@@ -6,7 +6,7 @@ from  Ashare import *
 tax_ratio=0.9999
 fund=10000
 stock=0
-count=1000
+count=100
 #df = get_price('sh000001', frequency='1d', count=count)  # 上证指数日线行情
 df = get_price('sh000300', frequency='1d', count=count)  # 日线行情
 
