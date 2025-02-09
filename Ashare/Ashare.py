@@ -9,8 +9,17 @@ def get_price_day_tx(code, end_date='', count=10, frequency='1d'):     #日线�
     URL=f'http://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param={code},{unit},,{end_date},{count},qfq'     
     st= json.loads(requests.get(URL).content);    ms='qfq'+unit;      stk=st['data'][code]   
     buf=stk[ms] if ms in stk else stk[unit]       #指数返回不是qfqday,是day
-    df=pd.DataFrame(buf,columns=['time','open','close','high','low','volume'],dtype='float')     
-    df.time=pd.to_datetime(df.time);    df.set_index(['time'], inplace=True);   df.index.name=''          #处理索引 
+    #df=pd.DataFrame(buf,columns=['time','open','close','high','low','volume'],dtype='float')
+
+    df = pd.DataFrame(buf, columns=['time', 'open', 'close', 'high', 'low', 'volume', 'info'])
+    df = df[['time', 'open', 'close', 'high', 'low', 'volume']]
+    df['open'] = df['open'].astype(float);
+    df['high'] = df['high'].astype(float);  # 转换数据类型
+    df['low'] = df['low'].astype(float);
+    df['close'] = df['close'].astype(float);
+    df['volume'] = df['volume'].astype(float)
+    df.time = pd.to_datetime(df.time);
+    df.set_index(['time'], inplace=True);   df.index.name=''          #处理索引
     return df
 
 #腾讯分钟线
