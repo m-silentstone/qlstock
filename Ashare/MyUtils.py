@@ -12,3 +12,37 @@ def get_price_tx(code, end_date='', count=10, frequency='1d', fields=[]):  # 明
         if frequency in '1m': return get_price_min_tx(xcode, end_date=end_date, count=count, frequency=frequency)
         return get_price_day_tx(xcode, end_date=end_date, count=count,
                                 frequency=frequency)
+
+
+def get_from_gtime(code):
+    URL = f'https://qt.gtimg.cn/q={code}'
+    is_hk=False
+    switch_hand_percent_index=38
+    if code[:2] == 'hk':
+        is_hk=True
+        switch_hand_percent_index=59
+
+    str = requests.get(URL).content
+    str = str.decode('GBK')
+    array = str.split('~')
+    result= {'name': array[1],
+             'code': array[2],
+             'price': array[3],
+             'yesterday_close': array[4],
+             'open': array[5],
+             'volume_hands': array[6], #成交量（手数）
+             'time': array[30],
+             'updown': array[31], #涨幅
+             'updown_percent': array[32], #涨幅比率
+             'high': array[33],
+             'low': array[34],
+             'volume_10k': array[37], #成交量（万）
+             'switch_hand_percent': array[switch_hand_percent_index], #换手率
+             'swing': array[43], # 振幅
+             'circulation_market_value': array[44], #流通市值
+             'total_market_value': array[45]#总市值
+             }
+    if not is_hk:
+        result['pb'] = array[46] #市净率
+        result['pe'] = array[39] #市盈率
+    return result

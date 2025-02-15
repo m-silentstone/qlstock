@@ -10,9 +10,13 @@ from Ashare import *
 #df = get_price('sh518880', frequency='1d', count=count)  # 黄金ETF日线行情
 #df = MyUtils.get_price_tx('sh518880', frequency='1d', count=count)  # 黄金ETF日线行情(腾讯接口)
 
-#另一个接口待结合使用：https://qt.gtimg.cn/q=sh518880
+
+# https://qt.gtimg.cn/q=hk00700接口使用
+result = MyUtils.get_from_gtime('sz301396')
+print(result)
 
 
+'''--------------------------------------------
 stock_code='hk00700'
 count=5
 
@@ -39,7 +43,7 @@ for x in day_line_array:
 df = MyUtils.get_price_tx(stock_code, frequency='1d', count=count)  # 腾讯日线行情(腾讯接口)
 
 print('日线行情\n',df)
-
+================================='''
 
 '''
 #每日按收盘价买入/卖出循环操作
