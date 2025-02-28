@@ -11,9 +11,19 @@ from Ashare import *
 #df = MyUtils.get_price_tx('sh518880', frequency='1d', count=count)  # 黄金ETF日线行情(腾讯接口)
 
 
+#读港股全量股票文件
+buf=[]
+with open('all_stocks_hk.txt', 'r', encoding='utf-8') as file:
+    lines = file.readlines()
+    for line in lines:
+        array=line.split('.')
+        print(array[0])
+
+
+'''
 #读A股全量股票文件
 buf=[]
-with open('all_stock_basic.txt', 'r', encoding='utf-8') as file:
+with open('all_stocks_basic.txt', 'r', encoding='utf-8') as file:
     lines = file.readlines()
     for line in lines[1:]:
         array=line.split()
@@ -22,6 +32,9 @@ with open('all_stock_basic.txt', 'r', encoding='utf-8') as file:
 
 df = pd.DataFrame(buf, columns=['code', 'symbol', 'name', 'area', 'industry'])
 print(df)
+
+'''
+
 
 
 '''--------------------------------------------

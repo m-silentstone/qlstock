@@ -25,7 +25,7 @@ def get_from_gtime(code):
     str = requests.get(URL).content
     str = str.decode('GBK')
     array = str.split('~')
-    result= {'name': array[1],
+    map= {'name': array[1],
              'code': array[2],
              'price': array[3],
              'yesterday_close': array[4],
@@ -43,6 +43,6 @@ def get_from_gtime(code):
              'total_market_value': array[45]#总市值
              }
     if not is_hk:
-        result['pb'] = array[46] #市净率
-        result['pe'] = array[39] #市盈率
-    return result
+        map['pb'] = array[46] #市净率
+        map['pe'] = array[39] #市盈率
+    return map
