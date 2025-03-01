@@ -1,4 +1,6 @@
 from Ashare import *
+import MyTT
+import numpy
 
 def get_price_tx(code, end_date='', count=10, frequency='1d', fields=[]):  # 明确调用腾讯接口
     xcode = code.replace('.XSHG', '').replace('.XSHE', '')  # 证券代码编码兼容处理
@@ -46,3 +48,11 @@ def get_from_gtime(code):
         map['pb'] = array[46] #市净率
         map['pe'] = array[39] #市盈率
     return map
+
+def rsi(CLOSE, n=24):
+    CLOSE_LASTDAY=pd.Series(CLOSE).shift(1).values
+    DIF_RATIO = (CLOSE - CLOSE_LASTDAY) / CLOSE_LASTDAY
+    UP_RATIO=pd.Series(numpy.maximum(DIF_RATIO,0)).rolling(n).mean().values
+    DOWN_RATIO=numpy.abs(pd.Series(numpy.minimum(DIF_RATIO,0)).rolling(n).mean().values)
+    RS=UP_RATIO/DOWN_RATIO
+    return numpy.round(100-(100/(1+RS)), 3)
