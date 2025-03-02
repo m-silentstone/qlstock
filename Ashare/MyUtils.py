@@ -69,3 +69,15 @@ def boll(CLOSE, n=20, p=2):
     UPPER = MA + STD * p
     LOWER = MA - STD * p
     return numpy.round(UPPER, 3), numpy.round(MA, 3), numpy.round(LOWER, 3)
+
+
+'''
+MACD
+'''
+def macd(CLOSE, short=12, long=26, m=9):
+    EMA_SHORT=pd.Series(CLOSE).ewm(span=short, adjust=False).mean().values
+    EMA_LONG=pd.Series(CLOSE).ewm(span=long, adjust=False).mean().values
+    DIF = EMA_SHORT - EMA_LONG
+    DEA = pd.Series(DIF).ewm(span=m, adjust=False).mean().values
+    MACD = 2 * (DIF - DEA)
+    return numpy.round(DIF, 3), numpy.round(DEA, 3), numpy.round(MACD, 3)

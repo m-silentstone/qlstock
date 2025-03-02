@@ -2,8 +2,8 @@ import math
 
 import MyUtils;import MyTT as mytt;import time;
 from Ashare import *
-stock_count=1
-day_count=50
+stock_count=2
+day_count=150
 #读A股全量股票文件
 allstockcode_array=[]
 with open('all_stocks_basic.txt', 'r', encoding='utf-8') as file:
@@ -45,6 +45,11 @@ for stock_code in allstockcode_array:
     stock_price_df['BOLL_MID']=BOLL_MID
     stock_price_df['BOLL_LOWER']=BOLL_LOWER
 
+    # MACD
+    DIF, DEA, MACD= MyUtils.macd(CLOSE)
+    stock_price_df['DIF']=DIF
+    stock_price_df['DEA']=DEA
+    stock_price_df['MACD']=MACD
 
     for index, row in stock_price_df.iterrows():
         # status列
@@ -79,6 +84,9 @@ for stock_code in allstockcode_array:
             stock_price_df.loc[index, 'status'] += 'BollDownNear,' #布林带下沿
         elif row['close'] < row['BOLL_MID']:
             stock_price_df.loc[index, 'status'] += 'BollMidDown,' #布林带下半区
+        if row['RSI24'] > 65 or row['RSI24'] < 35:
+            stock_price_df.loc[index, 'status'] += 'RSI='+str(row['RSI24'])+','
+
 
     #print(stock_price_df)
     with pd.option_context('display.max_rows', None,
