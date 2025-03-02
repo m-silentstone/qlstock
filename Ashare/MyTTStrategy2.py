@@ -36,6 +36,13 @@ for stock_code in allstockcode_array:
     RSI24 = MyUtils.rsi(CLOSE, 24)
     stock_price_df['RSI24']=RSI24
 
+    # 布林带
+    BOLL_UPPER,BOLL_MID,BOLL_LOWER = MyUtils.boll(CLOSE)
+    stock_price_df['BOLL_UPPER']=BOLL_UPPER
+    stock_price_df['BOLL_MID']=BOLL_MID
+    stock_price_df['BOLL_LOWER']=BOLL_LOWER
+
+
     for index, row in stock_price_df.iterrows():
         # 确定插针
         change=abs(float(row['close'])-float(row['open']))
@@ -53,7 +60,6 @@ for stock_code in allstockcode_array:
         if downline > change * 2 and downline/float(row['close']) > 0.03:
             stock_price_df.loc[index, 'status'] += 'BlowSpin,' #下插针
 
-        # 布林带
 
     #print(stock_price_df)
     with pd.option_context('display.max_rows', None,

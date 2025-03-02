@@ -49,6 +49,9 @@ def get_from_gtime(code):
         map['pe'] = array[39] #市盈率
     return map
 
+'''
+RSI相对强弱指数（暂时无平均涨幅平滑处理，所以不准确）
+'''
 def rsi(CLOSE, n=24):
     CLOSE_LASTDAY=pd.Series(CLOSE).shift(1).values
     DIF_RATIO = (CLOSE - CLOSE_LASTDAY) / CLOSE_LASTDAY
@@ -56,3 +59,13 @@ def rsi(CLOSE, n=24):
     DOWN_RATIO=numpy.abs(pd.Series(numpy.minimum(DIF_RATIO,0)).rolling(n).mean().values)
     RS=UP_RATIO/DOWN_RATIO
     return numpy.round(100-(100/(1+RS)), 3)
+
+'''
+布林带
+'''
+def boll(CLOSE, n=20, p=2):
+    MA=pd.Series(CLOSE).rolling(n).mean().values
+    STD=pd.Series(CLOSE).rolling(n).std(ddof=0).values
+    UPPER = MA + STD * p
+    LOWER = MA - STD * p
+    return numpy.round(UPPER, 3), numpy.round(MA, 3), numpy.round(LOWER, 3)
