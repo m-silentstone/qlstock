@@ -3,7 +3,7 @@ import math
 import MyUtils;import MyTT as mytt;import time;
 from Ashare import *
 stock_count=1
-day_count=100
+day_count=50
 #读A股全量股票文件
 allstockcode_array=[]
 with open('all_stocks_basic.txt', 'r', encoding='utf-8') as file:
@@ -15,7 +15,10 @@ with open('all_stocks_basic.txt', 'r', encoding='utf-8') as file:
 
 i=0
 for stock_code in allstockcode_array:
-    stock_price_df = MyUtils.get_price_tx(stock_code, frequency='1d', count=day_count)
+    i = i + 1
+    if i> stock_count:
+        break
+    stock_price_df = MyUtils.get_price_tx(stock_code, frequency='1d', count=day_count+30)
     stock_map = MyUtils.get_from_gtime(stock_code)
     if stock_code[2:] != stock_map['code']:
         print('数据有问题！')
@@ -44,12 +47,17 @@ for stock_code in allstockcode_array:
 
 
     for index, row in stock_price_df.iterrows():
-        # 确定插针
+        # status列
         change=abs(float(row['close'])-float(row['open']))
         upline=float(row['high'])-max(float(row['close']),float(row['open']))
         downline = min(float(row['close']), float(row['open'])) - float(row['low'])
         stock_price_df.loc[index, 'status']=''
-        if math.isnan(row['MA5']) or math.isnan(row['MA10']) or math.isnan(row['MA20']) or math.isnan(row['MA30']):
+        isSkip=False
+        for value in row.values:
+            if math.isnan(value):
+                isSkip=True
+                break
+        if isSkip:
             continue
         if row['MA5'] > row['MA10'] > row['MA20'] > row['MA30']:
             stock_price_df.loc[index, 'status'] += 'Up,' #上涨状态
@@ -59,7 +67,18 @@ for stock_code in allstockcode_array:
             stock_price_df.loc[index, 'status'] += 'TopSpin,' #上插针
         if downline > change * 2 and downline/float(row['close']) > 0.03:
             stock_price_df.loc[index, 'status'] += 'BlowSpin,' #下插针
-
+        if row['close'] > row['BOLL_UPPER']:
+            stock_price_df.loc[index, 'status'] += 'BollUpBeyond,' #布林带上超出
+        elif row['close'] > 0.75 * row['BOLL_UPPER'] + 0.25 * row['BOLL_MID']:
+            stock_price_df.loc[index, 'status'] += 'BollUpNear,' #布林带上沿
+        elif row['close'] > row['BOLL_MID']:
+            stock_price_df.loc[index, 'status'] += 'BollMidUp,' #布林带上半区
+        if row['close'] < row['BOLL_LOWER']:
+            stock_price_df.loc[index, 'status'] += 'BollDownBeyond,' #布林带下超出
+        elif row['close'] < 0.75 * row['BOLL_LOWER'] + 0.25 * row['BOLL_MID']:
+            stock_price_df.loc[index, 'status'] += 'BollDownNear,' #布林带下沿
+        elif row['close'] < row['BOLL_MID']:
+            stock_price_df.loc[index, 'status'] += 'BollMidDown,' #布林带下半区
 
     #print(stock_price_df)
     with pd.option_context('display.max_rows', None,
@@ -69,9 +88,6 @@ for stock_code in allstockcode_array:
         print(stock_price_df)
     print(stock_map)
     time.sleep(1)
-    i=i+1
-    if i>stock_count:
-        break
 
 
 
