@@ -1,6 +1,6 @@
 import math
 
-import MyUtils;import MyTT as mytt;import time;
+import MyUtils;import time;
 from Ashare import *
 stock_count=2
 day_count=150
@@ -26,14 +26,26 @@ for stock_code in allstockcode_array:
     print(stock_code, stock_map['name'],'--------------------------------------------------------')
     #日线
     CLOSE=stock_price_df.close.values
-    MA5 = mytt.MA(CLOSE, 5)
-    MA10 = mytt.MA(CLOSE, 10)
-    MA20 = mytt.MA(CLOSE, 20)
-    MA30 = mytt.MA(CLOSE, 30)
+    VOLUME=stock_price_df.volume.values
+    # 价格日线
+    MA5 = MyUtils.ma(CLOSE, 5)
+    MA10 = MyUtils.ma(CLOSE, 10)
+    MA20 = MyUtils.ma(CLOSE, 20)
+    MA30 = MyUtils.ma(CLOSE, 30)
     stock_price_df['MA5']=MA5
     stock_price_df['MA10']=MA10
     stock_price_df['MA20']=MA20
     stock_price_df['MA30']=MA30
+
+    # 成交量日线
+    VMA5 = MyUtils.ma(VOLUME, 5)
+    VMA10 = MyUtils.ma(VOLUME, 10)
+    VMA20 = MyUtils.ma(VOLUME, 20)
+    VMA30 = MyUtils.ma(VOLUME, 30)
+    stock_price_df['VMA5']=VMA5
+    stock_price_df['VMA10']=VMA10
+    stock_price_df['VMA20']=VMA20
+    stock_price_df['VMA30']=VMA30
 
     # RSI相对强弱指数
     RSI24 = MyUtils.rsi(CLOSE, 24)

@@ -50,6 +50,12 @@ def get_from_gtime(code):
     return map
 
 '''
+N日平均值
+'''
+def ma(S, n):
+    return pd.Series(S).rolling(n).mean().values
+
+'''
 RSI相对强弱指数（暂时无平均涨幅平滑处理，所以不准确）
 '''
 def rsi(CLOSE, n=24):
