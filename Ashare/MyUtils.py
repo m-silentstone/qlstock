@@ -78,12 +78,26 @@ def boll(CLOSE, n=20, p=2):
 
 
 '''
-MACD
+MACD 其实还是价格趋势的平滑，可以预示买点卖点
 '''
 def macd(CLOSE, short=12, long=26, m=9):
     EMA_SHORT=pd.Series(CLOSE).ewm(span=short, adjust=False).mean().values
     EMA_LONG=pd.Series(CLOSE).ewm(span=long, adjust=False).mean().values
-    DIF = EMA_SHORT - EMA_LONG
-    DEA = pd.Series(DIF).ewm(span=m, adjust=False).mean().values
-    MACD = 2 * (DIF - DEA)
+    DIF = EMA_SHORT - EMA_LONG  # 差异线
+    DEA = pd.Series(DIF).ewm(span=m, adjust=False).mean().values  # 信号线
+    MACD = 2 * (DIF - DEA)  #  直方图
     return numpy.round(DIF, 3), numpy.round(DEA, 3), numpy.round(MACD, 3)
+
+
+'''
+KDJ
+'''
+def kdj(CLOSE,HIGH,LOW, n=9,m1=3,m2=3):
+    LLV=pd.Series(LOW).rolling(n).min().values
+    HHV=pd.Series(HIGH).rolling(n).max().values
+    RSV=(CLOSE-LLV)/(HHV-LLV) * 100
+    K=pd.Series(RSV).ewm(span=m1*2-1, adjust=False).mean().values
+    D=pd.Series(K).ewm(span=m2*2-1, adjust=False).mean().values
+    J=K*3-D*2
+    return K,D,J
+

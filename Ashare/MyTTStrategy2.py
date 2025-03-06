@@ -2,7 +2,7 @@ import math
 
 import MyUtils;import time;
 from Ashare import *
-stock_count=2
+stock_count=1
 day_count=150
 #读A股全量股票文件
 allstockcode_array=[]
@@ -26,6 +26,9 @@ for stock_code in allstockcode_array:
     print(stock_code, stock_map['name'],'--------------------------------------------------------')
     #日线
     CLOSE=stock_price_df.close.values
+    HIGH=stock_price_df.high.values
+    LOW=stock_price_df.low.values
+
     VOLUME=stock_price_df.volume.values
     # 价格日线
     MA5 = MyUtils.ma(CLOSE, 5)
@@ -62,6 +65,12 @@ for stock_code in allstockcode_array:
     stock_price_df['DIF']=DIF
     stock_price_df['DEA']=DEA
     stock_price_df['MACD']=MACD
+
+    # KDJ
+    KDJ_K,KDJ_D,KDJ_J=MyUtils.kdj(CLOSE,HIGH,LOW)
+    stock_price_df['KDJ_K'] = KDJ_K
+    stock_price_df['KDJ_D'] = KDJ_D
+    stock_price_df['KDJ_J'] = KDJ_J
 
     for index, row in stock_price_df.iterrows():
         # status列
