@@ -94,25 +94,25 @@ for stock_code in allstockcode_array:
         if isSkip:
             continue
         if row['MA5'] > row['MA10'] > row['MA20'] > row['MA30']:
-            stock_price_df.loc[index, 'status'] += 'Up,' #上涨状态
+            stock_price_df.loc[index, 'status'] += '正上涨,' #上涨状态
         if row['MA5'] < row['MA10'] < row['MA20'] < row['MA30']:
-            stock_price_df.loc[index, 'status'] += 'Down,' #下跌状态
+            stock_price_df.loc[index, 'status'] += '正下跌,' #下跌状态
         if upline > change * 2 and upline/float(row['close']) > 0.03:
-            stock_price_df.loc[index, 'status'] += 'TopSpin,' #上插针
+            stock_price_df.loc[index, 'status'] += '上插针,' #上插针
         if downline > change * 2 and downline/float(row['close']) > 0.03:
-            stock_price_df.loc[index, 'status'] += 'BlowSpin,' #下插针
+            stock_price_df.loc[index, 'status'] += '下插针,' #下插针
         if row['close'] > row['BOLL_UPPER']:
-            stock_price_df.loc[index, 'status'] += 'BollUpBeyond,' #布林带上超出
+            stock_price_df.loc[index, 'status'] += '布林带上超出,' #布林带上超出
         elif row['close'] > 0.75 * row['BOLL_UPPER'] + 0.25 * row['BOLL_MID']:
-            stock_price_df.loc[index, 'status'] += 'BollUpNear,' #布林带上沿
+            stock_price_df.loc[index, 'status'] += '布林带上沿,' #布林带上沿
         elif row['close'] > row['BOLL_MID']:
-            stock_price_df.loc[index, 'status'] += 'BollMidUp,' #布林带上半区
+            stock_price_df.loc[index, 'status'] += '布林带上半区,' #布林带上半区
         if row['close'] < row['BOLL_LOWER']:
-            stock_price_df.loc[index, 'status'] += 'BollDownBeyond,' #布林带下超出
+            stock_price_df.loc[index, 'status'] += '布林带下超出,' #布林带下超出
         elif row['close'] < 0.75 * row['BOLL_LOWER'] + 0.25 * row['BOLL_MID']:
-            stock_price_df.loc[index, 'status'] += 'BollDownNear,' #布林带下沿
+            stock_price_df.loc[index, 'status'] += '布林带下沿,' #布林带下沿
         elif row['close'] < row['BOLL_MID']:
-            stock_price_df.loc[index, 'status'] += 'BollMidDown,' #布林带下半区
+            stock_price_df.loc[index, 'status'] += '布林带下半区,' #布林带下半区
         if row['RSI24'] > 65 or row['RSI24'] < 35:
             stock_price_df.loc[index, 'status'] += 'RSI='+str(row['RSI24'])+','
 
