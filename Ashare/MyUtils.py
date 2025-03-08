@@ -1,3 +1,5 @@
+import pandas as pd
+
 from Ashare import *
 import MyTT
 import numpy
@@ -117,7 +119,22 @@ def atr(CLOSE,HIGH,LOW, n=14):
     return pd.Series(TR).rolling(n).mean().values
 
 '''
-MFI 资金流入流出强度
+MFI 资金流量指数
+资金流入流出强度
+结合价格和成交量的震荡指标（0-100），类似于RSI（相对强弱指数），但加入了成交量数据，用于衡量资金流入流出的强度
+MFI > 80为超买（可能回调），MFI < 20为超卖（可能反弹）
 '''
+def mfi(CLOSE,HIGH,LOW,VOLUME,n=14,m=6):
+    TP=(CLOSE+HIGH+LOW)/3
+    MF=TP * VOLUME
+    MF_LASTDAY=pd.Series(MF).shift(1).values
+    #SIG = numpy.round((MF - MF_LASTDAY) / numpy.abs(MF - MF_LASTDAY), 0)
+    #FUNDIN = pd.Series(numpy.maximum(SIG,0) * MF).w.rolling(n).sum().values
+    #FUNDOUT = pd.Series(numpy.abs(numpy.minimum(SIG,0)) * MF).rolling(n).sum().values
 
+    FUNDIN = pd.Series(MF).where(MF >= MF_LASTDAY, 0).rolling(n).sum().values
+    FUNDOUT = pd.Series(MF).where(MF < MF_LASTDAY, 0).rolling(n).sum().values
 
+    MFI=100 - (100/(1+FUNDIN/FUNDOUT))
+    MFIM=pd.Series(MFI).rolling(m).mean().values
+    return numpy.round(MFIM, 3)

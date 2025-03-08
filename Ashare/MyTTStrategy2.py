@@ -72,6 +72,14 @@ for stock_code in allstockcode_array:
     stock_price_df['KDJ_D'] = KDJ_D
     stock_price_df['KDJ_J'] = KDJ_J
 
+    # ATR
+    ATR14 = MyUtils.atr(CLOSE, HIGH, LOW, 14)
+    stock_price_df['ATR14'] = ATR14
+
+    # MFI
+    MFI = MyUtils.mfi(CLOSE,HIGH,LOW,VOLUME,14)
+    stock_price_df['MFI'] = MFI
+
     for index, row in stock_price_df.iterrows():
         # status列
         change=abs(float(row['close'])-float(row['open']))
