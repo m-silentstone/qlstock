@@ -57,6 +57,8 @@ def ma(S, n):
 
 '''
 RSI相对强弱指数（暂时无平均涨幅平滑处理，所以不准确）
+动量振荡器，用于衡量股票或其他金融资产的价格变动速度和变化幅度，以判断超买或超卖状况。
+70,30
 '''
 def rsi(CLOSE, n=24):
     CLOSE_LASTDAY=pd.Series(CLOSE).shift(1).values
@@ -68,6 +70,7 @@ def rsi(CLOSE, n=24):
 
 '''
 布林带
+衡量价格波动性和市场超买超卖状态，价格支撑位
 '''
 def boll(CLOSE, n=20, p=2):
     MA=pd.Series(CLOSE).rolling(n).mean().values
@@ -79,6 +82,7 @@ def boll(CLOSE, n=20, p=2):
 
 '''
 MACD 其实还是价格趋势的平滑，可以预示买点卖点
+两条移动平均线的差异（DIF线）及其平滑线（DEA线）来反映价格的变化趋势，并结合柱状图（MACD Histogram）展示动量的强弱
 '''
 def macd(CLOSE, short=12, long=26, m=9):
     EMA_SHORT=pd.Series(CLOSE).ewm(span=short, adjust=False).mean().values
@@ -91,6 +95,8 @@ def macd(CLOSE, short=12, long=26, m=9):
 
 '''
 KDJ
+评估股票的超买和超卖状态，反应灵敏，适合短期交易
+80，20
 '''
 def kdj(CLOSE,HIGH,LOW, n=9,m1=3,m2=3):
     LLV=pd.Series(LOW).rolling(n).min().values
@@ -100,4 +106,18 @@ def kdj(CLOSE,HIGH,LOW, n=9,m1=3,m2=3):
     D=pd.Series(K).ewm(span=m2*2-1, adjust=False).mean().values
     J=K*3-D*2
     return K,D,J
+
+'''
+ATR 价格波动幅度
+反映市场短期内的价格波动剧烈程度，高波动性常伴随趋势行情，低波动性可能预示盘整
+'''
+def atr(CLOSE,HIGH,LOW, n=14):
+    CLOSE_LASTDAY=pd.Series(CLOSE).shift(1).values
+    TR = numpy.maximum(HIGH-LOW, numpy.abs(CLOSE_LASTDAY-HIGH), numpy.abs(CLOSE_LASTDAY-LOW))
+    return pd.Series(TR).rolling(n).mean().values
+
+'''
+MFI 资金流入流出强度
+'''
+
 
