@@ -1,7 +1,6 @@
 import pandas as pd
 
 from Ashare import *
-import MyTT
 import numpy
 
 def get_price_tx(code, end_date='', count=10, frequency='1d', fields=[]):  # 明确调用腾讯接口

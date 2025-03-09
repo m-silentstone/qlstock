@@ -93,10 +93,10 @@ for stock_code in allstockcode_array:
                 break
         if isSkip:
             continue
-        if row['MA5'] > row['MA10'] > row['MA20'] > row['MA30']:
-            stock_price_df.loc[index, 'status'] += '正上涨,' #上涨状态
-        if row['MA5'] < row['MA10'] < row['MA20'] < row['MA30']:
-            stock_price_df.loc[index, 'status'] += '正下跌,' #下跌状态
+        if row['MA5'] > row['MA20']:
+            stock_price_df.loc[index, 'status'] += '价格金叉,' #上涨状态
+        if row['MA5'] < row['MA20']:
+            stock_price_df.loc[index, 'status'] += '价格死叉,' #下跌状态
         if upline > change * 2 and upline/float(row['close']) > 0.03:
             stock_price_df.loc[index, 'status'] += '上插针,' #上插针
         if downline > change * 2 and downline/float(row['close']) > 0.03:
@@ -126,6 +126,16 @@ for stock_code in allstockcode_array:
     print(stock_map)
     time.sleep(1)
 
+
+
+# def buy_check(code, stock_price_df):
+#
+#
+#
+#
+#
+# def sell_check(code, stock_price_df, stockHoldInfo):
+#     hold_info.positions[code].closeable_amount
 
 
 
