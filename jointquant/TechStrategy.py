@@ -151,7 +151,7 @@ def buy_check(code, stock_price_df, context):
             stock_price_df.at[stock_price_df.index[-1], 'DEA'] < 0 or \
             stock_price_df.at[stock_price_df.index[-1], 'MACD'] < 0:
         return False
-    if stock_price_df.at[stock_price_df.index[-2], 'MACD'] > 0:  # 转为正的时候再考虑买入
+    if stock_price_df.at[stock_price_df.index[-2], 'MACD'] >= 0:  # 转为正的时候再考虑买入
         return False
     # 考虑boll
     if stock_price_df.at[stock_price_df.index[-1], 'CLOSE'] < stock_price_df.at[stock_price_df.index[-1], 'BOLL_MID']:
@@ -173,10 +173,17 @@ def sell_check(code, stock_price_df, context):
             context.portfolio.positions[code].price) +
               "，成本价：" + str(context.portfolio.positions[code].acc_avg_cost))
         return True
+    # 盈利
+    if (context.portfolio.positions[code].price - context.portfolio.positions[code].acc_avg_cost) / \
+            context.portfolio.positions[code].acc_avg_cost >= 0.3:
+        print(str(context.current_dt.date()) + " 盈利卖：" + code + "当前价：" + str(
+            context.portfolio.positions[code].price) +
+              "，成本价：" + str(context.portfolio.positions[code].acc_avg_cost))
+        return True
 
     # 考虑MACD
-    if stock_price_df.at[stock_price_df.index[-1], 'MACD'] <= 0 and \
-            stock_price_df.at[stock_price_df.index[-2], 'MACD'] > 0:
+    if stock_price_df.at[stock_price_df.index[-1], 'MACD'] < 0 and \
+            stock_price_df.at[stock_price_df.index[-2], 'MACD'] >= 0:
         print(str(context.current_dt.date()) + ' ' + code + " MACD条件卖")
         return True
     # 考虑boll
