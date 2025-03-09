@@ -55,14 +55,14 @@ def market_open(context):
         valuation.market_cap.desc()
     ).limit(
         # 最多返回几个
-        3
+        1000
     ), date=str(context.current_dt.date()))
 
     buy_stocks = []
     sell_stocks = []
 
     for index, row in df.iterrows():
-        stock_price_array = get_bars(row['code'], count=50, unit='1d',
+        stock_price_array = get_bars(row['code'], count=100, unit='1d',
                                      fields=['open', 'high', 'low', 'close', 'volume'])
         print(row['code'])
         stock_price_df = pd.DataFrame()
@@ -71,6 +71,10 @@ def market_open(context):
         HIGH = stock_price_array['high']
         LOW = stock_price_array['low']
         VOLUME = stock_price_array['volume']
+        stock_price_df['CLOSE'] = CLOSE
+        stock_price_df['HIGH'] = HIGH
+        stock_price_df['LOW'] = LOW
+        stock_price_df['VOLUME'] = VOLUME
 
         # 价格日线
         MA5 = ma(CLOSE, 5)
@@ -138,11 +142,17 @@ def after_market_close(context):
 
 
 def buy_check(code, stock_price_df):
-    result = True
-    if stock_price_df.at[stock_price_df.index[-1], 'DIF'] < 0 or stock_price_df.at[
-        stock_price_df.index[-1], 'DEA'] < 0 or stock_price_df.at[stock_price_df.index[-1], 'MACD'] < 0:
+    # 考虑MACD
+    if stock_price_df.at[stock_price_df.index[-1], 'DIF'] < 0 or \
+            stock_price_df.at[stock_price_df.index[-1], 'DEA'] < 0 or \
+            stock_price_df.at[stock_price_df.index[-1], 'MACD'] < 0:
         return False
-    return result
+    if stock_price_df.at[stock_price_df.index[-2], 'MACD'] > 0:  # 转为正的时候再考虑买入
+        return False
+    # 考虑boll
+    if stock_price_df.at[stock_price_df.index[-1], 'CLOSE'] < stock_price_df.at[stock_price_df.index[-1], 'BOLL_MID']:
+        return False
+    return True
 
 
 def sell_check(code, stock_price_df, context):
@@ -150,8 +160,21 @@ def sell_check(code, stock_price_df, context):
         return False
     if context.portfolio.positions[code].closeable_amount <= 0:
         return False
+    # 止损
+    if (context.portfolio.positions[code].price - context.portfolio.positions[code].acc_avg_cost) / \
+            context.portfolio.positions[code].acc_avg_cost <= -0.15:
+        print("止损：" + code + "当前价：" + str(context.portfolio.positions[code].price) +
+              "，成本价：" + str(context.portfolio.positions[code].acc_avg_cost))
+        return True
 
-    return True
+    # 考虑MACD
+    if stock_price_df.at[stock_price_df.index[-1], 'MACD'] <= 0 and \
+            stock_price_df.at[stock_price_df.index[-2], 'MACD'] > 0:
+        return True
+    # 考虑boll
+    if stock_price_df.at[stock_price_df.index[-1], 'CLOSE'] <= stock_price_df.at[stock_price_df.index[-1], 'BOLL_MID']:
+        return True
+    return False
 
 
 '''
