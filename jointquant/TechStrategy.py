@@ -12,6 +12,7 @@ def initialize(context):
     set_option('use_real_price', True)
     # 输出内容到日志 log.info()
     log.info('初始函数开始运行且全局只运行一次')
+    context.total_cash = context.portfolio.available_cash
     # 过滤掉order系列API产生的比error级别低的log
     # log.set_level('order', 'error')
 
@@ -108,20 +109,20 @@ def market_open(context):
         stock_price_df['DEA'] = DEA
         stock_price_df['MACD'] = MACD
 
-        if buy_check(row['code'], stock_price_df):
+        if buy_check(row['code'], stock_price_df, context):
             buy_stocks.append(row['code'])
 
         if sell_check(row['code'], stock_price_df, context):
             sell_stocks.append(row['code'])
     if len(buy_stocks) > 0:
-        per_cash = context.portfolio.available_cash / len(buy_stocks)
+        per_cash = min(context.portfolio.available_cash / len(buy_stocks), context.total_cash / 10)
         for buy_code in buy_stocks:
-            print('买入：' + str(buy_code) + '，金额：' + str(per_cash))
+            print(str(context.current_dt.date()) + ' ' + '买入：' + str(buy_code) + '，金额：' + str(per_cash))
             order_value(buy_code, per_cash)
     if len(sell_stocks) > 0:
         for sell_code in sell_stocks:
             updatedNum = 0
-            print('卖出：' + str(sell_code) + '，剩余股数：' + str(updatedNum))
+            print(str(context.current_dt.date()) + ' ' + '卖出：' + str(sell_code) + '，剩余股数：' + str(updatedNum))
             order_target(sell_code, updatedNum)
 
 
@@ -141,7 +142,10 @@ def after_market_close(context):
 '''
 
 
-def buy_check(code, stock_price_df):
+def buy_check(code, stock_price_df, context):
+    if len(stock_price_df.index) <= 26:
+        return False
+
     # 考虑MACD
     if stock_price_df.at[stock_price_df.index[-1], 'DIF'] < 0 or \
             stock_price_df.at[stock_price_df.index[-1], 'DEA'] < 0 or \
@@ -156,6 +160,8 @@ def buy_check(code, stock_price_df):
 
 
 def sell_check(code, stock_price_df, context):
+    if len(stock_price_df.index) <= 26:
+        return False
     if context.portfolio.positions[code].today_amount > 0:
         return False
     if context.portfolio.positions[code].closeable_amount <= 0:
@@ -163,16 +169,19 @@ def sell_check(code, stock_price_df, context):
     # 止损
     if (context.portfolio.positions[code].price - context.portfolio.positions[code].acc_avg_cost) / \
             context.portfolio.positions[code].acc_avg_cost <= -0.15:
-        print("止损：" + code + "当前价：" + str(context.portfolio.positions[code].price) +
+        print(str(context.current_dt.date()) + " 止损卖：" + code + "当前价：" + str(
+            context.portfolio.positions[code].price) +
               "，成本价：" + str(context.portfolio.positions[code].acc_avg_cost))
         return True
 
     # 考虑MACD
     if stock_price_df.at[stock_price_df.index[-1], 'MACD'] <= 0 and \
             stock_price_df.at[stock_price_df.index[-2], 'MACD'] > 0:
+        print(str(context.current_dt.date()) + ' ' + code + " MACD条件卖")
         return True
     # 考虑boll
     if stock_price_df.at[stock_price_df.index[-1], 'CLOSE'] <= stock_price_df.at[stock_price_df.index[-1], 'BOLL_MID']:
+        print(str(context.current_dt.date()) + ' ' + code + " boll条件卖")
         return True
     return False
 
