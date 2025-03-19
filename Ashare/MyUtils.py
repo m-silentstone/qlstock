@@ -93,6 +93,17 @@ def macd(CLOSE, short=12, long=26, m=9):
     MACD = 2 * (DIF - DEA)  #  直方图
     return numpy.round(DIF, 3), numpy.round(DEA, 3), numpy.round(MACD, 3)
 
+'''
+成交量加权VMACD，结合了交易量
+'''
+def vmacd(CLOSE, VALUME, short=12, long=26, m=9):
+    VWAP = CLOSE * VALUME
+    EMA_SHORT = pd.Series(VWAP).ewm(span=short, adjust=False).mean().values/pd.Series(VALUME).ewm(span=short, adjust=False).mean().values
+    EMA_LONG = pd.Series(VWAP).ewm(span=long, adjust=False).mean().values/pd.Series(VALUME).ewm(span=long, adjust=False).mean().values
+    DIF = EMA_SHORT - EMA_LONG  # 差异线
+    DEA = pd.Series(DIF).ewm(span=m, adjust=False).mean().values  # 信号线
+    MACD = 2 * (DIF - DEA)  # 直方图
+    return numpy.round(DIF, 3), numpy.round(DEA, 3), numpy.round(MACD, 3)
 
 '''
 KDJ

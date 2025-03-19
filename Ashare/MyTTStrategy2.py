@@ -66,6 +66,12 @@ for stock_code in allstockcode_array:
     stock_price_df['DEA']=DEA
     stock_price_df['MACD']=MACD
 
+    # VMACD
+    VDIF, VDEA, VMACD= MyUtils.vmacd(CLOSE, VOLUME)
+    stock_price_df['VDIF']=VDIF
+    stock_price_df['VDEA']=VDEA
+    stock_price_df['VMACD']=VMACD
+
     # KDJ
     KDJ_K,KDJ_D,KDJ_J=MyUtils.kdj(CLOSE,HIGH,LOW)
     stock_price_df['KDJ_K'] = KDJ_K
