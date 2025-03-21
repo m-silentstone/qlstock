@@ -50,6 +50,14 @@ for stock_code in allstockcode_array:
     stock_price_df['VMA20']=VMA20
     stock_price_df['VMA30']=VMA30
 
+    # 乖离率
+    BIAS6=MyUtils.bias(CLOSE, 6)
+    BIAS12 = MyUtils.bias(CLOSE, 12)
+    BIAS24 = MyUtils.bias(CLOSE, 24)
+    stock_price_df['BIAS6']=BIAS6
+    stock_price_df['BIAS12']=BIAS12
+    stock_price_df['BIAS24']=BIAS24
+
     # RSI相对强弱指数
     RSI24 = MyUtils.rsi(CLOSE, 24)
     stock_price_df['RSI24']=RSI24

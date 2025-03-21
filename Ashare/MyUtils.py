@@ -57,6 +57,16 @@ def ma(S, n):
     return pd.Series(S).rolling(n).mean().values
 
 '''
+BIAS 乖离率
+表示当前价格与某一周期移动平均线（MA）的百分比偏离程度，用于判断价格短期是否“过度上涨”或“过度下跌”。
+一般n取6短期,12中期,24长期
+'''
+def bias(CLOSE, n):
+    MA=pd.Series(CLOSE).rolling(n).mean().values
+    return numpy.round((CLOSE-MA)/MA*100)
+
+
+'''
 RSI相对强弱指数（暂时无平均涨幅平滑处理，所以不准确）
 动量振荡器，用于衡量股票或其他金融资产的价格变动速度和变化幅度，以判断超买或超卖状况。
 70,30
@@ -94,7 +104,7 @@ def macd(CLOSE, short=12, long=26, m=9):
     return numpy.round(DIF, 3), numpy.round(DEA, 3), numpy.round(MACD, 3)
 
 '''
-成交量加权VMACD，结合了交易量
+成交量加权VMACD，结合了交易量(使用效果不好，还不如MACD)
 '''
 def vmacd(CLOSE, VOLUME, short=12, long=26, m=9):
     VWAP = CLOSE * VOLUME
