@@ -95,6 +95,20 @@ def dma(CLOSE, n1=10, n2=50, m=10):
     return DIF,DIFMA
 
 '''
+SAR 抛物转向指标，Stop and Reverse
+'''
+
+
+'''
+ene-s 
+'''
+def ene(CLOSE, n=25, m1=6, m2=6):
+    MA = pd.Series(CLOSE).rolling(25).mean().values
+    MAH = MA * (1+m1/100)
+    MAL = MA * (1-m2/100)
+    return MAH, MA, MAL
+
+'''
 RSI相对强弱指数（暂时无平均涨幅平滑处理，所以不准确）
 动量振荡器，用于衡量股票或其他金融资产的价格变动速度和变化幅度，以判断超买或超卖状况。
 70,30

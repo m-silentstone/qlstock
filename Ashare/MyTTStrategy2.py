@@ -78,6 +78,12 @@ for stock_code in allstockcode_array:
     WR6 = MyUtils.wr(CLOSE, HIGH, LOW, 6)
     stock_price_df['WR6']=WR6
 
+    # ENE-S
+    ENE_UPPER, ENE_MID, ENE_LOWER = MyUtils.ene(CLOSE)
+    stock_price_df['ENE_UPPER']=ENE_UPPER
+    stock_price_df['ENE_MID']=ENE_MID
+    stock_price_df['ENE_LOWER']=ENE_LOWER
+
     # 布林带
     BOLL_UPPER,BOLL_MID,BOLL_LOWER = MyUtils.boll(CLOSE)
     stock_price_df['BOLL_UPPER']=BOLL_UPPER
