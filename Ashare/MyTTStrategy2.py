@@ -67,6 +67,11 @@ for stock_code in allstockcode_array:
     CCI14 = MyUtils.cci(CLOSE, HIGH, LOW)
     stock_price_df['CCI14']=CCI14
 
+    # DMA 移动平均线差
+    DMA_DIF, DMA_DIFMA = MyUtils.dma(CLOSE)
+    stock_price_df['DMA_DIF'] = DMA_DIF
+    stock_price_df['DMA_DIFMA'] = DMA_DIFMA
+
     # WR 威廉指数
     WR10 = MyUtils.wr(CLOSE, HIGH, LOW, 10)
     stock_price_df['WR10']=WR10

@@ -86,7 +86,13 @@ def wr(CLOSE, HIGH, LOW, n):
     WR = (MAX-CLOSE) / (MAX-MIN) * 100
     return numpy.round(WR, 3)
 
-
+'''
+DMA 移动平均线差
+'''
+def dma(CLOSE, n1=10, n2=50, m=10):
+    DIF = pd.Series(CLOSE).rolling(n1).mean().values - pd.Series(CLOSE).rolling(n2).mean().values
+    DIFMA = pd.Series(DIF).rolling(m).mean().values
+    return DIF,DIFMA
 
 '''
 RSI相对强弱指数（暂时无平均涨幅平滑处理，所以不准确）
