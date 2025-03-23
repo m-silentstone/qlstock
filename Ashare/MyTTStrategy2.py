@@ -1,6 +1,7 @@
 import math
 
 import MyUtils;import time;
+import MyTT;
 from Ashare import *
 stock_count=1
 day_count=150
@@ -61,6 +62,16 @@ for stock_code in allstockcode_array:
     # RSI相对强弱指数
     RSI24 = MyUtils.rsi(CLOSE, 24)
     stock_price_df['RSI24']=RSI24
+
+    # CCI 商品通道指数
+    CCI14 = MyUtils.cci(CLOSE, HIGH, LOW)
+    stock_price_df['CCI14']=CCI14
+
+    # WR 威廉指数
+    WR10 = MyUtils.wr(CLOSE, HIGH, LOW, 10)
+    stock_price_df['WR10']=WR10
+    WR6 = MyUtils.wr(CLOSE, HIGH, LOW, 6)
+    stock_price_df['WR6']=WR6
 
     # 布林带
     BOLL_UPPER,BOLL_MID,BOLL_LOWER = MyUtils.boll(CLOSE)

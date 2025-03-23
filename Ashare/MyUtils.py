@@ -1,3 +1,5 @@
+from ctypes.wintypes import SMALL_RECT
+
 import pandas as pd
 
 from Ashare import *
@@ -64,6 +66,26 @@ BIAS 乖离率
 def bias(CLOSE, n):
     MA=pd.Series(CLOSE).rolling(n).mean().values
     return numpy.round((CLOSE-MA)/MA*100)
+
+'''
+CCI 商品通道指数
+'''
+def cci(CLOSE, HIGH, LOW, n=14):
+    TP=(HIGH+LOW+CLOSE)/3
+    SMA=pd.Series(TP).rolling(n).mean().values
+    MD = pd.Series(TP).rolling(n).apply(lambda x: (numpy.abs(x - x.mean())).mean()).values
+    return (TP-SMA)/(0.015*MD)
+
+
+'''
+WR 威廉指标
+'''
+def wr(CLOSE, HIGH, LOW, n):
+    MAX = pd.Series(HIGH).rolling(n).max().values
+    MIN = pd.Series(LOW).rolling(n).min().values
+    WR = (MAX-CLOSE) / (MAX-MIN) * 100
+    return numpy.round(WR, 3)
+
 
 
 '''

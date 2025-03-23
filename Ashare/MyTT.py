@@ -123,6 +123,9 @@ def PSY(CLOSE,N=12, M=6):
 def CCI(CLOSE,HIGH,LOW,N=14):  
     TP=(HIGH+LOW+CLOSE)/3
     return (TP-MA(TP,N))/(0.015*AVEDEV(TP,N))
+
+
+
         
 def ATR(CLOSE,HIGH,LOW, N=20):                    #真实波动N日平均值
     TR = MAX(MAX((HIGH - LOW), ABS(REF(CLOSE, 1) - HIGH)), ABS(REF(CLOSE, 1) - LOW))
