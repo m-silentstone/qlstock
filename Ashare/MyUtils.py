@@ -103,7 +103,7 @@ SAR 抛物转向指标，Stop and Reverse
 ene-s 
 '''
 def ene(CLOSE, n=25, m1=6, m2=6):
-    MA = pd.Series(CLOSE).rolling(25).mean().values
+    MA = pd.Series(CLOSE).rolling(n).mean().values
     MAH = MA * (1+m1/100)
     MAL = MA * (1-m2/100)
     return MAH, MA, MAL
