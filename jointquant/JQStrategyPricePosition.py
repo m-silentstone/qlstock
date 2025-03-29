@@ -107,7 +107,6 @@ def market_open(context):
             # print('stocks_lowest:', context.stocks_lowest[row['code']])
         else:
             print(row['code'])
-            context.is_get_history[row['code']] = True
             stock_price_array = get_bars(row['code'], count=2000, unit='1d',
                                          fields=['date', 'open', 'high', 'low', 'close', 'volume'])
             stock_price_df = {}
@@ -116,6 +115,8 @@ def market_open(context):
             stock_price_df['HIGH'] = stock_price_array['high'].tolist()
             stock_price_df['LOW'] = stock_price_array['low'].tolist()
             stock_price_df['VOLUME'] = stock_price_array['volume'].tolist()
+            if len(stock_price_df['HIGH']) <= 0 or len(stock_price_df['LOW']) <= 0:
+                continue
             context.stocks_highest[row['code']] = numpy.max(stock_price_df['HIGH'])
             context.stocks_lowest[row['code']] = numpy.min(stock_price_df['LOW'])
             distance = context.stocks_highest[row['code']] - context.stocks_lowest[row['code']]
@@ -125,6 +126,7 @@ def market_open(context):
             # print('stocks_price_df:', context.stocks_price_df[row['code']])
             # print('stocks_highest:', context.stocks_highest[row['code']])
             # print('stocks_lowest:', context.stocks_lowest[row['code']])
+            context.is_get_history[row['code']] = True
 
         if buy_check(row['code'], stock_price_df, context):
             buy_stocks.append(row['code'])
