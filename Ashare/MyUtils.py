@@ -31,25 +31,25 @@ def get_from_gtime(code):
     str = str.decode('GBK')
     array = str.split('~')
     map= {'name': array[1],
-             'code': array[2],
-             'price': array[3],
-             'yesterday_close': array[4],
-             'open': array[5],
-             'volume_hands': array[6], #成交量（手数）
-             'time': array[30],
-             'updown': array[31], #涨幅
-             'updown_percent': array[32], #涨幅比率
-             'high': array[33],
-             'low': array[34],
-             'volume_10k': array[37], #成交量（万）
+             'code': array[2], #代码
+             'price': float(array[3]), #当前价
+             'yesterday_close': float(array[4]), #昨日收盘价
+             'open': float(array[5]), #当日开盘价
+             'volume_hands': float(array[6]), #成交量（手数）
+             'time': array[30], #数据时间
+             'updown': float(array[31]), #涨幅
+             'updown_percent': float(array[32]), #涨幅比率
+             'high': float(array[33]), #当日最高价
+             'low': float(array[34]), #当日最低价
+             'volume_10k': float(array[37]), #成交量（万）
              'switch_hand_percent': array[switch_hand_percent_index], #换手率
              'swing': array[43], # 振幅
-             'circulation_market_value': array[44], #流通市值
-             'total_market_value': array[45]#总市值
+             'circulation_market_value': float(array[44]), #流通市值（亿元）
+             'total_market_value': float(array[45]) #总市值（亿元）
              }
     if not is_hk:
-        map['pb'] = array[46] #市净率
-        map['pe'] = array[39] #市盈率
+        map['pb'] = float(array[46]) #市净率
+        map['pe'] = float(array[39]) #市盈率
     return map
 
 '''
