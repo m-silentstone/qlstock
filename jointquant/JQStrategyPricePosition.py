@@ -181,6 +181,21 @@ def sell_check(code, stock_price_df, context):
     # 不持有就不卖出
     if context.portfolio.positions[code].closeable_amount <= 0:
         return False
+    # 止损
+    if (context.portfolio.positions[code].price - context.portfolio.positions[code].acc_avg_cost) / \
+            context.portfolio.positions[code].acc_avg_cost <= -0.2:
+        print(str(context.current_dt.date()) + " 止损卖：" + code + "当前价：" + str(
+            context.portfolio.positions[code].price) +
+              "，成本价：" + str(context.portfolio.positions[code].acc_avg_cost))
+        return True
+    # 止盈
+    if (context.portfolio.positions[code].price - context.portfolio.positions[code].acc_avg_cost) / \
+            context.portfolio.positions[code].acc_avg_cost >= 0.3:
+        print(str(context.current_dt.date()) + " 盈利卖：" + code + "当前价：" + str(
+            context.portfolio.positions[code].price) +
+              "，成本价：" + str(context.portfolio.positions[code].acc_avg_cost))
+        return True
+
     if stock_price_df['POSITION'][-1] > 60:
         print(str(context.current_dt.date()) + ' ' + code + ' 分位值：' + str(
             stock_price_df['POSITION'][-1]) + ',大于分位阈值，卖出')
