@@ -14,10 +14,15 @@ def initialize(context):
     log.info('初始函数开始运行且全局只运行一次')
     context.total_cash = context.portfolio.available_cash
 
+    context.buy_stocks = []
+    context.sell_stocks = []
+
     context.is_get_history = {}
     context.stocks_price_df = {}
     context.stocks_highest = {}
     context.stocks_lowest = {}
+    context.high_pos_threshold = 75
+    context.low_pos_threshold = 25
 
     # 过滤掉order系列API产生的比error级别低的log
     # log.set_level('order', 'error')
@@ -48,6 +53,31 @@ def market_open(context):
     log.info('函数运行日期：', str(context.current_dt.date()))
     log.info('可用现金：', str(context.portfolio.available_cash))
 
+    if len(context.buy_stocks) > 0:
+        per_cash = min(context.portfolio.available_cash / len(context.buy_stocks), context.total_cash / 10)
+        for buy_code in context.buy_stocks:
+            print(str(context.current_dt.date()) + ' ' + '买入：' + str(buy_code) + '，金额：' + str(per_cash))
+            order_value(buy_code, per_cash)
+    if len(context.sell_stocks) > 0:
+        for sell_code in context.sell_stocks:
+            updatedNum = 0
+            print(str(context.current_dt.date()) + ' ' + '卖出：' + str(sell_code) + '，剩余股数：' + str(updatedNum))
+            order_target(sell_code, updatedNum)
+
+
+## 收盘后运行函数
+def after_market_close(context):
+    log.info(str('函数运行时间(after_market_close):' + str(context.current_dt.time())))
+    # 得到当天所有成交记录
+    trades = get_trades()
+    for _trade in trades.values():
+        log.info('成交记录：' + str(_trade))
+    log.info('一天结束')
+    log.info('##############################################################')
+
+    # 分析历史数据
+    context.buy_stocks = []
+    context.sell_stocks = []
     df = get_fundamentals(query(
         valuation.code, valuation.market_cap
     ).filter(
@@ -60,14 +90,12 @@ def market_open(context):
         1000
     ), date=str(context.current_dt.date()))
 
-    buy_stocks = []
-    sell_stocks = []
-
     for index, row in df.iterrows():
         if row['code'] in context.is_get_history:
-            print(row['code'])
+            print(row['code'] + ': 增量更新数据')
             stock_price_today = get_bars(row['code'], count=1, unit='1d',
                                          fields=['date', 'open', 'high', 'low', 'close', 'volume'])
+
             # print('stock_price_today:', stock_price_today)
             # print('context.stocks_highest[row[code]]:',context.stocks_highest[row['code']])
             # print('stock_price_today[high][-1]', stock_price_today['high'][-1])
@@ -106,8 +134,8 @@ def market_open(context):
             # print('stocks_highest:', context.stocks_highest[row['code']])
             # print('stocks_lowest:', context.stocks_lowest[row['code']])
         else:
-            print(row['code'])
-            stock_price_array = get_bars(row['code'], count=2000, unit='1d',
+            print(row['code'] + ': 首次计算历史数据')
+            stock_price_array = get_bars(row['code'], count=1000, unit='1d',
                                          fields=['date', 'open', 'high', 'low', 'close', 'volume'])
             stock_price_df = {}
             stock_price_df['DATE'] = stock_price_array['date'].tolist()
@@ -129,31 +157,9 @@ def market_open(context):
             context.is_get_history[row['code']] = True
 
         if buy_check(row['code'], stock_price_df, context):
-            buy_stocks.append(row['code'])
+            context.buy_stocks.append(row['code'])
         if sell_check(row['code'], stock_price_df, context):
-            sell_stocks.append(row['code'])
-
-    if len(buy_stocks) > 0:
-        per_cash = min(context.portfolio.available_cash / len(buy_stocks), context.total_cash / 10)
-        for buy_code in buy_stocks:
-            print(str(context.current_dt.date()) + ' ' + '买入：' + str(buy_code) + '，金额：' + str(per_cash))
-            order_value(buy_code, per_cash)
-    if len(sell_stocks) > 0:
-        for sell_code in sell_stocks:
-            updatedNum = 0
-            print(str(context.current_dt.date()) + ' ' + '卖出：' + str(sell_code) + '，剩余股数：' + str(updatedNum))
-            order_target(sell_code, updatedNum)
-
-
-## 收盘后运行函数
-def after_market_close(context):
-    log.info(str('函数运行时间(after_market_close):' + str(context.current_dt.time())))
-    # 得到当天所有成交记录
-    trades = get_trades()
-    for _trade in trades.values():
-        log.info('成交记录：' + str(_trade))
-    log.info('一天结束')
-    log.info('##############################################################')
+            context.sell_stocks.append(row['code'])
 
 
 '''
@@ -167,7 +173,7 @@ def buy_check(code, stock_price_df, context):
     if context.portfolio.positions[code].closeable_amount > 0:
         return False
 
-    if stock_price_df['POSITION'][-1] < 30:
+    if stock_price_df['POSITION'][-1] < context.low_pos_threshold:
         print(str(context.current_dt.date()) + ' ' + code + ' 分位值：' + str(
             stock_price_df['POSITION'][-1]) + ',小于分位阈值，买入')
         return True
@@ -196,7 +202,7 @@ def sell_check(code, stock_price_df, context):
               "，成本价：" + str(context.portfolio.positions[code].acc_avg_cost))
         return True
 
-    if stock_price_df['POSITION'][-1] > 60:
+    if stock_price_df['POSITION'][-1] > context.high_pos_threshold:
         print(str(context.current_dt.date()) + ' ' + code + ' 分位值：' + str(
             stock_price_df['POSITION'][-1]) + ',大于分位阈值，卖出')
         return True
