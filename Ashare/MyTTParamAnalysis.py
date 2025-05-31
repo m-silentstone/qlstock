@@ -4,13 +4,19 @@ import MyUtils;import time;
 import MyTT;
 from Ashare import *
 stock_count=10000
-#读A股全量股票文件
+#读全量股票文件
 allstockcode_array=[]
-with open('all_stocks_basic.txt', 'r', encoding='utf-8') as file:
+# with open('all_stocks_basic.txt', 'r', encoding='utf-8') as file:
+#     lines = file.readlines()
+#     for line in lines:
+#         array=line.split()
+#         code_array=array[0].split('.')
+#         allstockcode_array.append(str(code_array[1]+code_array[0]).lower())
+with open('all_stocks_hk.txt', 'r', encoding='utf-8') as file:
     lines = file.readlines()
-    for line in lines[1:]:
+    for line in lines:
         array=line.split()
-        code_array=array[1].split('.')
+        code_array=array[0].split('.')
         allstockcode_array.append(str(code_array[1]+code_array[0]).lower())
 
 i=0
