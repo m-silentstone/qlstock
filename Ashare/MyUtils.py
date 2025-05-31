@@ -22,34 +22,33 @@ def get_price_tx(code, end_date='', count=10, frequency='1d', fields=[]):  # 明
 def get_from_gtime(code):
     URL = f'https://qt.gtimg.cn/q={code}'
     is_hk=False
-    switch_hand_percent_index=38
+    switch_hand_percent_index = 38
     if code[:2] == 'hk':
         is_hk=True
         switch_hand_percent_index=59
-
     str = requests.get(URL).content
     str = str.decode('GBK')
     array = str.split('~')
     map= {'name': array[1],
              'code': array[2], #代码
-             'price': float(array[3]), #当前价
+             'price': float(array[3].strip()) if len(array[3].strip())>0 else 0.00, #当前价
              'yesterday_close': float(array[4]), #昨日收盘价
-             'open': float(array[5]), #当日开盘价
-             'volume_hands': float(array[6]), #成交量（手数）
+             'open': float(array[5].strip()) if len(array[5].strip())>0 else 0.00, #当日开盘价
+             'volume_hands': float(array[6].strip()) if len(array[6].strip())>0 else 0.00, #成交量（手数）
              'time': array[30], #数据时间
-             'updown': float(array[31]), #涨幅
-             'updown_percent': float(array[32]), #涨幅比率
-             'high': float(array[33]), #当日最高价
-             'low': float(array[34]), #当日最低价
-             'volume_10k': float(array[37]), #成交量（万）
+             'updown': float(array[31].strip()) if len(array[31].strip())>0 else 0.00, #涨幅
+             'updown_percent': float(array[32].strip()) if len(array[32].strip())>0 else 0.00, #涨幅比率
+             'high': float(array[33].strip()) if len(array[33].strip())>0 else 0.00, #当日最高价
+             'low': float(array[34].strip()) if len(array[34].strip())>0 else 0.00, #当日最低价
+             'volume_10k': float(array[37].strip()) if len(array[37].strip())>0 else 0.00, #成交量（万）
+             'pe': float(array[39].strip()) if len(array[39].strip())>0 else 0.00, #市盈率
              'switch_hand_percent': array[switch_hand_percent_index], #换手率
              'swing': array[43], # 振幅
-             'circulation_market_value': float(array[44]), #流通市值（亿元）
-             'total_market_value': float(array[45]) #总市值（亿元）
+             'circulation_market_value': float(array[44].strip()) if len(array[44].strip())>0 else 0.00, #流通市值（亿元）
+             'total_market_value': float(array[45].strip()) if len(array[45].strip())>0 else 0.00 #总市值（亿元）
              }
     if not is_hk:
-        map['pb'] = float(array[46]) #市净率
-        map['pe'] = float(array[39]) #市盈率
+        map['pb'] = float(array[46].strip()) if len(array[46].strip())>0 else 0.00 #市净率
     return map
 
 '''
