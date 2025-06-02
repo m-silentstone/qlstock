@@ -9,7 +9,7 @@ day_count=150
 allstockcode_array=[]
 with open('all_stocks_basic.txt', 'r', encoding='utf-8') as file:
     lines = file.readlines()
-    for line in lines[1:]:
+    for line in lines[0:]:
         array=line.split()
         code_array=array[1].split('.')
         allstockcode_array.append(str(code_array[1]+code_array[0]).lower())
