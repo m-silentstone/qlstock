@@ -4,7 +4,7 @@ import MyUtils;import time;
 import MyTT;
 from Ashare import *
 
-stock_code_index_end=1000
+stock_code_index_end=-1
 day_count=1000
 stock_code_index_start = 0
 
@@ -16,7 +16,11 @@ low_pos_stocks=[]
 high_pos_threshold=70
 low_pos_threshold=30
 
-with open('all_stocks_hk.txt', 'r', encoding='utf-8') as file:
+pe_list=[]
+pe_map1={}
+pe_map2={}
+
+with open('all_stocks_basic.txt', 'r', encoding='utf-8') as file:
     lines = file.readlines()
     for line in lines[0:]:
         array=line.split()
@@ -25,7 +29,7 @@ with open('all_stocks_hk.txt', 'r', encoding='utf-8') as file:
 
 stock_code_index = stock_code_index_start
 while stock_code_index < len(allstockcode_array):
-    time.sleep(0.1)
+    time.sleep(0.05)
     if 0 <= stock_code_index_end <= stock_code_index:
         break
     stock_code = allstockcode_array[stock_code_index]
@@ -36,10 +40,17 @@ while stock_code_index < len(allstockcode_array):
         break
     print(stock_code_index, stock_code, stock_map['name'],'--------------------------------------------------------')
     # 参考stock_map
-    if stock_map['total_market_value'] < 800:
+    if stock_map['total_market_value'] < 800 or stock_map['pe'] <= 0:
         stock_code_index = stock_code_index + 1
         continue
     print(stock_code_index, stock_code, stock_map['name'],'--------------------------------------------------------')
+    # pe排序
+    pe_list.append(stock_map['pe'])
+    if stock_map['pe'] not in pe_map1.keys():
+        pe_map1[stock_map['pe']] = []
+        pe_map2[stock_map['pe']] = []
+    pe_map1[stock_map['pe']].append(stock_map['code'])
+    pe_map2[stock_map['pe']].append(stock_map['name'])
 
     #日线
     OPEN = stock_price_df.open.values
@@ -66,6 +77,16 @@ while stock_code_index < len(allstockcode_array):
     stock_code_index = stock_code_index + 1
 
 print('-------------------')
+pe_list = list(set(pe_list))
+pe_list.sort()
+for pe in pe_list:
+    print('-----pe:', pe)
+    pe_list1 = pe_map1[pe]
+    pe_list2 = pe_map2[pe]
+    for i in range(len(pe_list1)):
+        print('code:', pe_list1[i])
+        print('name:', pe_list2[i])
+
 print('high_pos_stocks:', high_pos_stocks)
 print('---')
 print('low_pos_stocks:', low_pos_stocks)
