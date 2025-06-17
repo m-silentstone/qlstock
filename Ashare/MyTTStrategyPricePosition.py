@@ -17,8 +17,9 @@ high_pos_threshold=70
 low_pos_threshold=30
 
 pe_list=[]
-pe_map1={}
-pe_map2={}
+pe_map_code={}
+pe_map_name={}
+pe_map_pos={}
 
 with open('all_stocks_basic.txt', 'r', encoding='utf-8') as file:
     lines = file.readlines()
@@ -44,13 +45,6 @@ while stock_code_index < len(allstockcode_array):
         stock_code_index = stock_code_index + 1
         continue
     print(stock_code_index, stock_code, stock_map['name'],'--------------------------------------------------------')
-    # pe排序
-    pe_list.append(stock_map['pe'])
-    if stock_map['pe'] not in pe_map1.keys():
-        pe_map1[stock_map['pe']] = []
-        pe_map2[stock_map['pe']] = []
-    pe_map1[stock_map['pe']].append(stock_map['code'])
-    pe_map2[stock_map['pe']].append(stock_map['name'])
 
     #日线
     OPEN = stock_price_df.open.values
@@ -63,16 +57,40 @@ while stock_code_index < len(allstockcode_array):
     lowest = numpy.min(LOW)
     distance = highest - lowest
 
+    # 价格最高最低区间的百分位
     pos = numpy.round((stock_map['price'] - lowest) / distance * 100, 3)
     stock_map['pos'] = float(pos)
-    if pos > high_pos_threshold:
-        str_append = stock_code + stock_map['name'] + str(pos) + '当前价:' + str(stock_map['price'])
-        print('pos>high_pos_threshold:' + str_append)
+
+    # 收盘价格分位排序的百分位
+    closes = CLOSE.tolist()
+    close_today = closes[-1]
+    length = len(closes)
+
+    closes.sort()
+    index1 = 1+closes.index(close_today)
+    index2 = length - closes[::-1].index(close_today)
+    pos1 = numpy.round(50*(index1+index2) / length, 3)
+    stock_map['pos1'] = float(pos1)
+
+    if pos1 > high_pos_threshold:
+        str_append = stock_code + stock_map['name'] + str(pos1) + '当前价:' + str(stock_map['price'])
+        print('pos1>high_pos_threshold:' + str_append)
         high_pos_stocks.append(str_append)
-    if pos < low_pos_threshold:
-        str_append = stock_code + stock_map['name'] + str(pos) + '当前价:' + str(stock_map['price'])
-        print('pos<low_pos_threshold:' + str_append)
+    if pos1 < low_pos_threshold:
+        str_append = stock_code + stock_map['name'] + str(pos1) + '当前价:' + str(stock_map['price'])
+        print('pos1<low_pos_threshold:' + str_append)
         low_pos_stocks.append(str_append)
+
+    # pe排序
+    pe_list.append(stock_map['pe'])
+    if stock_map['pe'] not in pe_map_code.keys():
+        pe_map_code[stock_map['pe']] = []
+        pe_map_name[stock_map['pe']] = []
+        pe_map_pos[stock_map['pe']] = []
+    pe_map_code[stock_map['pe']].append(stock_map['code'])
+    pe_map_name[stock_map['pe']].append(stock_map['name'])
+    pe_map_pos[stock_map['pe']].append(stock_map['pos1'])
+
     print(stock_map)
     stock_code_index = stock_code_index + 1
 
@@ -81,12 +99,14 @@ pe_list = list(set(pe_list))
 pe_list.sort()
 for pe in pe_list:
     print('-----pe:', pe)
-    pe_list1 = pe_map1[pe]
-    pe_list2 = pe_map2[pe]
-    for i in range(len(pe_list1)):
-        print('code:', pe_list1[i])
-        print('name:', pe_list2[i])
-
+    pe_list_code = pe_map_code[pe]
+    pe_list_name = pe_map_name[pe]
+    pe_list_pos = pe_map_pos[pe]
+    for i in range(len(pe_list_code)):
+        print('code:', pe_list_code[i])
+        print('name:', pe_list_name[i])
+        print('pos:', pe_list_pos[i])
+print('-------------------------')
 print('high_pos_stocks:', high_pos_stocks)
 print('---')
 print('low_pos_stocks:', low_pos_stocks)
