@@ -20,6 +20,7 @@ pe_list=[]
 pe_map_code={}
 pe_map_name={}
 pe_map_pos={}
+pe_map_info={}
 
 with open('all_stocks_basic.txt', 'r', encoding='utf-8') as file:
     lines = file.readlines()
@@ -87,11 +88,11 @@ while stock_code_index < len(allstockcode_array):
         pe_map_code[stock_map['pe']] = []
         pe_map_name[stock_map['pe']] = []
         pe_map_pos[stock_map['pe']] = []
+        pe_map_info[stock_map['pe']] = []
     pe_map_code[stock_map['pe']].append(stock_map['code'])
     pe_map_name[stock_map['pe']].append(stock_map['name'])
     pe_map_pos[stock_map['pe']].append(stock_map['pos1'])
-
-    print(stock_map)
+    pe_map_info[stock_map['pe']].append(stock_map)
     stock_code_index = stock_code_index + 1
 
 print('-------------------')
@@ -102,10 +103,12 @@ for pe in pe_list:
     pe_list_code = pe_map_code[pe]
     pe_list_name = pe_map_name[pe]
     pe_list_pos = pe_map_pos[pe]
+    pe_list_info = pe_map_info[pe]
     for i in range(len(pe_list_code)):
         print('code:', pe_list_code[i])
         print('name:', pe_list_name[i])
         print('pos:', pe_list_pos[i])
+        print('info:', pe_list_info[i])
 print('-------------------------')
 print('high_pos_stocks:', high_pos_stocks)
 print('---')

@@ -1,508 +1,850 @@
--------------------
------pe: 4.62
+-----pe: 4.64
 code: 601919
 name: 中远海控
------pe: 4.67
+pos: 97.422
+info: {'name': '中远海控', 'code': '601919', 'price': 16.19, 'yesterday_close': 16.27, 'open': 16.15, 'volume_hands': 1264204.0, 'time': '20250624161420', 'updown': -0.08, 'updown_percent': -0.49, 'high': 16.34, 'low': 15.9, 'volume_10k': 204664.0, 'pe': 4.64, 'switch_hand_percent': '1.00', 'swing': '2.70', 'circulation_market_value': 2041.55, 'total_market_value': 2507.79, 'pb': 1.04, 'pos': 93.263, 'pos1': 97.422}
+-----pe: 4.92
 code: 600015
 name: 华夏银行
------pe: 5.01
+pos: 99.844
+info: {'name': '华夏银行', 'code': '600015', 'price': 8.3, 'yesterday_close': 8.33, 'open': 8.33, 'volume_hands': 731453.0, 'time': '20250624161408', 'updown': -0.03, 'updown_percent': -0.36, 'high': 8.36, 'low': 8.17, 'volume_10k': 60523.0, 'pe': 4.92, 'switch_hand_percent': '0.48', 'swing': '2.28', 'circulation_market_value': 1277.14, 'total_market_value': 1320.94, 'pb': 0.43, 'pos': 98.419, 'pos1': 99.844}
+-----pe: 5.08
 code: 601186
 name: 中国铁建
------pe: 5.12
+pos: 34.844
+info: {'name': '中国铁建', 'code': '601186', 'price': 7.99, 'yesterday_close': 7.83, 'open': 7.84, 'volume_hands': 482582.0, 'time': '20250624161409', 'updown': 0.16, 'updown_percent': 2.04, 'high': 8.0, 'low': 7.83, 'volume_10k': 38330.0, 'pe': 5.08, 'switch_hand_percent': '0.42', 'swing': '2.17', 'circulation_market_value': 919.11, 'total_market_value': 1085.01, 'pb': 0.4, 'pos': 27.124, 'pos1': 34.844}
+-----pe: 5.18
 code: 601668
 name: 中国建筑
------pe: 5.16
+pos: 86.562
+info: {'name': '中国建筑', 'code': '601668', 'price': 5.8, 'yesterday_close': 5.71, 'open': 5.72, 'volume_hands': 1965180.0, 'time': '20250624161425', 'updown': 0.09, 'updown_percent': 1.58, 'high': 5.81, 'low': 5.72, 'volume_10k': 113524.0, 'pe': 5.18, 'switch_hand_percent': '0.48', 'swing': '1.58', 'circulation_market_value': 2396.58, 'total_market_value': 2396.58, 'pb': 0.51, 'pos': 61.573, 'pos1': 86.562}
+-----pe: 5.22
 code: 601390
 name: 中国中铁
------pe: 5.24
+pos: 22.812
+info: {'name': '中国中铁', 'code': '601390', 'price': 5.58, 'yesterday_close': 5.47, 'open': 5.49, 'volume_hands': 1241559.0, 'time': '20250624161410', 'updown': 0.11, 'updown_percent': 2.01, 'high': 5.6, 'low': 5.48, 'volume_10k': 68843.0, 'pe': 5.22, 'switch_hand_percent': '0.61', 'swing': '2.19', 'circulation_market_value': 1142.5, 'total_market_value': 1380.55, 'pb': 0.44, 'pos': 21.692, 'pos1': 22.812}
+-----pe: 5.3
 code: 000001
 name: 平安银行
------pe: 5.48
+pos: 93.359
+info: {'name': '平安银行', 'code': '000001', 'price': 11.93, 'yesterday_close': 11.93, 'open': 11.9, 'volume_hands': 1308525.0, 'time': '20250624161500', 'updown': 0.0, 'updown_percent': 0.0, 'high': 12.01, 'low': 11.84, 'volume_10k': 156062.0, 'pe': 5.3, 'switch_hand_percent': '0.67', 'swing': '1.42', 'circulation_market_value': 2315.08, 'total_market_value': 2315.13, 'pb': 0.54, 'pos': 66.159, 'pos1': 93.359}
+-----pe: 5.71
 code: 601169
 name: 北京银行
------pe: 5.78
+pos: 99.844
+info: {'name': '北京银行', 'code': '601169', 'price': 6.92, 'yesterday_close': 6.94, 'open': 6.91, 'volume_hands': 1122652.0, 'time': '20250624161428', 'updown': -0.02, 'updown_percent': -0.29, 'high': 6.95, 'low': 6.84, 'volume_10k': 77524.0, 'pe': 5.71, 'switch_hand_percent': '0.53', 'swing': '1.59', 'circulation_market_value': 1463.09, 'total_market_value': 1463.09, 'pb': 0.53, 'pos': 98.374, 'pos1': 99.844}
+-----pe: 6.02
 code: 601818
 name: 光大银行
------pe: 6.13
-code: 601328
-name: 交通银行
------pe: 6.21
-code: 601916
-name: 浙商银行
------pe: 6.26
-code: 601658
-name: 邮储银行
------pe: 6.28
-code: 601229
-name: 上海银行
------pe: 6.33
+pos: 100.0
+info: {'name': '光大银行', 'code': '601818', 'price': 4.25, 'yesterday_close': 4.23, 'open': 4.22, 'volume_hands': 1668275.0, 'time': '20250624161419', 'updown': 0.02, 'updown_percent': 0.47, 'high': 4.26, 'low': 4.17, 'volume_10k': 70497.0, 'pe': 6.02, 'switch_hand_percent': '0.36', 'swing': '2.13', 'circulation_market_value': 1972.29, 'total_market_value': 2511.14, 'pb': 0.52, 'pos': 99.497, 'pos1': 100.0}
+-----pe: 6.39
 code: 601800
 name: 中国交建
------pe: 6.38
-code: 601838
-name: 成都银行
------pe: 6.4
-code: 601336
-name: 新华保险
------pe: 6.41
+pos: 54.453
+info: {'name': '中国交建', 'code': '601800', 'price': 8.91, 'yesterday_close': 8.62, 'open': 8.66, 'volume_hands': 483017.0, 'time': '20250624161408', 'updown': 0.29, 'updown_percent': 3.36, 'high': 8.92, 'low': 8.64, 'volume_10k': 42568.0, 'pe': 6.39, 'switch_hand_percent': '0.41', 'swing': '3.25', 'circulation_market_value': 1046.68, 'total_market_value': 1450.42, 'pb': 0.5, 'pos': 42.893, 'pos1': 54.453}
+-----pe: 6.46
+code: 601916
+name: 浙商银行
+pos: 99.844
+info: {'name': '浙商银行', 'code': '601916', 'price': 3.58, 'yesterday_close': 3.59, 'open': 3.59, 'volume_hands': 2986223.0, 'time': '20250624161426', 'updown': -0.01, 'updown_percent': -0.28, 'high': 3.6, 'low': 3.53, 'volume_10k': 106431.0, 'pe': 6.46, 'switch_hand_percent': '1.39', 'swing': '1.95', 'circulation_market_value': 771.29, 'total_market_value': 983.23, 'pb': 0.56, 'pos': 98.525, 'pos1': 99.844}
+-----pe: 6.5
+code: 601229
+name: 上海银行
+pos: 99.219
+info: {'name': '上海银行', 'code': '601229', 'price': 10.85, 'yesterday_close': 11.01, 'open': 10.95, 'volume_hands': 823883.0, 'time': '20250624161411', 'updown': -0.16, 'updown_percent': -1.45, 'high': 11.01, 'low': 10.76, 'volume_10k': 89726.0, 'pe': 6.5, 'switch_hand_percent': '0.58', 'swing': '2.27', 'circulation_market_value': 1541.43, 'total_market_value': 1541.43, 'pb': 0.66, 'pos': 96.21, 'pos1': 99.219}
+-----pe: 6.53
 code: 002142
 name: 宁波银行
------pe: 6.6
-code: 600919
-name: 江苏银行
------pe: 6.61
+pos: 84.375
+info: {'name': '宁波银行', 'code': '002142', 'price': 27.23, 'yesterday_close': 26.87, 'open': 26.85, 'volume_hands': 415435.0, 'time': '20250624161409', 'updown': 0.36, 'updown_percent': 1.34, 'high': 27.6, 'low': 26.8, 'volume_10k': 113245.0, 'pe': 6.53, 'switch_hand_percent': '0.63', 'swing': '2.98', 'circulation_market_value': 1797.15, 'total_market_value': 1798.16, 'pb': 0.86, 'pos': 58.033, 'pos1': 84.375}
+-----pe: 6.58
 code: 601166
 name: 兴业银行
------pe: 6.65
+pos: 100.0
+info: {'name': '兴业银行', 'code': '601166', 'price': 23.85, 'yesterday_close': 23.75, 'open': 23.66, 'volume_hands': 779732.0, 'time': '20250624161429', 'updown': 0.1, 'updown_percent': 0.42, 'high': 24.16, 'low': 23.6, 'volume_10k': 186146.0, 'pe': 6.58, 'switch_hand_percent': '0.37', 'swing': '2.36', 'circulation_market_value': 5047.34, 'total_market_value': 5047.34, 'pb': 0.66, 'pos': 97.492, 'pos1': 100.0}
+-----pe: 6.59
+code: 601838
+name: 成都银行
+pos: 99.688
+info: {'name': '成都银行', 'code': '601838', 'price': 20.23, 'yesterday_close': 20.26, 'open': 20.26, 'volume_hands': 217198.0, 'time': '20250624161412', 'updown': -0.03, 'updown_percent': -0.15, 'high': 20.4, 'low': 20.0, 'volume_10k': 43874.0, 'pe': 6.59, 'switch_hand_percent': '0.51', 'swing': '1.97', 'circulation_market_value': 855.94, 'total_market_value': 857.44, 'pb': 1.04, 'pos': 98.396, 'pos1': 99.688}
+-----pe: 6.64
 code: 600016
 name: 民生银行
-code: 600926
-name: 杭州银行
------pe: 6.7
-code: 601988
-name: 中国银行
------pe: 6.76
+pos: 99.453
+info: {'name': '民生银行', 'code': '600016', 'price': 4.79, 'yesterday_close': 4.8, 'open': 4.8, 'volume_hands': 2503651.0, 'time': '20250624161412', 'updown': -0.01, 'updown_percent': -0.21, 'high': 4.81, 'low': 4.7, 'volume_10k': 119437.0, 'pe': 6.64, 'switch_hand_percent': '0.71', 'swing': '2.29', 'circulation_market_value': 1698.64, 'total_market_value': 2097.18, 'pb': 0.38, 'pos': 98.537, 'pos1': 99.453}
+-----pe: 6.69
 code: 601009
 name: 南京银行
------pe: 6.78
-code: 601939
-name: 建设银行
------pe: 6.81
+pos: 99.688
+info: {'name': '南京银行', 'code': '601009', 'price': 11.71, 'yesterday_close': 11.85, 'open': 11.68, 'volume_hands': 1929258.0, 'time': '20250624161414', 'updown': -0.14, 'updown_percent': -1.18, 'high': 11.77, 'low': 11.5, 'volume_10k': 225332.0, 'pe': 6.69, 'switch_hand_percent': '1.64', 'swing': '2.28', 'circulation_market_value': 1377.23, 'total_market_value': 1377.23, 'pb': 0.86, 'pos': 97.134, 'pos1': 99.688}
+-----pe: 6.71
+code: 601336
+name: 新华保险
+pos: 100.0
+info: {'name': '新华保险', 'code': '601336', 'price': 58.43, 'yesterday_close': 56.92, 'open': 57.24, 'volume_hands': 246982.0, 'time': '20250624161419', 'updown': 1.51, 'updown_percent': 2.65, 'high': 59.57, 'low': 57.1, 'volume_10k': 144158.0, 'pe': 6.71, 'switch_hand_percent': '1.18', 'swing': '4.34', 'circulation_market_value': 1218.52, 'total_market_value': 1822.75, 'pb': 2.28, 'pos': 97.002, 'pos1': 100.0}
+-----pe: 6.72
+code: 600919
+name: 江苏银行
+pos: 99.922
+info: {'name': '江苏银行', 'code': '600919', 'price': 11.93, 'yesterday_close': 11.93, 'open': 11.92, 'volume_hands': 1349263.0, 'time': '20250624161419', 'updown': 0.0, 'updown_percent': 0.0, 'high': 12.01, 'low': 11.8, 'volume_10k': 160717.0, 'pe': 6.72, 'switch_hand_percent': '0.74', 'swing': '1.76', 'circulation_market_value': 2189.31, 'total_market_value': 2189.31, 'pb': 0.91, 'pos': 98.774, 'pos1': 99.922}
+-----pe: 6.88
+code: 600926
+name: 杭州银行
+pos: 100.0
+info: {'name': '杭州银行', 'code': '600926', 'price': 17.16, 'yesterday_close': 17.15, 'open': 17.1, 'volume_hands': 672143.0, 'time': '20250624161410', 'updown': 0.01, 'updown_percent': 0.06, 'high': 17.23, 'low': 16.95, 'volume_10k': 114897.0, 'pe': 6.88, 'switch_hand_percent': '0.94', 'swing': '1.63', 'circulation_market_value': 1229.67, 'total_market_value': 1229.67, 'pb': 1.07, 'pos': 99.183, 'pos1': 100.0}
+-----pe: 6.94
 code: 601998
 name: 中信银行
------pe: 6.95
-code: 601288
-name: 农业银行
------pe: 7.02
-code: 601398
-name: 工商银行
------pe: 7.06
-code: 601077
-name: 渝农商行
+pos: 99.375
+info: {'name': '中信银行', 'code': '601998', 'price': 8.59, 'yesterday_close': 8.69, 'open': 8.68, 'volume_hands': 861966.0, 'time': '20250624161415', 'updown': -0.1, 'updown_percent': -1.15, 'high': 8.73, 'low': 8.49, 'volume_10k': 74000.0, 'pe': 6.94, 'switch_hand_percent': '0.21', 'swing': '2.76', 'circulation_market_value': 3501.54, 'total_market_value': 4779.92, 'pb': 0.68, 'pos': 94.608, 'pos1': 99.375}
 -----pe: 7.14
+code: 601939
+name: 建设银行
+pos: 100.0
+info: {'name': '建设银行', 'code': '601939', 'price': 9.48, 'yesterday_close': 9.45, 'open': 9.4, 'volume_hands': 1012862.0, 'time': '20250624161500', 'updown': 0.03, 'updown_percent': 0.32, 'high': 9.5, 'low': 9.35, 'volume_10k': 95590.0, 'pe': 7.14, 'switch_hand_percent': '1.06', 'swing': '1.59', 'circulation_market_value': 909.48, 'total_market_value': 23701.04, 'pb': 0.75, 'pos': 99.637, 'pos1': 100.0}
+-----pe: 7.18
 code: 601669
 name: 中国电建
------pe: 7.48
+pos: 19.922
+info: {'name': '中国电建', 'code': '601669', 'price': 4.86, 'yesterday_close': 4.75, 'open': 4.76, 'volume_hands': 961851.0, 'time': '20250624161422', 'updown': 0.11, 'updown_percent': 2.32, 'high': 4.86, 'low': 4.75, 'volume_10k': 46374.0, 'pe': 7.18, 'switch_hand_percent': '0.74', 'swing': '2.32', 'circulation_market_value': 635.28, 'total_market_value': 837.19, 'pb': 0.59, 'pos': 15.256, 'pos1': 19.922}
+-----pe: 7.29
+code: 601077
+name: 渝农商行
+pos: 99.062
+info: {'name': '渝农商行', 'code': '601077', 'price': 7.53, 'yesterday_close': 7.5, 'open': 7.47, 'volume_hands': 668319.0, 'time': '20250624161421', 'updown': 0.03, 'updown_percent': 0.4, 'high': 7.54, 'low': 7.41, 'volume_10k': 50032.0, 'pe': 7.29, 'switch_hand_percent': '0.76', 'swing': '1.73', 'circulation_market_value': 665.48, 'total_market_value': 855.18, 'pb': 0.67, 'pos': 94.886, 'pos1': 99.062}
+-----pe: 7.35
+code: 601288
+name: 农业银行
+pos: 100.0
+info: {'name': '农业银行', 'code': '601288', 'price': 5.96, 'yesterday_close': 5.89, 'open': 5.89, 'volume_hands': 4508231.0, 'time': '20250624161405', 'updown': 0.07, 'updown_percent': 1.19, 'high': 5.98, 'low': 5.87, 'volume_10k': 267222.0, 'pe': 7.35, 'switch_hand_percent': '0.14', 'swing': '1.87', 'circulation_market_value': 19026.95, 'total_market_value': 20858.99, 'pb': 0.79, 'pos': 99.48, 'pos1': 100.0}
+-----pe: 7.5
+code: 601398
+name: 工商银行
+pos: 100.0
+info: {'name': '工商银行', 'code': '601398', 'price': 7.63, 'yesterday_close': 7.52, 'open': 7.51, 'volume_hands': 3560199.0, 'time': '20250624161409', 'updown': 0.11, 'updown_percent': 1.46, 'high': 7.64, 'low': 7.5, 'volume_10k': 269737.0, 'pe': 7.5, 'switch_hand_percent': '0.13', 'swing': '1.86', 'circulation_market_value': 20571.41, 'total_market_value': 27193.8, 'pb': 0.73, 'pos': 99.772, 'pos1': 100.0}
+-----pe: 7.53
 code: 000651
 name: 格力电器
------pe: 7.55
-code: 601898
-name: 中煤能源
------pe: 7.82
-code: 600036
-name: 招商银行
------pe: 7.86
+pos: 92.344
+info: {'name': '格力电器', 'code': '000651', 'price': 44.9, 'yesterday_close': 44.42, 'open': 44.49, 'volume_hands': 298954.0, 'time': '20250624161421', 'updown': 0.48, 'updown_percent': 1.08, 'high': 45.0, 'low': 44.49, 'volume_10k': 134194.0, 'pe': 7.53, 'switch_hand_percent': '0.54', 'swing': '1.15', 'circulation_market_value': 2476.21, 'total_market_value': 2515.03, 'pb': 1.83, 'pos': 75.603, 'pos1': 92.344}
+-----pe: 7.7
+code: 601328
+name: 交通银行
+pos: 100.0
+info: {'name': '交通银行', 'code': '601328', 'price': 8.19, 'yesterday_close': 8.06, 'open': 8.08, 'volume_hands': 2712999.0, 'time': '20250624161416', 'updown': 0.13, 'updown_percent': 1.61, 'high': 8.24, 'low': 8.07, 'volume_10k': 221603.0, 'pe': 7.7, 'switch_hand_percent': '0.69', 'swing': '2.11', 'circulation_market_value': 3214.65, 'total_market_value': 7236.99, 'pb': 0.66, 'pos': 98.985, 'pos1': 100.0}
+-----pe: 7.79
+code: 601988
+name: 中国银行
+pos: 99.922
+info: {'name': '中国银行', 'code': '601988', 'price': 5.71, 'yesterday_close': 5.66, 'open': 5.65, 'volume_hands': 4910506.0, 'time': '20250624161427', 'updown': 0.05, 'updown_percent': 0.88, 'high': 5.71, 'low': 5.6, 'volume_10k': 278651.0, 'pe': 7.79, 'switch_hand_percent': '0.23', 'swing': '1.94', 'circulation_market_value': 12034.71, 'total_market_value': 18398.33, 'pb': 0.72, 'pos': 98.564, 'pos1': 99.922}
+-----pe: 7.85
+code: 601658
+name: 邮储银行
+pos: 99.844
+info: {'name': '邮储银行', 'code': '601658', 'price': 5.61, 'yesterday_close': 5.65, 'open': 5.65, 'volume_hands': 2623541.0, 'time': '20250624161419', 'updown': -0.04, 'updown_percent': -0.71, 'high': 5.68, 'low': 5.55, 'volume_10k': 147136.0, 'pe': 7.85, 'switch_hand_percent': '0.39', 'swing': '2.30', 'circulation_market_value': 3765.57, 'total_market_value': 6737.33, 'pb': 0.7, 'pos': 97.266, 'pos1': 99.844}
+-----pe: 7.91
 code: 601825
 name: 沪农商行
------pe: 8.13
-code: 600000
-name: 浦发银行
------pe: 8.2
+pos: 99.375
+info: {'name': '沪农商行', 'code': '601825', 'price': 10.09, 'yesterday_close': 10.05, 'open': 10.0, 'volume_hands': 356606.0, 'time': '20250624161408', 'updown': 0.04, 'updown_percent': 0.4, 'high': 10.1, 'low': 9.91, 'volume_10k': 35711.0, 'pe': 7.91, 'switch_hand_percent': '0.38', 'swing': '1.89', 'circulation_market_value': 940.04, 'total_market_value': 973.12, 'pb': 0.78, 'pos': 93.16, 'pos1': 99.375}
+-----pe: 7.99
+code: 600036
+name: 招商银行
+pos: 100.0
+info: {'name': '招商银行', 'code': '600036', 'price': 46.75, 'yesterday_close': 46.25, 'open': 46.31, 'volume_hands': 655815.0, 'time': '20250624161427', 'updown': 0.5, 'updown_percent': 1.08, 'high': 47.0, 'low': 46.18, 'volume_10k': 305849.0, 'pe': 7.99, 'switch_hand_percent': '0.32', 'swing': '1.77', 'circulation_market_value': 9644.03, 'total_market_value': 11790.28, 'pb': 1.11, 'pos': 98.906, 'pos1': 100.0}
+-----pe: 8.02
+code: 601898
+name: 中煤能源
+pos: 66.562
+info: {'name': '中煤能源', 'code': '601898', 'price': 11.09, 'yesterday_close': 11.29, 'open': 11.18, 'volume_hands': 422769.0, 'time': '20250624161417', 'updown': -0.2, 'updown_percent': -1.77, 'high': 11.21, 'low': 10.94, 'volume_10k': 46853.0, 'pe': 8.02, 'switch_hand_percent': '0.46', 'swing': '2.39', 'circulation_market_value': 1014.96, 'total_market_value': 1470.39, 'pb': 0.94, 'pos': 49.727, 'pos1': 66.562}
+-----pe: 8.25
 code: 601601
 name: 中国太保
------pe: 8.24
-code: 601319
-name: 中国人保
------pe: 8.46
-code: 601318
-name: 中国平安
------pe: 8.52
+pos: 96.25
+info: {'name': '中国太保', 'code': '601601', 'price': 36.72, 'yesterday_close': 35.89, 'open': 36.1, 'volume_hands': 388179.0, 'time': '20250624161413', 'updown': 0.83, 'updown_percent': 2.31, 'high': 37.29, 'low': 35.89, 'volume_10k': 142925.0, 'pe': 8.25, 'switch_hand_percent': '0.57', 'swing': '3.90', 'circulation_market_value': 2513.5, 'total_market_value': 3532.59, 'pb': 1.34, 'pos': 74.739, 'pos1': 96.25}
+-----pe: 8.5
 code: 600795
 name: 国电电力
+pos: 70.625
+info: {'name': '国电电力', 'code': '600795', 'price': 4.7, 'yesterday_close': 4.72, 'open': 4.72, 'volume_hands': 1044594.0, 'time': '20250624161425', 'updown': -0.02, 'updown_percent': -0.42, 'high': 4.73, 'low': 4.69, 'volume_10k': 49151.0, 'pe': 8.5, 'switch_hand_percent': '0.59', 'swing': '0.85', 'circulation_market_value': 838.27, 'total_market_value': 838.27, 'pb': 1.45, 'pos': 55.326, 'pos1': 70.625}
+-----pe: 8.51
+code: 601319
+name: 中国人保
+pos: 100.0
+info: {'name': '中国人保', 'code': '601319', 'price': 9.0, 'yesterday_close': 8.64, 'open': 8.65, 'volume_hands': 1243865.0, 'time': '20250624161418', 'updown': 0.36, 'updown_percent': 4.17, 'high': 9.17, 'low': 8.63, 'volume_10k': 111381.0, 'pe': 8.51, 'switch_hand_percent': '0.35', 'swing': '6.25', 'circulation_market_value': 3194.8, 'total_market_value': 3980.16, 'pb': 1.42, 'pos': 96.509, 'pos1': 100.0}
 -----pe: 8.6
-code: 601225
-name: 陕西煤业
------pe: 8.63
+code: 600000
+name: 浦发银行
+pos: 99.922
+info: {'name': '浦发银行', 'code': '600000', 'price': 13.31, 'yesterday_close': 13.31, 'open': 13.31, 'volume_hands': 842876.0, 'time': '20250624161403', 'updown': 0.0, 'updown_percent': 0.0, 'high': 13.54, 'low': 13.16, 'volume_10k': 112348.0, 'pe': 8.6, 'switch_hand_percent': '0.29', 'swing': '2.85', 'circulation_market_value': 3906.78, 'total_market_value': 3906.78, 'pb': 0.59, 'pos': 96.95, 'pos1': 99.922}
+-----pe: 8.68
 code: 601600
 name: 中国铝业
------pe: 8.87
-code: 600018
-name: 上港集团
------pe: 9.24
-code: 300498
-name: 温氏股份
+pos: 68.047
+info: {'name': '中国铝业', 'code': '601600', 'price': 6.94, 'yesterday_close': 6.91, 'open': 6.92, 'volume_hands': 1331411.0, 'time': '20250624161420', 'updown': 0.03, 'updown_percent': 0.43, 'high': 7.05, 'low': 6.91, 'volume_10k': 92905.0, 'pe': 8.68, 'switch_hand_percent': '1.01', 'swing': '2.03', 'circulation_market_value': 913.69, 'total_market_value': 1190.6, 'pb': 1.65, 'pos': 54.318, 'pos1': 68.047}
+-----pe: 8.76
 code: 600188
 name: 兖矿能源
------pe: 9.3
-code: 601688
-name: 华泰证券
------pe: 9.48
-code: 002714
-name: 牧原股份
------pe: 9.58
+pos: 15.781
+info: {'name': '兖矿能源', 'code': '600188', 'price': 12.23, 'yesterday_close': 12.26, 'open': 12.25, 'volume_hands': 178804.0, 'time': '20250624161408', 'updown': -0.03, 'updown_percent': -0.24, 'high': 12.3, 'low': 12.11, 'volume_10k': 21843.0, 'pe': 8.76, 'switch_hand_percent': '0.30', 'swing': '1.55', 'circulation_market_value': 724.49, 'total_market_value': 1227.58, 'pb': 2.16, 'pos': 26.468, 'pos1': 15.781}
+-----pe: 8.85
+code: 601318
+name: 中国平安
+pos: 96.875
+info: {'name': '中国平安', 'code': '601318', 'price': 56.79, 'yesterday_close': 55.1, 'open': 55.21, 'volume_hands': 1040798.0, 'time': '20250624161407', 'updown': 1.69, 'updown_percent': 3.07, 'high': 56.97, 'low': 55.2, 'volume_10k': 587391.0, 'pe': 8.85, 'switch_hand_percent': '0.97', 'swing': '3.21', 'circulation_market_value': 6112.11, 'total_market_value': 10341.59, 'pb': 1.1, 'pos': 83.027, 'pos1': 96.875}
+-----pe: 8.97
+code: 600018
+name: 上港集团
+pos: 82.031
+info: {'name': '上港集团', 'code': '600018', 'price': 5.84, 'yesterday_close': 5.9, 'open': 5.9, 'volume_hands': 389633.0, 'time': '20250624161425', 'updown': -0.06, 'updown_percent': -1.02, 'high': 5.91, 'low': 5.81, 'volume_10k': 22764.0, 'pe': 8.97, 'switch_hand_percent': '0.17', 'swing': '1.69', 'circulation_market_value': 1355.73, 'total_market_value': 1359.63, 'pb': 0.99, 'pos': 50.627, 'pos1': 82.031}
+-----pe: 9.0
+code: 601225
+name: 陕西煤业
+pos: 57.656
+info: {'name': '陕西煤业', 'code': '601225', 'price': 20.71, 'yesterday_close': 20.83, 'open': 20.6, 'volume_hands': 665736.0, 'time': '20250624161419', 'updown': -0.12, 'updown_percent': -0.58, 'high': 20.87, 'low': 20.23, 'volume_10k': 137948.0, 'pe': 9.0, 'switch_hand_percent': '0.69', 'swing': '3.07', 'circulation_market_value': 2007.83, 'total_market_value': 2007.83, 'pb': 2.08, 'pos': 46.627, 'pos1': 57.656}
+-----pe: 9.07
+code: 300498
+name: 温氏股份
+pos: 29.922
+info: {'name': '温氏股份', 'code': '300498', 'price': 17.0, 'yesterday_close': 16.92, 'open': 16.96, 'volume_hands': 311512.0, 'time': '20250624161430', 'updown': 0.08, 'updown_percent': 0.47, 'high': 17.14, 'low': 16.93, 'volume_10k': 53004.0, 'pe': 9.07, 'switch_hand_percent': '0.60', 'swing': '1.24', 'circulation_market_value': 890.01, 'total_market_value': 1131.17, 'pb': 2.76, 'pos': 25.376, 'pos1': 29.922}
+-----pe: 9.22
 code: 600938
 name: 中国海油
------pe: 9.96
+pos: 63.828
+info: {'name': '中国海油', 'code': '600938', 'price': 26.15, 'yesterday_close': 26.74, 'open': 26.02, 'volume_hands': 633943.0, 'time': '20250624161423', 'updown': -0.59, 'updown_percent': -2.21, 'high': 26.33, 'low': 25.77, 'volume_10k': 165409.0, 'pe': 9.22, 'switch_hand_percent': '2.12', 'swing': '2.09', 'circulation_market_value': 781.88, 'total_market_value': 12429.08, 'pb': 1.59, 'pos': 62.533, 'pos1': 63.828}
+-----pe: 9.23
+code: 002714
+name: 牧原股份
+pos: 56.875
+info: {'name': '牧原股份', 'code': '002714', 'price': 41.82, 'yesterday_close': 41.68, 'open': 41.85, 'volume_hands': 249770.0, 'time': '20250624161457', 'updown': 0.14, 'updown_percent': 0.34, 'high': 42.22, 'low': 41.28, 'volume_10k': 104502.0, 'pe': 9.23, 'switch_hand_percent': '0.66', 'swing': '2.26', 'circulation_market_value': 1593.64, 'total_market_value': 2284.53, 'pb': 3.03, 'pos': 58.078, 'pos1': 56.875}
+-----pe: 9.41
+code: 601688
+name: 华泰证券
+pos: 86.797
+info: {'name': '华泰证券', 'code': '601688', 'price': 17.41, 'yesterday_close': 17.06, 'open': 17.05, 'volume_hands': 677121.0, 'time': '20250624161427', 'updown': 0.35, 'updown_percent': 2.05, 'high': 17.48, 'low': 17.05, 'volume_10k': 117600.0, 'pe': 9.41, 'switch_hand_percent': '0.93', 'swing': '2.52', 'circulation_market_value': 1272.11, 'total_market_value': 1571.65, 'pb': 0.94, 'pos': 65.567, 'pos1': 86.797}
+-----pe: 9.9
 code: 601857
 name: 中国石油
------pe: 10.0
+pos: 85.391
+info: {'name': '中国石油', 'code': '601857', 'price': 8.96, 'yesterday_close': 9.09, 'open': 8.85, 'volume_hands': 2170967.0, 'time': '20250624161424', 'updown': -0.13, 'updown_percent': -1.43, 'high': 9.0, 'low': 8.66, 'volume_10k': 192939.0, 'pe': 9.9, 'switch_hand_percent': '0.13', 'swing': '3.74', 'circulation_market_value': 14508.22, 'total_market_value': 16398.68, 'pb': 1.05, 'pos': 75.262, 'pos1': 85.391}
+-----pe: 10.18
 code: 601628
 name: 中国人寿
------pe: 10.27
+pos: 90.781
+info: {'name': '中国人寿', 'code': '601628', 'price': 41.45, 'yesterday_close': 40.13, 'open': 40.25, 'volume_hands': 211144.0, 'time': '20250624161414', 'updown': 1.32, 'updown_percent': 3.29, 'high': 42.33, 'low': 40.24, 'volume_10k': 87716.0, 'pe': 10.18, 'switch_hand_percent': '0.10', 'swing': '5.21', 'circulation_market_value': 8631.35, 'total_market_value': 11715.72, 'pb': 2.2, 'pos': 64.798, 'pos1': 90.781}
+-----pe: 10.59
 code: 300274
 name: 阳光电源
+pos: 28.438
+info: {'name': '阳光电源', 'code': '300274', 'price': 65.23, 'yesterday_close': 63.95, 'open': 64.2, 'volume_hands': 292447.0, 'time': '20250624161412', 'updown': 1.28, 'updown_percent': 2.0, 'high': 65.94, 'low': 64.2, 'volume_10k': 190428.0, 'pe': 10.59, 'switch_hand_percent': '1.84', 'swing': '2.72', 'circulation_market_value': 1036.97, 'total_market_value': 1352.36, 'pb': 3.51, 'pos': 20.116, 'pos1': 28.438}
+-----pe: 10.74
+code: 600011
+name: 华能国际
+pos: 28.125
+info: {'name': '华能国际', 'code': '600011', 'price': 7.19, 'yesterday_close': 7.2, 'open': 7.21, 'volume_hands': 591373.0, 'time': '20250624161406', 'updown': -0.01, 'updown_percent': -0.14, 'high': 7.26, 'low': 7.17, 'volume_10k': 42624.0, 'pe': 10.74, 'switch_hand_percent': '0.54', 'swing': '1.25', 'circulation_market_value': 790.74, 'total_market_value': 1128.69, 'pb': 1.82, 'pos': 24.762, 'pos1': 28.125}
 -----pe: 10.9
 code: 601868
 name: 中国能建
------pe: 10.93
-code: 600011
-name: 华能国际
------pe: 10.95
+pos: 46.328
+info: {'name': '中国能建', 'code': '601868', 'price': 2.23, 'yesterday_close': 2.21, 'open': 2.21, 'volume_hands': 1895201.0, 'time': '20250624161415', 'updown': 0.02, 'updown_percent': 0.9, 'high': 2.23, 'low': 2.21, 'volume_10k': 42079.0, 'pe': 10.9, 'switch_hand_percent': '0.58', 'swing': '0.90', 'circulation_market_value': 723.16, 'total_market_value': 929.71, 'pb': 0.86, 'pos': 33.77, 'pos1': 46.328}
+-----pe: 11.01
 code: 603993
 name: 洛阳钼业
------pe: 11.6
-code: 000338
-name: 潍柴动力
------pe: 11.69
-code: 600039
-name: 四川路桥
------pe: 11.73
+pos: 83.281
+info: {'name': '洛阳钼业', 'code': '603993', 'price': 7.89, 'yesterday_close': 7.85, 'open': 7.88, 'volume_hands': 1820347.0, 'time': '20250624161407', 'updown': 0.04, 'updown_percent': 0.51, 'high': 8.03, 'low': 7.88, 'volume_10k': 144694.0, 'pe': 11.01, 'switch_hand_percent': '1.04', 'swing': '1.91', 'circulation_market_value': 1385.94, 'total_market_value': 1696.29, 'pb': 2.3, 'pos': 67.789, 'pos1': 83.281}
+-----pe: 11.63
 code: 002736
 name: 国信证券
------pe: 11.77
-code: 600690
-name: 海尔智家
------pe: 11.82
+pos: 95.391
+info: {'name': '国信证券', 'code': '002736', 'price': 11.27, 'yesterday_close': 11.1, 'open': 11.12, 'volume_hands': 329303.0, 'time': '20250624161436', 'updown': 0.17, 'updown_percent': 1.53, 'high': 11.4, 'low': 11.1, 'volume_10k': 37148.0, 'pe': 11.63, 'switch_hand_percent': '0.36', 'swing': '2.70', 'circulation_market_value': 1029.95, 'total_market_value': 1083.32, 'pb': 1.25, 'pos': 65.447, 'pos1': 95.391}
+-----pe: 11.78
 code: 000776
 name: 广发证券
------pe: 11.87
+pos: 95.625
+info: {'name': '广发证券', 'code': '000776', 'price': 16.82, 'yesterday_close': 16.47, 'open': 16.52, 'volume_hands': 565869.0, 'time': '20250624161433', 'updown': 0.35, 'updown_percent': 2.13, 'high': 16.99, 'low': 16.52, 'volume_10k': 95160.0, 'pe': 11.78, 'switch_hand_percent': '0.96', 'swing': '2.85', 'circulation_market_value': 993.06, 'total_market_value': 1279.3, 'pb': 1.04, 'pos': 75.489, 'pos1': 95.625}
+-----pe: 11.81
+code: 000338
+name: 潍柴动力
+pos: 87.031
+info: {'name': '潍柴动力', 'code': '000338', 'price': 15.6, 'yesterday_close': 15.29, 'open': 15.33, 'volume_hands': 496569.0, 'time': '20250624161451', 'updown': 0.31, 'updown_percent': 2.03, 'high': 15.64, 'low': 15.32, 'volume_10k': 77082.0, 'pe': 11.81, 'switch_hand_percent': '1.00', 'swing': '2.09', 'circulation_market_value': 777.15, 'total_market_value': 1359.64, 'pb': 1.52, 'pos': 71.788, 'pos1': 87.031}
+-----pe: 11.92
+code: 600039
+name: 四川路桥
+pos: 99.531
+info: {'name': '四川路桥', 'code': '600039', 'price': 9.89, 'yesterday_close': 9.87, 'open': 9.9, 'volume_hands': 108817.0, 'time': '20250624161422', 'updown': 0.02, 'updown_percent': 0.2, 'high': 9.93, 'low': 9.83, 'volume_10k': 10750.0, 'pe': 11.92, 'switch_hand_percent': '0.16', 'swing': '1.01', 'circulation_market_value': 662.99, 'total_market_value': 861.42, 'pb': 1.73, 'pos': 94.608, 'pos1': 99.531}
+code: 600690
+name: 海尔智家
+pos: 54.688
+info: {'name': '海尔智家', 'code': '600690', 'price': 24.72, 'yesterday_close': 24.55, 'open': 24.55, 'volume_hands': 270180.0, 'time': '20250624161403', 'updown': 0.17, 'updown_percent': 0.69, 'high': 24.92, 'low': 24.55, 'volume_10k': 66910.0, 'pe': 11.92, 'switch_hand_percent': '0.43', 'swing': '1.51', 'circulation_market_value': 1546.11, 'total_market_value': 2319.46, 'pb': 1.97, 'pos': 34.651, 'pos1': 54.688}
+-----pe: 12.46
 code: 000568
 name: 泸州老窖
------pe: 13.04
+pos: 4.688
+info: {'name': '泸州老窖', 'code': '000568', 'price': 114.23, 'yesterday_close': 113.76, 'open': 113.81, 'volume_hands': 73922.0, 'time': '20250624161427', 'updown': 0.47, 'updown_percent': 0.41, 'high': 114.76, 'low': 113.46, 'volume_10k': 84310.0, 'pe': 12.46, 'switch_hand_percent': '0.50', 'swing': '1.14', 'circulation_market_value': 1678.43, 'total_market_value': 1681.41, 'pb': 3.35, 'pos': 10.587, 'pos1': 4.688}
+-----pe: 13.32
 code: 000333
 name: 美的集团
------pe: 13.84
-code: 601088
-name: 中国神华
------pe: 13.9
-code: 600999
-name: 招商证券
------pe: 13.91
+pos: 95.312
+info: {'name': '美的集团', 'code': '000333', 'price': 72.8, 'yesterday_close': 71.72, 'open': 72.1, 'volume_hands': 270501.0, 'time': '20250624161448', 'updown': 1.08, 'updown_percent': 1.51, 'high': 73.34, 'low': 72.0, 'volume_10k': 197181.0, 'pe': 13.32, 'switch_hand_percent': '0.39', 'swing': '1.87', 'circulation_market_value': 5034.31, 'total_market_value': 5589.03, 'pb': 2.75, 'pos': 84.57, 'pos1': 95.312}
+-----pe: 13.7
 code: 601899
 name: 紫金矿业
------pe: 14.05
-code: 000858
-name: 五 粮 液
------pe: 14.21
+pos: 98.906
+info: {'name': '紫金矿业', 'code': '601899', 'price': 18.54, 'yesterday_close': 18.51, 'open': 18.43, 'volume_hands': 1287024.0, 'time': '20250624161402', 'updown': 0.03, 'updown_percent': 0.16, 'high': 18.95, 'low': 18.4, 'volume_10k': 240612.0, 'pe': 13.7, 'switch_hand_percent': '0.63', 'swing': '2.97', 'circulation_market_value': 3817.0, 'total_market_value': 4927.48, 'pb': 3.6, 'pos': 91.505, 'pos1': 98.906}
+-----pe: 13.98
 code: 600309
 name: 万华化学
------pe: 14.26
+pos: 0.469
+info: {'name': '万华化学', 'code': '600309', 'price': 53.24, 'yesterday_close': 52.53, 'open': 52.54, 'volume_hands': 237343.0, 'time': '20250624161408', 'updown': 0.71, 'updown_percent': 1.35, 'high': 53.3, 'low': 52.49, 'volume_10k': 125947.0, 'pe': 13.98, 'switch_hand_percent': '0.76', 'swing': '1.54', 'circulation_market_value': 1671.6, 'total_market_value': 1671.6, 'pb': 1.74, 'pos': 2.217, 'pos1': 0.469}
 code: 601766
 name: 中国中车
------pe: 14.27
-code: 601211
-name: 国泰海通
------pe: 14.29
+pos: 66.094
+info: {'name': '中国中车', 'code': '601766', 'price': 7.03, 'yesterday_close': 7.0, 'open': 7.03, 'volume_hands': 924806.0, 'time': '20250624161405', 'updown': 0.03, 'updown_percent': 0.43, 'high': 7.11, 'low': 7.01, 'volume_10k': 65250.0, 'pe': 13.98, 'switch_hand_percent': '0.38', 'swing': '1.43', 'circulation_market_value': 1710.24, 'total_market_value': 2017.53, 'pb': 1.18, 'pos': 56.828, 'pos1': 66.094}
+-----pe: 14.12
+code: 600999
+name: 招商证券
+pos: 79.219
+info: {'name': '招商证券', 'code': '600999', 'price': 17.11, 'yesterday_close': 16.73, 'open': 16.75, 'volume_hands': 335947.0, 'time': '20250624161408', 'updown': 0.38, 'updown_percent': 2.27, 'high': 17.28, 'low': 16.75, 'volume_10k': 57382.0, 'pe': 14.12, 'switch_hand_percent': '0.45', 'swing': '3.17', 'circulation_market_value': 1269.91, 'total_market_value': 1487.98, 'pb': 1.28, 'pos': 43.762, 'pos1': 79.219}
+code: 601088
+name: 中国神华
+pos: 80.547
+info: {'name': '中国神华', 'code': '601088', 'price': 39.85, 'yesterday_close': 39.85, 'open': 39.8, 'volume_hands': 244854.0, 'time': '20250624161409', 'updown': 0.0, 'updown_percent': 0.0, 'high': 40.01, 'low': 39.68, 'volume_10k': 97612.0, 'pe': 14.12, 'switch_hand_percent': '0.15', 'swing': '0.83', 'circulation_market_value': 6571.68, 'total_market_value': 7917.61, 'pb': 1.83, 'pos': 70.059, 'pos1': 80.547}
+-----pe: 14.23
+code: 000858
+name: 五 粮 液
+pos: 5.938
+info: {'name': '五 粮 液', 'code': '000858', 'price': 119.75, 'yesterday_close': 118.28, 'open': 118.57, 'volume_hands': 178958.0, 'time': '20250624161415', 'updown': 1.47, 'updown_percent': 1.24, 'high': 119.99, 'low': 118.4, 'volume_10k': 213897.0, 'pe': 14.23, 'switch_hand_percent': '0.46', 'swing': '1.34', 'circulation_market_value': 4648.05, 'total_market_value': 4648.23, 'pb': 3.14, 'pos': 15.219, 'pos1': 5.938}
+-----pe: 14.24
 code: 000425
 name: 徐工机械
------pe: 14.68
-code: 600585
-name: 海螺水泥
------pe: 15.18
+pos: 79.609
+info: {'name': '徐工机械', 'code': '000425', 'price': 7.75, 'yesterday_close': 7.66, 'open': 7.67, 'volume_hands': 590193.0, 'time': '20250624161403', 'updown': 0.09, 'updown_percent': 1.17, 'high': 7.81, 'low': 7.67, 'volume_10k': 45804.0, 'pe': 14.24, 'switch_hand_percent': '0.73', 'swing': '1.83', 'circulation_market_value': 627.51, 'total_market_value': 910.91, 'pb': 1.49, 'pos': 64.151, 'pos1': 79.609}
+-----pe: 14.4
+code: 601211
+name: 国泰海通
+pos: 91.094
+info: {'name': '国泰海通', 'code': '601211', 'price': 18.6, 'yesterday_close': 18.44, 'open': 18.5, 'volume_hands': 828514.0, 'time': '20250624161425', 'updown': 0.16, 'updown_percent': 0.87, 'high': 18.86, 'low': 18.5, 'volume_10k': 154681.0, 'pe': 14.4, 'switch_hand_percent': '0.61', 'swing': '1.95', 'circulation_market_value': 2509.88, 'total_market_value': 3279.13, 'pb': 1.05, 'pos': 65.235, 'pos1': 91.094}
+-----pe: 14.42
 code: 600346
 name: 恒力石化
------pe: 15.48
-code: 001965
-name: 招商公路
------pe: 15.69
-code: 601006
-name: 大秦铁路
------pe: 15.83
+pos: 51.562
+info: {'name': '恒力石化', 'code': '600346', 'price': 14.25, 'yesterday_close': 14.2, 'open': 14.19, 'volume_hands': 197351.0, 'time': '20250624161405', 'updown': 0.05, 'updown_percent': 0.35, 'high': 14.3, 'low': 13.93, 'volume_10k': 27821.0, 'pe': 14.42, 'switch_hand_percent': '0.28', 'swing': '2.61', 'circulation_market_value': 1003.07, 'total_market_value': 1003.07, 'pb': 1.61, 'pos': 56.557, 'pos1': 51.562}
+-----pe: 14.55
+code: 600585
+name: 海螺水泥
+pos: 14.297
+info: {'name': '海螺水泥', 'code': '600585', 'price': 21.97, 'yesterday_close': 21.58, 'open': 21.62, 'volume_hands': 185252.0, 'time': '20250624161401', 'updown': 0.39, 'updown_percent': 1.81, 'high': 21.99, 'low': 21.6, 'volume_10k': 40485.0, 'pe': 14.55, 'switch_hand_percent': '0.46', 'swing': '1.81', 'circulation_market_value': 878.73, 'total_market_value': 1164.26, 'pb': 0.61, 'pos': 23.598, 'pos1': 14.297}
+-----pe: 15.19
 code: 600028
 name: 中国石化
------pe: 16.04
-code: 601881
-name: 中国银河
------pe: 16.36
-code: 601633
-name: 长城汽车
------pe: 16.46
+pos: 53.672
+info: {'name': '中国石化', 'code': '600028', 'price': 5.67, 'yesterday_close': 5.71, 'open': 5.66, 'volume_hands': 2096949.0, 'time': '20250624161428', 'updown': -0.04, 'updown_percent': -0.7, 'high': 5.72, 'low': 5.56, 'volume_10k': 118644.0, 'pe': 15.19, 'switch_hand_percent': '0.22', 'swing': '2.80', 'circulation_market_value': 5377.53, 'total_market_value': 6874.6, 'pb': 0.84, 'pos': 56.901, 'pos1': 53.672}
+-----pe: 15.51
+code: 001965
+name: 招商公路
+pos: 75.156
+info: {'name': '招商公路', 'code': '001965', 'price': 12.18, 'yesterday_close': 12.13, 'open': 12.14, 'volume_hands': 147631.0, 'time': '20250624161415', 'updown': 0.05, 'updown_percent': 0.41, 'high': 12.22, 'low': 12.08, 'volume_10k': 17966.0, 'pe': 15.51, 'switch_hand_percent': '0.22', 'swing': '1.15', 'circulation_market_value': 830.72, 'total_market_value': 830.72, 'pb': 1.24, 'pos': 73.316, 'pos1': 75.156}
+-----pe: 15.67
+code: 601006
+name: 大秦铁路
+pos: 53.672
+info: {'name': '大秦铁路', 'code': '601006', 'price': 6.66, 'yesterday_close': 6.69, 'open': 6.69, 'volume_hands': 581071.0, 'time': '20250624161500', 'updown': -0.03, 'updown_percent': -0.45, 'high': 6.71, 'low': 6.65, 'volume_10k': 38789.0, 'pe': 15.67, 'switch_hand_percent': '0.29', 'swing': '0.90', 'circulation_market_value': 1341.8, 'total_market_value': 1341.8, 'pb': 0.81, 'pos': 62.931, 'pos1': 53.672}
+-----pe: 16.29
 code: 600989
 name: 宝丰能源
------pe: 16.6
-code: 002475
-name: 立讯精密
------pe: 16.64
-code: 600809
-name: 山西汾酒
------pe: 16.8
-code: 000625
-name: 长安汽车
------pe: 16.98
-code: 600030
-name: 中信证券
------pe: 17.37
+pos: 89.531
+info: {'name': '宝丰能源', 'code': '600989', 'price': 16.33, 'yesterday_close': 16.58, 'open': 16.36, 'volume_hands': 413394.0, 'time': '20250624161422', 'updown': -0.25, 'updown_percent': -1.51, 'high': 16.58, 'low': 16.3, 'volume_10k': 67780.0, 'pe': 16.29, 'switch_hand_percent': '0.56', 'swing': '1.69', 'circulation_market_value': 1197.54, 'total_market_value': 1197.54, 'pb': 2.82, 'pos': 69.542, 'pos1': 89.531}
+code: 601633
+name: 长城汽车
+pos: 2.031
+info: {'name': '长城汽车', 'code': '601633', 'price': 21.36, 'yesterday_close': 21.03, 'open': 21.08, 'volume_hands': 157187.0, 'time': '20250624161429', 'updown': 0.33, 'updown_percent': 1.57, 'high': 21.38, 'low': 21.08, 'volume_10k': 33468.0, 'pe': 16.29, 'switch_hand_percent': '0.25', 'swing': '1.43', 'circulation_market_value': 1326.29, 'total_market_value': 1828.19, 'pb': 2.22, 'pos': 15.399, 'pos1': 2.031}
+code: 601881
+name: 中国银河
+pos: 98.438
+info: {'name': '中国银河', 'code': '601881', 'price': 17.01, 'yesterday_close': 16.29, 'open': 16.38, 'volume_hands': 1324348.0, 'time': '20250624161418', 'updown': 0.72, 'updown_percent': 4.42, 'high': 17.38, 'low': 16.29, 'volume_10k': 224868.0, 'pe': 16.29, 'switch_hand_percent': '1.83', 'swing': '6.69', 'circulation_market_value': 1232.11, 'total_market_value': 1859.94, 'pb': 1.65, 'pos': 78.733, 'pos1': 98.438}
+-----pe: 16.61
 code: 601138
 name: 工业富联
------pe: 17.49
-code: 000895
-name: 双汇发展
------pe: 17.52
-code: 600941
-name: 中国移动
------pe: 17.68
+pos: 54.375
+info: {'name': '工业富联', 'code': '601138', 'price': 20.29, 'yesterday_close': 20.2, 'open': 20.41, 'volume_hands': 711368.0, 'time': '20250624161426', 'updown': 0.09, 'updown_percent': 0.45, 'high': 20.55, 'low': 20.23, 'volume_10k': 144744.0, 'pe': 16.61, 'switch_hand_percent': '0.36', 'swing': '1.58', 'circulation_market_value': 4029.1, 'total_market_value': 4029.36, 'pb': 2.56, 'pos': 60.13, 'pos1': 54.375}
+-----pe: 16.63
+code: 000625
+name: 长安汽车
+pos: 31.641
+info: {'name': '长安汽车', 'code': '000625', 'price': 12.61, 'yesterday_close': 12.44, 'open': 12.53, 'volume_hands': 574623.0, 'time': '20250624161445', 'updown': 0.17, 'updown_percent': 1.37, 'high': 12.63, 'low': 12.53, 'volume_10k': 72323.0, 'pe': 16.63, 'switch_hand_percent': '0.70', 'swing': '0.80', 'circulation_market_value': 1041.68, 'total_market_value': 1250.17, 'pb': 1.6, 'pos': 21.309, 'pos1': 31.641}
+-----pe: 17.12
+code: 600030
+name: 中信证券
+pos: 82.656
+info: {'name': '中信证券', 'code': '600030', 'price': 26.91, 'yesterday_close': 26.23, 'open': 26.28, 'volume_hands': 1364250.0, 'time': '20250624161422', 'updown': 0.68, 'updown_percent': 2.59, 'high': 27.07, 'low': 26.26, 'volume_10k': 365970.0, 'pe': 17.12, 'switch_hand_percent': '1.12', 'swing': '3.09', 'circulation_market_value': 3276.71, 'total_market_value': 3988.21, 'pb': 1.48, 'pos': 52.84, 'pos1': 82.656}
+-----pe: 17.17
 code: 603259
 name: 药明康德
------pe: 17.87
+pos: 61.172
+info: {'name': '药明康德', 'code': '603259', 'price': 66.84, 'yesterday_close': 65.27, 'open': 65.6, 'volume_hands': 290531.0, 'time': '20250624161403', 'updown': 1.57, 'updown_percent': 2.41, 'high': 66.84, 'low': 65.6, 'volume_10k': 192810.0, 'pe': 17.17, 'switch_hand_percent': '1.17', 'swing': '1.90', 'circulation_market_value': 1661.07, 'total_market_value': 1919.79, 'pb': 3.31, 'pos': 51.508, 'pos1': 61.172}
+-----pe: 17.28
+code: 002475
+name: 立讯精密
+pos: 66.094
+info: {'name': '立讯精密', 'code': '002475', 'price': 33.23, 'yesterday_close': 33.19, 'open': 33.3, 'volume_hands': 1005406.0, 'time': '20250624161409', 'updown': 0.04, 'updown_percent': 0.12, 'high': 33.56, 'low': 33.01, 'volume_10k': 333739.0, 'pe': 17.28, 'switch_hand_percent': '1.39', 'swing': '1.66', 'circulation_market_value': 2404.44, 'total_market_value': 2408.81, 'pb': 3.35, 'pos': 37.261, 'pos1': 66.094}
+-----pe: 17.33
+code: 600809
+name: 山西汾酒
+pos: 10.469
+info: {'name': '山西汾酒', 'code': '600809', 'price': 179.39, 'yesterday_close': 177.71, 'open': 177.67, 'volume_hands': 65460.0, 'time': '20250624161411', 'updown': 1.68, 'updown_percent': 0.95, 'high': 181.37, 'low': 177.6, 'volume_10k': 117736.0, 'pe': 17.33, 'switch_hand_percent': '0.54', 'swing': '2.12', 'circulation_market_value': 2188.49, 'total_market_value': 2188.49, 'pb': 5.7, 'pos': 21.231, 'pos1': 10.469}
+-----pe: 17.47
+code: 600941
+name: 中国移动
+pos: 96.875
+info: {'name': '中国移动', 'code': '600941', 'price': 112.68, 'yesterday_close': 112.5, 'open': 112.5, 'volume_hands': 81891.0, 'time': '20250624161406', 'updown': 0.18, 'updown_percent': 0.16, 'high': 113.16, 'low': 112.37, 'volume_10k': 92290.0, 'pe': 17.47, 'switch_hand_percent': '0.91', 'swing': '0.70', 'circulation_market_value': 1017.24, 'total_market_value': 24345.91, 'pb': 1.75, 'pos': 92.884, 'pos1': 96.875}
+-----pe: 17.51
+code: 000895
+name: 双汇发展
+pos: 68.75
+info: {'name': '双汇发展', 'code': '000895', 'price': 24.54, 'yesterday_close': 24.13, 'open': 24.16, 'volume_hands': 99209.0, 'time': '20250624161427', 'updown': 0.41, 'updown_percent': 1.7, 'high': 24.57, 'low': 24.14, 'volume_10k': 24236.0, 'pe': 17.51, 'switch_hand_percent': '0.29', 'swing': '1.78', 'circulation_market_value': 850.1, 'total_market_value': 850.23, 'pb': 4.33, 'pos': 51.782, 'pos1': 68.75}
+-----pe: 17.6
 code: 600886
 name: 国投电力
------pe: 17.93
-code: 600050
-name: 中国联通
------pe: 17.96
-code: 003816
-name: 中国广核
------pe: 18.03
+pos: 62.969
+info: {'name': '国投电力', 'code': '600886', 'price': 14.7, 'yesterday_close': 14.71, 'open': 14.72, 'volume_hands': 219421.0, 'time': '20250624161417', 'updown': -0.01, 'updown_percent': -0.07, 'high': 14.74, 'low': 14.64, 'volume_10k': 32247.0, 'pe': 17.6, 'switch_hand_percent': '0.29', 'swing': '0.68', 'circulation_market_value': 1095.76, 'total_market_value': 1176.66, 'pb': 1.8, 'pos': 57.892, 'pos1': 62.969}
+-----pe: 18.07
 code: 000792
 name: 盐湖股份
------pe: 18.49
+pos: 38.594
+info: {'name': '盐湖股份', 'code': '000792', 'price': 16.64, 'yesterday_close': 16.4, 'open': 16.4, 'volume_hands': 375401.0, 'time': '20250624161451', 'updown': 0.24, 'updown_percent': 1.46, 'high': 16.69, 'low': 16.33, 'volume_10k': 62133.0, 'pe': 18.07, 'switch_hand_percent': '0.71', 'swing': '2.20', 'circulation_market_value': 880.5, 'total_market_value': 880.52, 'pb': 2.34, 'pos': 24.982, 'pos1': 38.594}
+-----pe: 18.11
+code: 003816
+name: 中国广核
+pos: 59.844
+info: {'name': '中国广核', 'code': '003816', 'price': 3.67, 'yesterday_close': 3.68, 'open': 3.68, 'volume_hands': 1385884.0, 'time': '20250624161500', 'updown': -0.01, 'updown_percent': -0.27, 'high': 3.69, 'low': 3.66, 'volume_10k': 50899.0, 'pe': 18.11, 'switch_hand_percent': '0.35', 'swing': '0.82', 'circulation_market_value': 1443.59, 'total_market_value': 1853.3, 'pb': 1.51, 'pos': 43.592, 'pos1': 59.844}
+-----pe: 18.13
+code: 600050
+name: 中国联通
+pos: 81.875
+info: {'name': '中国联通', 'code': '600050', 'price': 5.33, 'yesterday_close': 5.28, 'open': 5.28, 'volume_hands': 2117977.0, 'time': '20250624161428', 'updown': 0.05, 'updown_percent': 0.95, 'high': 5.35, 'low': 5.27, 'volume_10k': 112758.0, 'pe': 18.13, 'switch_hand_percent': '0.69', 'swing': '1.52', 'circulation_market_value': 1639.87, 'total_market_value': 1666.39, 'pb': 1.0, 'pos': 58.667, 'pos1': 81.875}
+-----pe: 18.21
 code: 600019
 name: 宝钢股份
------pe: 18.58
+pos: 69.531
+info: {'name': '宝钢股份', 'code': '600019', 'price': 6.54, 'yesterday_close': 6.47, 'open': 6.48, 'volume_hands': 567795.0, 'time': '20250624161414', 'updown': 0.07, 'updown_percent': 1.08, 'high': 6.55, 'low': 6.48, 'volume_10k': 37021.0, 'pe': 18.21, 'switch_hand_percent': '0.26', 'swing': '1.08', 'circulation_market_value': 1424.55, 'total_market_value': 1432.83, 'pb': 0.71, 'pos': 69.637, 'pos1': 69.531}
+-----pe: 18.43
 code: 600660
 name: 福耀玻璃
------pe: 18.64
+pos: 92.266
+info: {'name': '福耀玻璃', 'code': '600660', 'price': 57.47, 'yesterday_close': 56.79, 'open': 56.9, 'volume_hands': 91026.0, 'time': '20250624161410', 'updown': 0.68, 'updown_percent': 1.2, 'high': 57.88, 'low': 56.88, 'volume_10k': 52371.0, 'pe': 18.43, 'switch_hand_percent': '0.45', 'swing': '1.76', 'circulation_market_value': 1151.12, 'total_market_value': 1499.82, 'pb': 4.4, 'pos': 85.892, 'pos1': 92.266}
+-----pe: 18.65
 code: 000063
 name: 中兴通讯
------pe: 19.47
-code: 001979
-name: 招商蛇口
+pos: 65.938
+info: {'name': '中兴通讯', 'code': '000063', 'price': 31.73, 'yesterday_close': 31.13, 'open': 31.2, 'volume_hands': 576877.0, 'time': '20250624161418', 'updown': 0.6, 'updown_percent': 1.93, 'high': 31.9, 'low': 31.2, 'volume_10k': 182663.0, 'pe': 18.65, 'switch_hand_percent': '1.43', 'swing': '2.25', 'circulation_market_value': 1277.89, 'total_market_value': 1517.82, 'pb': 2.1, 'pos': 46.945, 'pos1': 65.938}
 -----pe: 19.5
 code: 002027
 name: 分众传媒
------pe: 19.76
-code: 600905
-name: 三峡能源
------pe: 20.01
+pos: 88.203
+info: {'name': '分众传媒', 'code': '002027', 'price': 7.09, 'yesterday_close': 6.95, 'open': 6.98, 'volume_hands': 1135675.0, 'time': '20250624161445', 'updown': 0.14, 'updown_percent': 2.01, 'high': 7.12, 'low': 6.95, 'volume_10k': 80024.0, 'pe': 19.5, 'switch_hand_percent': '0.79', 'swing': '2.45', 'circulation_market_value': 1023.95, 'total_market_value': 1023.95, 'pb': 5.63, 'pos': 82.031, 'pos1': 88.203}
+-----pe: 19.84
 code: 000538
 name: 云南白药
------pe: 20.04
-code: 600025
-name: 华能水电
------pe: 20.07
-code: 600519
-name: 贵州茅台
------pe: 20.08
-code: 002311
-name: 海大集团
------pe: 20.37
-code: 688036
-name: 传音控股
------pe: 20.69
+pos: 80.625
+info: {'name': '云南白药', 'code': '000538', 'price': 55.4, 'yesterday_close': 55.02, 'open': 55.2, 'volume_hands': 71484.0, 'time': '20250624161433', 'updown': 0.38, 'updown_percent': 0.69, 'high': 55.68, 'low': 55.12, 'volume_10k': 39599.0, 'pe': 19.84, 'switch_hand_percent': '0.40', 'swing': '1.02', 'circulation_market_value': 982.07, 'total_market_value': 988.48, 'pb': 2.56, 'pos': 61.715, 'pos1': 80.625}
+-----pe: 19.86
+code: 600905
+name: 三峡能源
+pos: 14.219
+info: {'name': '三峡能源', 'code': '600905', 'price': 4.26, 'yesterday_close': 4.23, 'open': 4.23, 'volume_hands': 822826.0, 'time': '20250624161406', 'updown': 0.03, 'updown_percent': 0.71, 'high': 4.26, 'low': 4.23, 'volume_10k': 34941.0, 'pe': 19.86, 'switch_hand_percent': '0.29', 'swing': '0.71', 'circulation_market_value': 1217.83, 'total_market_value': 1219.15, 'pb': 1.37, 'pos': 13.916, 'pos1': 14.219}
+-----pe: 19.94
 code: 603195
 name: 公牛集团
------pe: 20.75
-code: 300750
-name: 宁德时代
------pe: 20.86
+pos: 50.156
+info: {'name': '公牛集团', 'code': '603195', 'price': 47.6, 'yesterday_close': 47.28, 'open': 47.37, 'volume_hands': 24777.0, 'time': '20250624161417', 'updown': 0.32, 'updown_percent': 0.68, 'high': 47.78, 'low': 47.33, 'volume_10k': 11788.0, 'pe': 19.94, 'switch_hand_percent': '0.14', 'swing': '0.95', 'circulation_market_value': 857.77, 'total_market_value': 860.89, 'pb': 6.26, 'pos': 41.696, 'pos1': 50.156}
+-----pe: 20.02
+code: 600025
+name: 华能水电
+pos: 82.422
+info: {'name': '华能水电', 'code': '600025', 'price': 9.72, 'yesterday_close': 9.76, 'open': 9.78, 'volume_hands': 281541.0, 'time': '20250624161409', 'updown': -0.04, 'updown_percent': -0.41, 'high': 9.8, 'low': 9.67, 'volume_10k': 27323.0, 'pe': 20.02, 'switch_hand_percent': '0.16', 'swing': '1.33', 'circulation_market_value': 1749.6, 'total_market_value': 1749.6, 'pb': 3.07, 'pos': 61.521, 'pos1': 82.422}
+-----pe: 20.03
+code: 002311
+name: 海大集团
+pos: 89.688
+info: {'name': '海大集团', 'code': '002311', 'price': 59.31, 'yesterday_close': 59.0, 'open': 58.94, 'volume_hands': 62528.0, 'time': '20250624161439', 'updown': 0.31, 'updown_percent': 0.53, 'high': 59.98, 'low': 58.65, 'volume_10k': 37098.0, 'pe': 20.03, 'switch_hand_percent': '0.38', 'swing': '2.25', 'circulation_market_value': 986.04, 'total_market_value': 986.77, 'pb': 4.02, 'pos': 82.848, 'pos1': 89.688}
+-----pe: 20.18
 code: 600048
 name: 保利发展
------pe: 21.0
+pos: 5.469
+info: {'name': '保利发展', 'code': '600048', 'price': 7.97, 'yesterday_close': 7.88, 'open': 7.9, 'volume_hands': 697219.0, 'time': '20250624161419', 'updown': 0.09, 'updown_percent': 1.14, 'high': 7.97, 'low': 7.87, 'volume_10k': 55384.0, 'pe': 20.18, 'switch_hand_percent': '0.58', 'swing': '1.27', 'circulation_market_value': 954.04, 'total_market_value': 954.04, 'pb': 0.49, 'pos': 6.834, 'pos1': 5.469}
+-----pe: 20.28
+code: 600519
+name: 贵州茅台
+pos: 12.656
+info: {'name': '贵州茅台', 'code': '600519', 'price': 1437.2, 'yesterday_close': 1420.0, 'open': 1423.35, 'volume_hands': 36312.0, 'time': '20250624161404', 'updown': 17.2, 'updown_percent': 1.21, 'high': 1451.68, 'low': 1423.35, 'volume_10k': 522918.0, 'pe': 20.28, 'switch_hand_percent': '0.29', 'swing': '2.00', 'circulation_market_value': 18054.07, 'total_market_value': 18054.07, 'pb': 6.99, 'pos': 32.409, 'pos1': 12.656}
+code: 688036
+name: 传音控股
+pos: 36.25
+info: {'name': '传音控股', 'code': '688036', 'price': 78.47, 'yesterday_close': 77.01, 'open': 76.9, 'volume_hands': 4509757.0, 'time': '20250624161433', 'updown': 1.46, 'updown_percent': 1.9, 'high': 79.2, 'low': 76.52, 'volume_10k': 35213.0, 'pe': 20.28, 'switch_hand_percent': '0.40', 'swing': '3.48', 'circulation_market_value': 894.83, 'total_market_value': 894.83, 'pb': 4.7, 'pos': 46.338, 'pos1': 36.25}
+-----pe: 20.69
+code: 300750
+name: 宁德时代
+pos: 80.187
+info: {'name': '宁德时代', 'code': '300750', 'price': 245.92, 'yesterday_close': 239.61, 'open': 240.58, 'volume_hands': 235011.0, 'time': '20250624161421', 'updown': 6.31, 'updown_percent': 2.63, 'high': 248.08, 'low': 240.58, 'volume_10k': 576736.0, 'pe': 20.69, 'switch_hand_percent': '0.60', 'swing': '3.13', 'circulation_market_value': 9597.17, 'total_market_value': 11212.26, 'pb': 4.64, 'pos': 70.01, 'pos1': 80.187}
+-----pe: 20.98
 code: 600958
 name: 东方证券
------pe: 21.05
+pos: 63.516
+info: {'name': '东方证券', 'code': '600958', 'price': 9.63, 'yesterday_close': 9.43, 'open': 9.45, 'volume_hands': 529516.0, 'time': '20250624161405', 'updown': 0.2, 'updown_percent': 2.12, 'high': 9.7, 'low': 9.45, 'volume_10k': 50872.0, 'pe': 20.98, 'switch_hand_percent': '0.71', 'swing': '2.65', 'circulation_market_value': 719.31, 'total_market_value': 818.23, 'pb': 1.05, 'pos': 47.186, 'pos1': 63.516}
+-----pe: 21.07
 code: 002415
 name: 海康威视
------pe: 21.07
+pos: 10.469
+info: {'name': '海康威视', 'code': '002415', 'price': 27.61, 'yesterday_close': 27.32, 'open': 27.38, 'volume_hands': 281276.0, 'time': '20250624161412', 'updown': 0.29, 'updown_percent': 1.06, 'high': 27.64, 'low': 27.31, 'volume_10k': 77409.0, 'pe': 21.07, 'switch_hand_percent': '0.31', 'swing': '1.21', 'circulation_market_value': 2514.08, 'total_market_value': 2549.29, 'pb': 3.38, 'pos': 15.961, 'pos1': 10.469}
+-----pe: 21.28
 code: 000166
 name: 申万宏源
------pe: 21.23
-code: 300014
-name: 亿纬锂能
------pe: 21.31
-code: 601728
-name: 中国电信
------pe: 21.48
+pos: 80.156
+info: {'name': '申万宏源', 'code': '000166', 'price': 4.93, 'yesterday_close': 4.86, 'open': 4.88, 'volume_hands': 1221945.0, 'time': '20250624161442', 'updown': 0.07, 'updown_percent': 1.44, 'high': 4.97, 'low': 4.86, 'volume_10k': 60201.0, 'pe': 21.28, 'switch_hand_percent': '0.54', 'swing': '2.26', 'circulation_market_value': 1111.0, 'total_market_value': 1234.47, 'pb': 1.16, 'pos': 42.488, 'pos1': 80.156}
+-----pe: 21.66
 code: 600600
 name: 青岛啤酒
------pe: 21.62
-code: 000617
-name: 中油资本
------pe: 21.86
+pos: 25.078
+info: {'name': '青岛啤酒', 'code': '600600', 'price': 70.77, 'yesterday_close': 70.41, 'open': 70.42, 'volume_hands': 54276.0, 'time': '20250624161409', 'updown': 0.36, 'updown_percent': 0.51, 'high': 70.96, 'low': 70.26, 'volume_10k': 38371.0, 'pe': 21.66, 'switch_hand_percent': '0.77', 'swing': '0.99', 'circulation_market_value': 501.85, 'total_market_value': 965.44, 'pb': 3.14, 'pos': 25.594, 'pos1': 25.078}
+-----pe: 21.75
+code: 601728
+name: 中国电信
+pos: 96.875
+info: {'name': '中国电信', 'code': '601728', 'price': 7.91, 'yesterday_close': 7.86, 'open': 7.88, 'volume_hands': 763861.0, 'time': '20250624161423', 'updown': 0.05, 'updown_percent': 0.64, 'high': 7.95, 'low': 7.87, 'volume_10k': 60512.0, 'pe': 21.75, 'switch_hand_percent': '0.10', 'swing': '1.02', 'circulation_market_value': 6140.51, 'total_market_value': 7238.21, 'pb': 1.6, 'pos': 88.363, 'pos1': 96.875}
+-----pe: 21.76
 code: 601985
 name: 中国核电
------pe: 21.98
-code: 600031
-name: 三一重工
------pe: 22.03
+pos: 63.125
+info: {'name': '中国核电', 'code': '601985', 'price': 9.37, 'yesterday_close': 9.33, 'open': 9.34, 'volume_hands': 636384.0, 'time': '20250624161423', 'updown': 0.04, 'updown_percent': 0.43, 'high': 9.38, 'low': 9.3, 'volume_10k': 59503.0, 'pe': 21.76, 'switch_hand_percent': '0.34', 'swing': '0.86', 'circulation_market_value': 1769.36, 'total_market_value': 1927.22, 'pb': 1.71, 'pos': 57.259, 'pos1': 63.125}
+-----pe: 21.92
+code: 000617
+name: 中油资本
+pos: 85.781
+info: {'name': '中油资本', 'code': '000617', 'price': 7.27, 'yesterday_close': 7.3, 'open': 7.19, 'volume_hands': 2403459.0, 'time': '20250624161442', 'updown': -0.03, 'updown_percent': -0.41, 'high': 7.35, 'low': 7.11, 'volume_10k': 173829.0, 'pe': 21.92, 'switch_hand_percent': '1.90', 'swing': '3.29', 'circulation_market_value': 919.08, 'total_market_value': 919.08, 'pb': 0.9, 'pos': 56.523, 'pos1': 85.781}
+-----pe: 22.11
 code: 601816
 name: 京沪高铁
------pe: 22.11
+pos: 87.578
+info: {'name': '京沪高铁', 'code': '601816', 'price': 5.77, 'yesterday_close': 5.69, 'open': 5.67, 'volume_hands': 1431142.0, 'time': '20250624161421', 'updown': 0.08, 'updown_percent': 1.41, 'high': 5.8, 'low': 5.66, 'volume_10k': 82297.0, 'pe': 22.11, 'switch_hand_percent': '0.29', 'swing': '2.46', 'circulation_market_value': 2823.01, 'total_market_value': 2823.01, 'pb': 1.39, 'pos': 60.433, 'pos1': 87.578}
+-----pe: 22.2
 code: 600900
 name: 长江电力
------pe: 23.32
-code: 002304
-name: 洋河股份
-code: 300308
-name: 中际旭创
------pe: 23.34
-code: 002594
-name: 比亚迪
------pe: 23.35
+pos: 98.438
+info: {'name': '长江电力', 'code': '600900', 'price': 30.58, 'yesterday_close': 30.65, 'open': 30.61, 'volume_hands': 788400.0, 'time': '20250624161407', 'updown': -0.07, 'updown_percent': -0.23, 'high': 30.81, 'low': 30.53, 'volume_10k': 241532.0, 'pe': 22.2, 'switch_hand_percent': '0.33', 'swing': '0.91', 'circulation_market_value': 7341.42, 'total_market_value': 7482.38, 'pb': 3.47, 'pos': 89.486, 'pos1': 98.438}
+-----pe: 22.22
+code: 600031
+name: 三一重工
+pos: 86.875
+info: {'name': '三一重工', 'code': '600031', 'price': 18.0, 'yesterday_close': 17.66, 'open': 17.69, 'volume_hands': 474206.0, 'time': '20250624161421', 'updown': 0.34, 'updown_percent': 1.93, 'high': 18.06, 'low': 17.68, 'volume_10k': 85166.0, 'pe': 22.22, 'switch_hand_percent': '0.56', 'swing': '2.15', 'circulation_market_value': 1525.39, 'total_market_value': 1525.5, 'pb': 2.12, 'pos': 71.325, 'pos1': 86.875}
+-----pe: 22.34
+code: 300014
+name: 亿纬锂能
+pos: 47.656
+info: {'name': '亿纬锂能', 'code': '300014', 'price': 44.89, 'yesterday_close': 43.9, 'open': 43.8, 'volume_hands': 287483.0, 'time': '20250624161451', 'updown': 0.99, 'updown_percent': 2.26, 'high': 44.97, 'low': 43.58, 'volume_10k': 127622.0, 'pe': 22.34, 'switch_hand_percent': '1.54', 'swing': '3.17', 'circulation_market_value': 835.6, 'total_market_value': 918.32, 'pb': 2.46, 'pos': 22.008, 'pos1': 47.656}
+-----pe: 23.19
 code: 001289
 name: 龙源电力
------pe: 23.44
-code: 600406
-name: 国电南瑞
------pe: 23.45
+pos: 12.188
+info: {'name': '龙源电力', 'code': '001289', 'price': 16.11, 'yesterday_close': 15.92, 'open': 15.95, 'volume_hands': 27911.0, 'time': '20250624161442', 'updown': 0.19, 'updown_percent': 1.19, 'high': 16.11, 'low': 15.92, 'volume_10k': 4477.0, 'pe': 23.19, 'switch_hand_percent': '0.06', 'swing': '1.19', 'circulation_market_value': 812.26, 'total_market_value': 1346.77, 'pb': 1.79, 'pos': 30.665, 'pos1': 12.188}
+-----pe: 23.25
+code: 002304
+name: 洋河股份
+pos: 0.625
+info: {'name': '洋河股份', 'code': '002304', 'price': 65.68, 'yesterday_close': 65.33, 'open': 65.5, 'volume_hands': 61439.0, 'time': '20250624161433', 'updown': 0.35, 'updown_percent': 0.54, 'high': 66.13, 'low': 65.41, 'volume_10k': 40385.0, 'pe': 23.25, 'switch_hand_percent': '0.41', 'swing': '1.10', 'circulation_market_value': 989.41, 'total_market_value': 989.43, 'pb': 1.91, 'pos': 2.15, 'pos1': 0.625}
+-----pe: 23.54
 code: 601066
 name: 中信建投
------pe: 23.7
-code: 002352
-name: 顺丰控股
------pe: 23.97
+pos: 44.766
+info: {'name': '中信建投', 'code': '601066', 'price': 23.79, 'yesterday_close': 23.23, 'open': 23.29, 'volume_hands': 156318.0, 'time': '20250624161428', 'updown': 0.56, 'updown_percent': 2.41, 'high': 23.96, 'low': 23.23, 'volume_10k': 37121.0, 'pe': 23.54, 'switch_hand_percent': '0.24', 'swing': '3.14', 'circulation_market_value': 1545.32, 'total_market_value': 1845.32, 'pb': 2.36, 'pos': 40.883, 'pos1': 44.766}
+-----pe: 23.61
+code: 600406
+name: 国电南瑞
+pos: 53.906
+info: {'name': '国电南瑞', 'code': '600406', 'price': 22.62, 'yesterday_close': 22.76, 'open': 22.77, 'volume_hands': 291003.0, 'time': '20250624161424', 'updown': -0.14, 'updown_percent': -0.62, 'high': 22.83, 'low': 22.55, 'volume_10k': 66027.0, 'pe': 23.61, 'switch_hand_percent': '0.36', 'swing': '1.23', 'circulation_market_value': 1808.77, 'total_market_value': 1816.86, 'pb': 3.63, 'pos': 32.111, 'pos1': 53.906}
+-----pe: 23.64
 code: 600887
 name: 伊利股份
------pe: 24.45
-code: 000725
-name: 京东方Ａ
------pe: 25.37
-code: 002179
-name: 中航光电
------pe: 25.67
-code: 601995
-name: 中金公司
------pe: 25.76
+pos: 80.625
+info: {'name': '伊利股份', 'code': '600887', 'price': 27.67, 'yesterday_close': 27.57, 'open': 27.62, 'volume_hands': 372451.0, 'time': '20250624161416', 'updown': 0.1, 'updown_percent': 0.36, 'high': 27.9, 'low': 27.6, 'volume_10k': 103229.0, 'pe': 23.64, 'switch_hand_percent': '0.59', 'swing': '1.09', 'circulation_market_value': 1741.53, 'total_market_value': 1750.23, 'pb': 3.53, 'pos': 71.653, 'pos1': 80.625}
+-----pe: 24.12
+code: 002352
+name: 顺丰控股
+pos: 84.219
+info: {'name': '顺丰控股', 'code': '002352', 'price': 50.7, 'yesterday_close': 49.9, 'open': 50.2, 'volume_hands': 189551.0, 'time': '20250624161500', 'updown': 0.8, 'updown_percent': 1.6, 'high': 50.95, 'low': 49.97, 'volume_10k': 95929.0, 'pe': 24.12, 'switch_hand_percent': '0.40', 'swing': '1.96', 'circulation_market_value': 2431.21, 'total_market_value': 2531.29, 'pb': 2.69, 'pos': 69.332, 'pos1': 84.219}
+-----pe: 24.22
+code: 300308
+name: 中际旭创
+pos: 83.619
+info: {'name': '中际旭创', 'code': '300308', 'price': 125.25, 'yesterday_close': 127.09, 'open': 128.38, 'volume_hands': 450006.0, 'time': '20250624161445', 'updown': -1.84, 'updown_percent': -1.45, 'high': 129.97, 'low': 124.3, 'volume_10k': 569325.0, 'pe': 24.22, 'switch_hand_percent': '4.07', 'swing': '4.46', 'circulation_market_value': 1384.85, 'total_market_value': 1391.68, 'pb': 6.85, 'pos': 64.15, 'pos1': 83.619}
+-----pe: 24.48
 code: 300760
 name: 迈瑞医疗
------pe: 25.89
+pos: 5.304
+info: {'name': '迈瑞医疗', 'code': '300760', 'price': 224.84, 'yesterday_close': 225.83, 'open': 226.04, 'volume_hands': 51914.0, 'time': '20250624161430', 'updown': -0.99, 'updown_percent': -0.44, 'high': 228.0, 'low': 224.77, 'volume_10k': 117342.0, 'pe': 24.48, 'switch_hand_percent': '0.43', 'swing': '1.43', 'circulation_market_value': 2726.0, 'total_market_value': 2726.05, 'pb': 7.53, 'pos': 13.978, 'pos1': 5.304}
+-----pe: 25.01
+code: 000725
+name: 京东方Ａ
+pos: 53.047
+info: {'name': '京东方Ａ', 'code': '000725', 'price': 3.98, 'yesterday_close': 3.96, 'open': 3.96, 'volume_hands': 3094230.0, 'time': '20250624161500', 'updown': 0.02, 'updown_percent': 0.51, 'high': 3.98, 'low': 3.95, 'volume_10k': 122808.0, 'pe': 25.01, 'switch_hand_percent': '0.84', 'swing': '0.76', 'circulation_market_value': 1460.9, 'total_market_value': 1489.07, 'pb': 1.13, 'pos': 43.373, 'pos1': 53.047}
+-----pe: 25.11
+code: 002179
+name: 中航光电
+pos: 43.75
+info: {'name': '中航光电', 'code': '002179', 'price': 38.44, 'yesterday_close': 38.09, 'open': 37.8, 'volume_hands': 146886.0, 'time': '20250624161424', 'updown': 0.35, 'updown_percent': 0.92, 'high': 38.8, 'low': 37.67, 'volume_10k': 56231.0, 'pe': 25.11, 'switch_hand_percent': '0.71', 'swing': '2.97', 'circulation_market_value': 799.82, 'total_market_value': 814.26, 'pb': 3.6, 'pos': 50.624, 'pos1': 43.75}
+-----pe: 25.69
 code: 601788
 name: 光大证券
------pe: 25.91
+pos: 89.766
+info: {'name': '光大证券', 'code': '601788', 'price': 17.8, 'yesterday_close': 17.49, 'open': 17.56, 'volume_hands': 549978.0, 'time': '20250624161416', 'updown': 0.31, 'updown_percent': 1.77, 'high': 17.96, 'low': 17.5, 'volume_10k': 97727.0, 'pe': 25.69, 'switch_hand_percent': '1.41', 'swing': '2.63', 'circulation_market_value': 695.39, 'total_market_value': 820.72, 'pb': 1.38, 'pos': 49.846, 'pos1': 89.766}
+-----pe: 25.92
 code: 300502
 name: 新易盛
------pe: 27.61
+pos: 99.062
+info: {'name': '新易盛', 'code': '300502', 'price': 106.71, 'yesterday_close': 107.28, 'open': 108.38, 'volume_hands': 350815.0, 'time': '20250624161421', 'updown': -0.57, 'updown_percent': -0.53, 'high': 109.97, 'low': 105.9, 'volume_10k': 376660.0, 'pe': 25.92, 'switch_hand_percent': '3.97', 'swing': '3.79', 'circulation_market_value': 943.1, 'total_market_value': 1058.91, 'pb': 11.02, 'pos': 92.107, 'pos1': 99.062}
+-----pe: 26.08
+code: 601995
+name: 中金公司
+pos: 45.156
+info: {'name': '中金公司', 'code': '601995', 'price': 35.1, 'yesterday_close': 34.25, 'open': 34.33, 'volume_hands': 303462.0, 'time': '20250624161404', 'updown': 0.85, 'updown_percent': 2.48, 'high': 35.47, 'low': 34.33, 'volume_10k': 106362.0, 'pe': 26.08, 'switch_hand_percent': '1.04', 'swing': '3.33', 'circulation_market_value': 1026.16, 'total_market_value': 1694.37, 'pb': 1.8, 'pos': 42.601, 'pos1': 45.156}
+-----pe: 28.03
 code: 601689
 name: 拓普集团
------pe: 28.24
-code: 002050
-name: 三花智控
------pe: 28.79
+pos: 57.188
+info: {'name': '拓普集团', 'code': '601689', 'price': 47.1, 'yesterday_close': 44.13, 'open': 44.98, 'volume_hands': 386007.0, 'time': '20250624161419', 'updown': 2.97, 'updown_percent': 6.73, 'high': 47.19, 'low': 44.98, 'volume_10k': 179205.0, 'pe': 28.03, 'switch_hand_percent': '2.22', 'swing': '5.01', 'circulation_market_value': 818.52, 'total_market_value': 818.52, 'pb': 3.76, 'pos': 38.818, 'pos1': 57.188}
+-----pe: 28.5
+code: 002463
+name: 沪电股份
+pos: 97.656
+info: {'name': '沪电股份', 'code': '002463', 'price': 42.0, 'yesterday_close': 42.45, 'open': 42.68, 'volume_hands': 633377.0, 'time': '20250624161409', 'updown': -0.45, 'updown_percent': -1.06, 'high': 43.09, 'low': 41.71, 'volume_10k': 267252.0, 'pe': 28.5, 'switch_hand_percent': '3.30', 'swing': '3.25', 'circulation_market_value': 807.3, 'total_market_value': 807.82, 'pb': 6.91, 'pos': 88.065, 'pos1': 97.656}
+-----pe: 29.15
 code: 300433
 name: 蓝思科技
------pe: 30.55
+pos: 87.656
+info: {'name': '蓝思科技', 'code': '300433', 'price': 21.9, 'yesterday_close': 21.2, 'open': 21.32, 'volume_hands': 556637.0, 'time': '20250624161442', 'updown': 0.7, 'updown_percent': 3.3, 'high': 21.92, 'low': 21.3, 'volume_10k': 120622.0, 'pe': 29.15, 'switch_hand_percent': '1.12', 'swing': '2.92', 'circulation_market_value': 1087.49, 'total_market_value': 1091.23, 'pb': 2.32, 'pos': 56.937, 'pos1': 87.656}
+-----pe: 29.65
+code: 002241
+name: 歌尔股份
+pos: 83.75
+info: {'name': '歌尔股份', 'code': '002241', 'price': 23.39, 'yesterday_close': 22.92, 'open': 23.13, 'volume_hands': 778097.0, 'time': '20250624161415', 'updown': 0.47, 'updown_percent': 2.05, 'high': 23.47, 'low': 22.99, 'volume_10k': 181073.0, 'pe': 29.65, 'switch_hand_percent': '2.52', 'swing': '2.09', 'circulation_market_value': 721.42, 'total_market_value': 816.66, 'pb': 2.46, 'pos': 58.397, 'pos1': 83.75}
+-----pe: 30.82
 code: 300015
 name: 爱尔眼科
------pe: 31.93
+pos: 18.594
+info: {'name': '爱尔眼科', 'code': '300015', 'price': 12.25, 'yesterday_close': 11.94, 'open': 11.97, 'volume_hands': 671975.0, 'time': '20250624161439', 'updown': 0.31, 'updown_percent': 2.6, 'high': 12.26, 'low': 11.92, 'volume_10k': 81655.0, 'pe': 30.82, 'switch_hand_percent': '0.85', 'swing': '2.85', 'circulation_market_value': 971.54, 'total_market_value': 1142.36, 'pb': 5.62, 'pos': 19.128, 'pos1': 18.594}
+-----pe: 31.77
+code: 002050
+name: 三花智控
+pos: 63.438
+info: {'name': '三花智控', 'code': '002050', 'price': 25.7, 'yesterday_close': 24.5, 'open': 24.8, 'volume_hands': 1068794.0, 'time': '20250624161500', 'updown': 1.2, 'updown_percent': 4.9, 'high': 25.72, 'low': 24.79, 'volume_10k': 271747.0, 'pe': 31.77, 'switch_hand_percent': '2.91', 'swing': '3.80', 'circulation_market_value': 943.31, 'total_market_value': 1065.72, 'pb': 5.52, 'pos': 48.551, 'pos1': 63.438}
+-----pe: 31.9
 code: 600150
 name: 中国船舶
------pe: 32.08
+pos: 55.703
+info: {'name': '中国船舶', 'code': '600150', 'price': 30.96, 'yesterday_close': 31.04, 'open': 30.82, 'volume_hands': 308793.0, 'time': '20250624161429', 'updown': -0.08, 'updown_percent': -0.26, 'high': 31.04, 'low': 30.76, 'volume_10k': 95458.0, 'pe': 31.9, 'switch_hand_percent': '0.69', 'swing': '0.90', 'circulation_market_value': 1384.66, 'total_market_value': 1384.66, 'pb': 2.72, 'pos': 40.684, 'pos1': 55.703}
+-----pe: 32.31
 code: 601888
 name: 中国中免
------pe: 33.08
-code: 601127
-name: 赛力斯
------pe: 33.11
+pos: 14.688
+info: {'name': '中国中免', 'code': '601888', 'price': 60.88, 'yesterday_close': 59.71, 'open': 59.94, 'volume_hands': 134075.0, 'time': '20250624161407', 'updown': 1.17, 'updown_percent': 1.96, 'high': 60.89, 'low': 59.93, 'volume_10k': 81243.0, 'pe': 32.31, 'switch_hand_percent': '0.69', 'swing': '1.61', 'circulation_market_value': 1188.67, 'total_market_value': 1259.52, 'pb': 2.3, 'pos': 4.57, 'pos1': 14.688}
+-----pe: 33.23
 code: 300059
 name: 东方财富
------pe: 33.17
-code: 600415
-name: 小商品城
------pe: 33.66
+pos: 81.875
+info: {'name': '东方财富', 'code': '300059', 'price': 21.81, 'yesterday_close': 20.93, 'open': 21.0, 'volume_hands': 6091340.0, 'time': '20250624161433', 'updown': 0.88, 'updown_percent': 4.2, 'high': 22.1, 'low': 20.93, 'volume_10k': 1321528.0, 'pe': 33.23, 'switch_hand_percent': '4.55', 'swing': '5.59', 'circulation_market_value': 2917.39, 'total_market_value': 3446.86, 'pb': 4.17, 'pos': 56.791, 'pos1': 81.875}
+-----pe: 33.53
+code: 601127
+name: 赛力斯
+pos: 93.125
+info: {'name': '赛力斯', 'code': '601127', 'price': 132.89, 'yesterday_close': 132.34, 'open': 133.75, 'volume_hands': 189452.0, 'time': '20250624161424', 'updown': 0.55, 'updown_percent': 0.42, 'high': 134.7, 'low': 132.69, 'volume_10k': 253087.0, 'pe': 33.53, 'switch_hand_percent': '1.25', 'swing': '1.52', 'circulation_market_value': 2006.35, 'total_market_value': 2170.58, 'pb': 10.08, 'pos': 87.455, 'pos1': 93.125}
+-----pe: 34.35
 code: 603288
 name: 海天味业
------pe: 34.56
+pos: 40.312
+info: {'name': '海天味业', 'code': '603288', 'price': 38.98, 'yesterday_close': 38.44, 'open': 38.6, 'volume_hands': 153862.0, 'time': '20250624161424', 'updown': 0.54, 'updown_percent': 1.4, 'high': 39.25, 'low': 38.56, 'volume_10k': 59987.0, 'pe': 34.35, 'switch_hand_percent': '0.28', 'swing': '1.80', 'circulation_market_value': 2167.52, 'total_market_value': 2276.29, 'pb': 8.04, 'pos': 19.652, 'pos1': 40.312}
+-----pe: 34.72
 code: 000100
 name: TCL科技
------pe: 35.25
+pos: 67.578
+info: {'name': 'TCL科技', 'code': '000100', 'price': 4.32, 'yesterday_close': 4.33, 'open': 4.34, 'volume_hands': 2127437.0, 'time': '20250624161436', 'updown': -0.01, 'updown_percent': -0.23, 'high': 4.37, 'low': 4.31, 'volume_10k': 92283.0, 'pe': 34.72, 'switch_hand_percent': '1.18', 'swing': '1.39', 'circulation_market_value': 781.9, 'total_market_value': 811.26, 'pb': 1.51, 'pos': 41.336, 'pos1': 67.578}
+-----pe: 35.88
+code: 600415
+name: 小商品城
+pos: 100.0
+info: {'name': '小商品城', 'code': '600415', 'price': 20.7, 'yesterday_close': 19.35, 'open': 19.33, 'volume_hands': 777880.0, 'time': '20250624161420', 'updown': 1.35, 'updown_percent': 6.98, 'high': 20.9, 'low': 19.33, 'volume_10k': 157463.0, 'pe': 35.88, 'switch_hand_percent': '1.42', 'swing': '8.11', 'circulation_market_value': 1134.95, 'total_market_value': 1135.11, 'pb': 5.82, 'pos': 98.84, 'pos1': 100.0}
+-----pe: 35.99
 code: 300124
 name: 汇川技术
------pe: 35.53
-code: 601100
-name: 恒立液压
------pe: 36.33
-code: 002371
-name: 北方华创
------pe: 36.78
+pos: 59.062
+info: {'name': '汇川技术', 'code': '300124', 'price': 64.06, 'yesterday_close': 61.95, 'open': 62.23, 'volume_hands': 260262.0, 'time': '20250624161442', 'updown': 2.11, 'updown_percent': 3.41, 'high': 64.1, 'low': 62.23, 'volume_10k': 165441.0, 'pe': 35.99, 'switch_hand_percent': '1.09', 'swing': '3.02', 'circulation_market_value': 1529.43, 'total_market_value': 1726.61, 'pb': 6.07, 'pos': 59.473, 'pos1': 59.062}
+-----pe: 36.35
 code: 001391
 name: 国货航
------pe: 40.37
+pos: 15.652
+info: {'name': '国货航', 'code': '001391', 'price': 6.77, 'yesterday_close': 6.71, 'open': 6.72, 'volume_hands': 251677.0, 'time': '20250624161500', 'updown': 0.06, 'updown_percent': 0.89, 'high': 6.78, 'low': 6.71, 'volume_10k': 17009.0, 'pe': 36.35, 'switch_hand_percent': '3.00', 'swing': '1.04', 'circulation_market_value': 56.8, 'total_market_value': 826.54, 'pb': 3.22, 'pos': 6.678, 'pos1': 15.652}
+-----pe: 36.86
+code: 601100
+name: 恒立液压
+pos: 87.969
+info: {'name': '恒立液压', 'code': '601100', 'price': 69.39, 'yesterday_close': 66.77, 'open': 67.04, 'volume_hands': 98727.0, 'time': '20250624161422', 'updown': 2.62, 'updown_percent': 3.92, 'high': 69.49, 'low': 67.02, 'volume_10k': 67842.0, 'pe': 36.86, 'switch_hand_percent': '0.74', 'swing': '3.70', 'circulation_market_value': 930.4, 'total_market_value': 930.4, 'pb': 5.67, 'pos': 48.066, 'pos1': 87.969}
+-----pe: 38.4
+code: 002371
+name: 北方华创
+pos: 92.969
+info: {'name': '北方华创', 'code': '002371', 'price': 435.82, 'yesterday_close': 438.57, 'open': 436.99, 'volume_hands': 39203.0, 'time': '20250624161442', 'updown': -2.75, 'updown_percent': -0.63, 'high': 440.57, 'low': 430.37, 'volume_10k': 170261.0, 'pe': 38.4, 'switch_hand_percent': '0.73', 'swing': '2.33', 'circulation_market_value': 2326.03, 'total_market_value': 2328.04, 'pb': 7.13, 'pos': 80.457, 'pos1': 92.969}
+-----pe: 40.28
 code: 600436
 name: 片仔癀
------pe: 42.19
+pos: 2.812
+info: {'name': '片仔癀', 'code': '600436', 'price': 200.46, 'yesterday_close': 198.9, 'open': 199.01, 'volume_hands': 13605.0, 'time': '20250624161408', 'updown': 1.56, 'updown_percent': 0.78, 'high': 200.65, 'low': 199.0, 'volume_10k': 27229.0, 'pe': 40.28, 'switch_hand_percent': '0.23', 'swing': '0.83', 'circulation_market_value': 1209.41, 'total_market_value': 1209.41, 'pb': 7.92, 'pos': 15.665, 'pos1': 2.812}
+-----pe: 42.08
+code: 002594
+name: 比亚迪
+pos: 87.344
+info: {'name': '比亚迪', 'code': '002594', 'price': 343.38, 'yesterday_close': 338.2, 'open': 341.23, 'volume_hands': 144713.0, 'time': '20250624161451', 'updown': 5.18, 'updown_percent': 1.53, 'high': 346.2, 'low': 341.23, 'volume_10k': 497950.0, 'pe': 42.08, 'switch_hand_percent': '1.24', 'swing': '1.47', 'circulation_market_value': 3991.5, 'total_market_value': 18867.58, 'pb': 8.64, 'pos': 71.396, 'pos1': 87.344}
+-----pe: 42.3
 code: 603501
-name: 韦尔股份
------pe: 42.59
+name: 豪威集团
+pos: 89.688
+info: {'name': '豪威集团', 'code': '603501', 'price': 126.21, 'yesterday_close': 123.82, 'open': 124.17, 'volume_hands': 108791.0, 'time': '20250624161406', 'updown': 2.39, 'updown_percent': 1.93, 'high': 126.8, 'low': 124.17, 'volume_10k': 137125.0, 'pe': 42.3, 'switch_hand_percent': '0.89', 'swing': '2.12', 'circulation_market_value': 1535.91, 'total_market_value': 1535.91, 'pb': 6.15, 'pos': 58.955, 'pos1': 89.688}
+-----pe: 42.72
 code: 600547
 name: 山东黄金
------pe: 46.73
+pos: 97.422
+info: {'name': '山东黄金', 'code': '600547', 'price': 31.3, 'yesterday_close': 31.98, 'open': 31.5, 'volume_hands': 341568.0, 'time': '20250624161414', 'updown': -0.68, 'updown_percent': -2.13, 'high': 31.98, 'low': 31.22, 'volume_10k': 107936.0, 'pe': 42.72, 'switch_hand_percent': '0.95', 'swing': '2.38', 'circulation_market_value': 1131.32, 'total_market_value': 1400.18, 'pb': 5.49, 'pos': 78.077, 'pos1': 97.422}
+-----pe: 45.91
 code: 605499
 name: 东鹏饮料
------pe: 48.31
+pos: 98.438
+info: {'name': '东鹏饮料', 'code': '605499', 'price': 321.59, 'yesterday_close': 315.91, 'open': 316.29, 'volume_hands': 13746.0, 'time': '20250624161404', 'updown': 5.68, 'updown_percent': 1.8, 'high': 322.57, 'low': 315.95, 'volume_10k': 44052.0, 'pe': 45.91, 'switch_hand_percent': '0.26', 'swing': '2.10', 'circulation_market_value': 1672.31, 'total_market_value': 1672.31, 'pb': 22.73, 'pos': 92.497, 'pos1': 98.438}
+-----pe: 46.9
 code: 600760
 name: 中航沈飞
------pe: 51.51
-code: 603019
-name: 中科曙光
------pe: 51.75
-code: 300476
-name: 胜宏科技
------pe: 51.89
+pos: 97.344
+info: {'name': '中航沈飞', 'code': '600760', 'price': 52.9, 'yesterday_close': 53.04, 'open': 52.0, 'volume_hands': 325887.0, 'time': '20250624161401', 'updown': -0.14, 'updown_percent': -0.26, 'high': 54.0, 'low': 51.84, 'volume_10k': 172548.0, 'pe': 46.9, 'switch_hand_percent': '1.19', 'swing': '4.07', 'circulation_market_value': 1453.79, 'total_market_value': 1457.77, 'pb': 8.68, 'pos': 70.374, 'pos1': 97.344}
+-----pe: 50.59
 code: 600276
 name: 恒瑞医药
------pe: 53.13
+pos: 95.938
+info: {'name': '恒瑞医药', 'code': '600276', 'price': 52.15, 'yesterday_close': 51.96, 'open': 52.09, 'volume_hands': 451035.0, 'time': '20250624161420', 'updown': 0.19, 'updown_percent': 0.37, 'high': 52.5, 'low': 51.73, 'volume_10k': 234721.0, 'pe': 50.59, 'switch_hand_percent': '0.71', 'swing': '1.48', 'circulation_market_value': 3326.65, 'total_market_value': 3461.3, 'pb': 7.57, 'pos': 76.687, 'pos1': 95.938}
+-----pe: 50.81
+code: 603019
+name: 中科曙光
+pos: 87.656
+info: {'name': '中科曙光', 'code': '603019', 'price': 67.9, 'yesterday_close': 66.64, 'open': 66.87, 'volume_hands': 307421.0, 'time': '20250624161408', 'updown': 1.26, 'updown_percent': 1.89, 'high': 68.44, 'low': 66.81, 'volume_10k': 208533.0, 'pe': 50.81, 'switch_hand_percent': '2.11', 'swing': '2.45', 'circulation_market_value': 990.4, 'total_market_value': 993.46, 'pb': 4.92, 'pos': 68.34, 'pos1': 87.656}
+-----pe: 52.81
 code: 688008
 name: 澜起科技
------pe: 60.17
+pos: 96.562
+info: {'name': '澜起科技', 'code': '688008', 'price': 79.05, 'yesterday_close': 78.01, 'open': 78.85, 'volume_hands': 22733172.0, 'time': '20250624161453', 'updown': 1.04, 'updown_percent': 1.33, 'high': 80.17, 'low': 78.48, 'volume_10k': 180253.0, 'pe': 52.81, 'switch_hand_percent': '1.99', 'swing': '2.17', 'circulation_market_value': 904.96, 'total_market_value': 904.96, 'pb': 7.85, 'pos': 83.063, 'pos1': 96.562}
+-----pe: 53.88
+code: 300476
+name: 胜宏科技
+pos: 99.688
+info: {'name': '胜宏科技', 'code': '300476', 'price': 116.5, 'yesterday_close': 113.2, 'open': 113.92, 'volume_hands': 338985.0, 'time': '20250624161412', 'updown': 3.3, 'updown_percent': 2.92, 'high': 117.5, 'low': 113.5, 'volume_10k': 390413.0, 'pe': 53.88, 'switch_hand_percent': '3.96', 'swing': '3.53', 'circulation_market_value': 996.32, 'total_market_value': 1005.03, 'pb': 10.39, 'pos': 97.207, 'pos1': 99.688}
+-----pe: 60.03
 code: 601989
 name: 中国重工
------pe: 61.42
+pos: 54.141
+info: {'name': '中国重工', 'code': '601989', 'price': 4.46, 'yesterday_close': 4.46, 'open': 4.46, 'volume_hands': 779591.0, 'time': '20250624161423', 'updown': 0.0, 'updown_percent': 0.0, 'high': 4.48, 'low': 4.43, 'volume_10k': 34754.0, 'pe': 60.03, 'switch_hand_percent': '0.34', 'swing': '1.12', 'circulation_market_value': 1016.97, 'total_market_value': 1016.97, 'pb': 1.21, 'pos': 41.124, 'pos1': 54.141}
+-----pe: 61.09
 code: 300999
 name: 金龙鱼
------pe: 64.44
-code: 688012
-name: 中微公司
------pe: 66.58
+pos: 13.125
+info: {'name': '金龙鱼', 'code': '300999', 'price': 29.31, 'yesterday_close': 28.97, 'open': 29.01, 'volume_hands': 50160.0, 'time': '20250624161406', 'updown': 0.34, 'updown_percent': 1.17, 'high': 29.33, 'low': 28.9, 'volume_10k': 14658.0, 'pe': 61.09, 'switch_hand_percent': '0.92', 'swing': '1.48', 'circulation_market_value': 159.05, 'total_market_value': 1589.07, 'pb': 1.69, 'pos': 20.856, 'pos1': 13.125}
+-----pe: 63.66
 code: 600111
 name: 北方稀土
------pe: 70.96
+pos: 73.75
+info: {'name': '北方稀土', 'code': '600111', 'price': 24.35, 'yesterday_close': 24.08, 'open': 24.1, 'volume_hands': 416274.0, 'time': '20250624161422', 'updown': 0.27, 'updown_percent': 1.12, 'high': 24.42, 'low': 23.95, 'volume_10k': 101183.0, 'pe': 63.66, 'switch_hand_percent': '1.15', 'swing': '1.95', 'circulation_market_value': 880.27, 'total_market_value': 880.27, 'pb': 3.87, 'pos': 58.448, 'pos1': 73.75}
+-----pe: 66.79
+code: 688012
+name: 中微公司
+pos: 76.406
+info: {'name': '中微公司', 'code': '688012', 'price': 179.16, 'yesterday_close': 178.63, 'open': 178.5, 'volume_hands': 5187513.0, 'time': '20250624161435', 'updown': 0.53, 'updown_percent': 0.3, 'high': 179.66, 'low': 177.52, 'volume_10k': 92689.0, 'pe': 66.79, 'switch_hand_percent': '0.83', 'swing': '1.20', 'circulation_market_value': 1121.8, 'total_market_value': 1121.8, 'pb': 5.5, 'pos': 51.954, 'pos1': 76.406}
+-----pe: 72.66
 code: 603986
 name: 兆易创新
------pe: 74.51
+pos: 89.531
+info: {'name': '兆易创新', 'code': '603986', 'price': 123.91, 'yesterday_close': 120.21, 'open': 122.26, 'volume_hands': 167500.0, 'time': '20250624161406', 'updown': 3.7, 'updown_percent': 3.08, 'high': 124.9, 'low': 121.9, 'volume_10k': 207478.0, 'pe': 72.66, 'switch_hand_percent': '2.52', 'swing': '2.50', 'circulation_market_value': 822.41, 'total_market_value': 822.84, 'pb': 4.9, 'pos': 74.394, 'pos1': 89.531}
+-----pe: 73.95
 code: 300033
 name: 同花顺
------pe: 76.05
+pos: 79.375
+info: {'name': '同花顺', 'code': '300033', 'price': 253.09, 'yesterday_close': 238.52, 'open': 239.29, 'volume_hands': 146575.0, 'time': '20250624161439', 'updown': 14.57, 'updown_percent': 6.11, 'high': 254.58, 'low': 238.5, 'volume_10k': 365898.0, 'pe': 73.95, 'switch_hand_percent': '5.32', 'swing': '6.74', 'circulation_market_value': 697.28, 'total_market_value': 1360.61, 'pb': 21.0, 'pos': 61.581, 'pos1': 79.375}
+-----pe: 74.01
 code: 688111
 name: 金山办公
------pe: 82.44
+pos: 28.906
+info: {'name': '金山办公', 'code': '688111', 'price': 268.57, 'yesterday_close': 262.51, 'open': 263.88, 'volume_hands': 3345065.0, 'time': '20250624161448', 'updown': 6.06, 'updown_percent': 2.31, 'high': 269.5, 'low': 262.66, 'volume_10k': 89542.0, 'pe': 74.01, 'switch_hand_percent': '0.72', 'swing': '2.61', 'circulation_market_value': 1243.96, 'total_market_value': 1243.96, 'pb': 10.51, 'pos': 28.031, 'pos1': 28.906}
+-----pe: 82.82
 code: 688271
 name: 联影医疗
------pe: 93.56
+pos: 37.656
+info: {'name': '联影医疗', 'code': '688271', 'price': 127.48, 'yesterday_close': 128.1, 'open': 128.3, 'volume_hands': 3288842.0, 'time': '20250624161439', 'updown': -0.62, 'updown_percent': -0.48, 'high': 128.5, 'low': 127.02, 'volume_10k': 41951.0, 'pe': 82.82, 'switch_hand_percent': '0.55', 'swing': '1.16', 'circulation_market_value': 756.34, 'total_market_value': 1050.64, 'pb': 5.18, 'pos': 28.386, 'pos1': 37.656}
+-----pe: 94.21
 code: 600104
 name: 上汽集团
------pe: 111.3
+pos: 84.531
+info: {'name': '上汽集团', 'code': '600104', 'price': 16.08, 'yesterday_close': 15.58, 'open': 15.68, 'volume_hands': 307561.0, 'time': '20250624161407', 'updown': 0.5, 'updown_percent': 3.21, 'high': 16.08, 'low': 15.67, 'volume_10k': 48972.0, 'pe': 94.21, 'switch_hand_percent': '0.27', 'swing': '2.63', 'circulation_market_value': 1861.31, 'total_market_value': 1861.31, 'pb': 0.64, 'pos': 46.789, 'pos1': 84.531}
+-----pe: 108.64
 code: 002493
 name: 荣盛石化
+pos: 3.594
+info: {'name': '荣盛石化', 'code': '002493', 'price': 8.16, 'yesterday_close': 8.12, 'open': 8.1, 'volume_hands': 266377.0, 'time': '20250624161451', 'updown': 0.04, 'updown_percent': 0.49, 'high': 8.18, 'low': 8.03, 'volume_10k': 21623.0, 'pe': 108.64, 'switch_hand_percent': '0.28', 'swing': '1.85', 'circulation_market_value': 775.06, 'total_market_value': 826.24, 'pb': 1.9, 'pos': 6.759, 'pos1': 3.594}
 -----pe: 122.51
 code: 601727
 name: 上海电气
------pe: 122.91
+pos: 81.25
+info: {'name': '上海电气', 'code': '601727', 'price': 7.28, 'yesterday_close': 7.22, 'open': 7.23, 'volume_hands': 871395.0, 'time': '20250624161420', 'updown': 0.06, 'updown_percent': 0.83, 'high': 7.31, 'low': 7.22, 'volume_10k': 63343.0, 'pe': 122.51, 'switch_hand_percent': '0.69', 'swing': '1.25', 'circulation_market_value': 921.31, 'total_market_value': 1134.21, 'pb': 2.12, 'pos': 43.468, 'pos1': 81.25}
+-----pe: 125.08
 code: 002625
 name: 光启技术
------pe: 133.63
+pos: 77.5
+info: {'name': '光启技术', 'code': '002625', 'price': 38.7, 'yesterday_close': 38.08, 'open': 38.25, 'volume_hands': 206176.0, 'time': '20250624161442', 'updown': 0.62, 'updown_percent': 1.63, 'high': 38.95, 'low': 38.25, 'volume_10k': 79709.0, 'pe': 125.08, 'switch_hand_percent': '0.96', 'swing': '1.84', 'circulation_market_value': 833.82, 'total_market_value': 833.83, 'pb': 9.18, 'pos': 70.791, 'pos1': 77.5}
+-----pe: 131.83
 code: 600893
 name: 航发动力
------pe: 145.73
-code: 688981
-name: 中芯国际
------pe: 149.68
+pos: 24.062
+info: {'name': '航发动力', 'code': '600893', 'price': 35.26, 'yesterday_close': 35.05, 'open': 34.87, 'volume_hands': 241373.0, 'time': '20250624161404', 'updown': 0.21, 'updown_percent': 0.6, 'high': 35.61, 'low': 34.46, 'volume_10k': 84288.0, 'pe': 131.83, 'switch_hand_percent': '0.91', 'swing': '3.28', 'circulation_market_value': 939.72, 'total_market_value': 939.89, 'pb': 2.36, 'pos': 34.403, 'pos1': 24.062}
+-----pe: 148.37
 code: 688041
 name: 海光信息
------pe: 165.92
+pos: 86.719
+info: {'name': '海光信息', 'code': '688041', 'price': 137.14, 'yesterday_close': 133.58, 'open': 134.0, 'volume_hands': 19608053.0, 'time': '20250624161444', 'updown': 3.56, 'updown_percent': 2.67, 'high': 138.12, 'low': 133.6, 'volume_10k': 267475.0, 'pe': 148.37, 'switch_hand_percent': '2.21', 'swing': '3.38', 'circulation_market_value': 1215.82, 'total_market_value': 3187.6, 'pb': 15.63, 'pos': 74.349, 'pos1': 86.719}
+-----pe: 149.58
+code: 688981
+name: 中芯国际
+pos: 87.0
+info: {'name': '中芯国际', 'code': '688981', 'price': 85.15, 'yesterday_close': 84.25, 'open': 84.25, 'volume_hands': 30936689.0, 'time': '20250624161458', 'updown': 0.9, 'updown_percent': 1.07, 'high': 85.37, 'low': 84.09, 'volume_10k': 262850.0, 'pe': 149.58, 'switch_hand_percent': '1.56', 'swing': '1.52', 'circulation_market_value': 1693.09, 'total_market_value': 6800.03, 'pb': 4.55, 'pos': 66.78, 'pos1': 87.0}
+-----pe: 161.9
 code: 002230
 name: 科大讯飞
------pe: 199.2
+pos: 46.406
+info: {'name': '科大讯飞', 'code': '002230', 'price': 46.74, 'yesterday_close': 46.02, 'open': 46.17, 'volume_hands': 206281.0, 'time': '20250624161445', 'updown': 0.72, 'updown_percent': 1.56, 'high': 46.75, 'low': 46.0, 'volume_10k': 95998.0, 'pe': 161.9, 'switch_hand_percent': '0.94', 'swing': '1.63', 'circulation_market_value': 1023.21, 'total_market_value': 1080.49, 'pb': 6.05, 'pos': 31.129, 'pos1': 46.406}
+-----pe: 198.18
 code: 601698
 name: 中国卫通
------pe: 335.11
+pos: 74.219
+info: {'name': '中国卫通', 'code': '601698', 'price': 19.55, 'yesterday_close': 19.46, 'open': 19.39, 'volume_hands': 134384.0, 'time': '20250624161401', 'updown': 0.09, 'updown_percent': 0.46, 'high': 19.57, 'low': 19.31, 'volume_10k': 26151.0, 'pe': 198.18, 'switch_hand_percent': '0.32', 'swing': '1.34', 'circulation_market_value': 825.87, 'total_market_value': 825.87, 'pb': 5.23, 'pos': 49.269, 'pos1': 74.219}
+-----pe: 325.9
 code: 600010
 name: 包钢股份
------pe: 450.95
+pos: 46.016
+info: {'name': '包钢股份', 'code': '600010', 'price': 1.77, 'yesterday_close': 1.75, 'open': 1.75, 'volume_hands': 2227312.0, 'time': '20250624161426', 'updown': 0.02, 'updown_percent': 1.14, 'high': 1.77, 'low': 1.74, 'volume_10k': 39241.0, 'pe': 325.9, 'switch_hand_percent': '0.71', 'swing': '1.71', 'circulation_market_value': 555.44, 'total_market_value': 801.61, 'pb': 1.54, 'pos': 42.268, 'pos1': 46.016}
+-----pe: 493.83
 code: 688347
 name: 华虹公司
------pe: 1921.76
+pos: 91.74
+info: {'name': '华虹公司', 'code': '688347', 'price': 51.95, 'yesterday_close': 51.98, 'open': 52.03, 'volume_hands': 10677586.0, 'time': '20250624161451', 'updown': -0.03, 'updown_percent': -0.06, 'high': 52.64, 'low': 51.15, 'volume_10k': 55319.0, 'pe': 493.83, 'switch_hand_percent': '2.73', 'swing': '2.87', 'circulation_market_value': 203.35, 'total_market_value': 896.77, 'pb': 2.05, 'pos': 71.732, 'pos1': 91.74}
+-----pe: 1952.96
 code: 688256
 name: 寒武纪-U
-high_pos_stocks: ['sz000333美的集团81.777当前价:71.26', 'sz000338潍柴动力70.873当前价:15.33', 'sz000651格力电器75.032当前价:44.6', 'sz000776广发证券76.141当前价:16.87', 'sz001965招商公路73.125当前价:12.16', 'sz002027分众传媒84.282当前价:7.09', 'sz002311海大集团83.342当前价:59.46', 'sz002371北方华创72.011当前价:412.39', 'sz002594比亚迪71.804当前价:344.43', 'sz300476胜宏科技97.576当前价:111.9', 'sz300502新易盛92.853当前价:106.7', 'sz300750宁德时代70.455当前价:246.66', 'sh600000浦发银行99.697当前价:12.58', 'sh600015华夏银行94.309当前价:7.88', 'sh600016民生银行99.052当前价:4.8', 'sh600019宝钢股份73.042当前价:6.64', 'sh600036招商银行98.639当前价:45.78', 'sh600039四川路桥90.813当前价:9.7', 'sh600276恒瑞医药83.933当前价:53.76', 'sh600415小商品城96.119当前价:19.14', 'sh600547山东黄金78.205当前价:31.21', 'sh600660福耀玻璃87.318当前价:57.95', 'sh600760中航沈飞75.884当前价:54.49', 'sh600887伊利股份75.254当前价:28.06', 'sh600900长江电力88.639当前价:30.46', 'sh600919江苏银行99.84当前价:11.71', 'sh600926杭州银行96.005当前价:16.59', 'sh600941中国移动93.479当前价:113.06', 'sh600989宝丰能源73.908当前价:16.51', 'sh601009南京银行99.474当前价:11.82', 'sh601077渝农商行90.204当前价:7.29', 'sh601127赛力斯86.032当前价:131.11', 'sh601166兴业银行96.823当前价:23.96', 'sh601169北京银行100.0当前价:6.65', 'sh601229上海银行90.751当前价:10.47', 'sh601288农业银行97.765当前价:5.63', 'sh601318中国平安75.444当前价:54.32', 'sh601319中国人保98.657当前价:8.71', 'sh601328交通银行98.669当前价:7.76', 'sh601336新华保险95.21当前价:55.71', 'sh601398工商银行95.102当前价:7.14', 'sh601601中国太保75.968当前价:36.49', 'sh601658邮储银行94.099当前价:5.42', 'sh601728中国电信85.379当前价:7.75', 'sh601818光大银行98.384当前价:4.08', 'sh601825沪农商行92.295当前价:10.03', 'sh601838成都银行98.79当前价:19.6', 'sh601857中国石油76.374当前价:9.02', 'sh601881中国银河76.458当前价:16.75', 'sh601899紫金矿业93.927当前价:18.82', 'sh601916浙商银行100.0当前价:3.44', 'sh601919中远海控92.66当前价:16.12', 'sh601939建设银行93.823当前价:9.0', 'sh601988中国银行89.084当前价:5.38', 'sh601998中信银行97.445当前价:8.43', 'sh603019中科曙光70.28当前价:68.82', 'sh603986兆易创新71.254当前价:121.01', 'sh605499东鹏饮料95.095当前价:327.35', 'sh688008澜起科技84.148当前价:79.54', 'sh688041海光信息75.425当前价:138.35', 'sh688256寒武纪-U71.342当前价:597.55']
+pos: 89.9
+info: {'name': '寒武纪-U', 'code': '688256', 'price': 607.25, 'yesterday_close': 568.0, 'open': 574.2, 'volume_hands': 8834966.0, 'time': '20250624161450', 'updown': 39.25, 'updown_percent': 6.91, 'high': 616.58, 'low': 574.0, 'volume_10k': 531392.0, 'pe': 1952.96, 'switch_hand_percent': '2.12', 'swing': '7.50', 'circulation_market_value': 2535.01, 'total_market_value': 2535.01, 'pb': 43.49, 'pos': 72.598, 'pos1': 89.9}
+-------------------------
+high_pos_stocks: ['sz000001平安银行93.359当前价:11.93', 'sz000166申万宏源80.156当前价:4.93', 'sz000333美的集团95.312当前价:72.8', 'sz000338潍柴动力87.031当前价:15.6', 'sz000425徐工机械79.609当前价:7.75', 'sz000538云南白药80.625当前价:55.4', 'sz000617中油资本85.781当前价:7.27', 'sz000651格力电器92.344当前价:44.9', 'sz000776广发证券95.625当前价:16.82', 'sz001965招商公路75.156当前价:12.18', 'sz002027分众传媒88.203当前价:7.09', 'sz002142宁波银行84.375当前价:27.23', 'sz002241歌尔股份83.75当前价:23.39', 'sz002311海大集团89.688当前价:59.31', 'sz002352顺丰控股84.219当前价:50.7', 'sz002371北方华创92.969当前价:435.82', 'sz002463沪电股份97.656当前价:42.0', 'sz002594比亚迪87.344当前价:343.38', 'sz002625光启技术77.5当前价:38.7', 'sz002736国信证券95.391当前价:11.27', 'sz300033同花顺79.375当前价:253.09', 'sz300059东方财富81.875当前价:21.81', 'sz300308中际旭创83.619当前价:125.25', 'sz300433蓝思科技87.656当前价:21.9', 'sz300476胜宏科技99.688当前价:116.5', 'sz300502新易盛99.062当前价:106.71', 'sz300750宁德时代80.187当前价:245.92', 'sh600000浦发银行99.922当前价:13.31', 'sh600015华夏银行99.844当前价:8.3', 'sh600016民生银行99.453当前价:4.79', 'sh600018上港集团82.031当前价:5.84', 'sh600025华能水电82.422当前价:9.72', 'sh600030中信证券82.656当前价:26.91', 'sh600031三一重工86.875当前价:18.0', 'sh600036招商银行100.0当前价:46.75', 'sh600039四川路桥99.531当前价:9.89', 'sh600050中国联通81.875当前价:5.33', 'sh600104上汽集团84.531当前价:16.08', 'sh600111北方稀土73.75当前价:24.35', 'sh600276恒瑞医药95.938当前价:52.15', 'sh600415小商品城100.0当前价:20.7', 'sh600547山东黄金97.422当前价:31.3', 'sh600660福耀玻璃92.266当前价:57.47', 'sh600760中航沈飞97.344当前价:52.9', 'sh600795国电电力70.625当前价:4.7', 'sh600887伊利股份80.625当前价:27.67', 'sh600900长江电力98.438当前价:30.58', 'sh600919江苏银行99.922当前价:11.93', 'sh600926杭州银行100.0当前价:17.16', 'sh600941中国移动96.875当前价:112.68', 'sh600989宝丰能源89.531当前价:16.33', 'sh600999招商证券79.219当前价:17.11', 'sh601009南京银行99.688当前价:11.71', 'sh601077渝农商行99.062当前价:7.53', 'sh601088中国神华80.547当前价:39.85', 'sh601100恒立液压87.969当前价:69.39', 'sh601127赛力斯93.125当前价:132.89', 'sh601166兴业银行100.0当前价:23.85', 'sh601169北京银行99.844当前价:6.92', 'sh601211国泰海通91.094当前价:18.6', 'sh601229上海银行99.219当前价:10.85', 'sh601288农业银行100.0当前价:5.96', 'sh601318中国平安96.875当前价:56.79', 'sh601319中国人保100.0当前价:9.0', 'sh601328交通银行100.0当前价:8.19', 'sh601336新华保险100.0当前价:58.43', 'sh601398工商银行100.0当前价:7.63', 'sh601601中国太保96.25当前价:36.72', 'sh601628中国人寿90.781当前价:41.45', 'sh601658邮储银行99.844当前价:5.61', 'sh601668中国建筑86.562当前价:5.8', 'sh601688华泰证券86.797当前价:17.41', 'sh601698中国卫通74.219当前价:19.55', 'sh601727上海电气81.25当前价:7.28', 'sh601728中国电信96.875当前价:7.91', 'sh601788光大证券89.766当前价:17.8', 'sh601816京沪高铁87.578当前价:5.77', 'sh601818光大银行100.0当前价:4.25', 'sh601825沪农商行99.375当前价:10.09', 'sh601838成都银行99.688当前价:20.23', 'sh601857中国石油85.391当前价:8.96', 'sh601881中国银河98.438当前价:17.01', 'sh601899紫金矿业98.906当前价:18.54', 'sh601916浙商银行99.844当前价:3.58', 'sh601919中远海控97.422当前价:16.19', 'sh601939建设银行100.0当前价:9.48', 'sh601988中国银行99.922当前价:5.71', 'sh601998中信银行99.375当前价:8.59', 'sh603019中科曙光87.656当前价:67.9', 'sh603501豪威集团89.688当前价:126.21', 'sh603986兆易创新89.531当前价:123.91', 'sh603993洛阳钼业83.281当前价:7.89', 'sh605499东鹏饮料98.438当前价:321.59', 'sh688008澜起科技96.562当前价:79.05', 'sh688012中微公司76.406当前价:179.16', 'sh688041海光信息86.719当前价:137.14', 'sh688256寒武纪-U89.9当前价:607.25', 'sh688347华虹公司91.74当前价:51.95', 'sh688981中芯国际87.0当前价:85.15']
 ---
-low_pos_stocks: ['sz000568泸州老窖7.138当前价:108.8', 'sz000625长安汽车22.508当前价:12.74', 'sz000792盐湖股份24.771当前价:16.61', 'sz000858五 粮 液13.811当前价:118.27', 'sz001391国货航7.98当前价:6.85', 'sz001979招商蛇口18.359当前价:8.92', 'sz002304洋河股份2.321当前价:65.88', 'sz002415海康威视15.872当前价:27.59', 'sz002493荣盛石化9.243当前价:8.36', 'sz300014亿纬锂能18.826当前价:42.67', 'sz300015爱尔眼科18.501当前价:12.14', 'sz300274阳光电源17.126当前价:63.25', 'sz300498温氏股份28.907当前价:17.31', 'sz300760迈瑞医疗22.2当前价:236.61', 'sz300999金龙鱼21.545当前价:29.47', 'sh600011华能国际27.857当前价:7.32', 'sh600048保利发展9.588当前价:8.24', 'sh600188兖矿能源27.774当前价:12.9', 'sh600309万华化学1.926当前价:54.13', 'sh600436片仔癀15.941当前价:200.87', 'sh600585海螺水泥25.532当前价:22.17', 'sh600600青岛啤酒24.749当前价:70.19', 'sh600809山西汾酒16.862当前价:172.22', 'sh600905三峡能源12.837当前价:4.24', 'sh601186中国铁建26.88当前价:7.88', 'sh601390中国中铁20.69当前价:5.51', 'sh601633长城汽车16.002当前价:21.46', 'sh601669中国电建14.417当前价:4.83', 'sh601888中国中免3.766当前价:60.45', 'sh603288海天味业22.647当前价:40.12', 'sh688271联影医疗27.924当前价:126.9']
+low_pos_stocks: ['sz000568泸州老窖4.688当前价:114.23', 'sz000858五 粮 液5.938当前价:119.75', 'sz001289龙源电力12.188当前价:16.11', 'sz001391国货航15.652当前价:6.77', 'sz002304洋河股份0.625当前价:65.68', 'sz002415海康威视10.469当前价:27.61', 'sz002493荣盛石化3.594当前价:8.16', 'sz300015爱尔眼科18.594当前价:12.25', 'sz300274阳光电源28.438当前价:65.23', 'sz300498温氏股份29.922当前价:17.0', 'sz300760迈瑞医疗5.304当前价:224.84', 'sz300999金龙鱼13.125当前价:29.31', 'sh600011华能国际28.125当前价:7.19', 'sh600048保利发展5.469当前价:7.97', 'sh600188兖矿能源15.781当前价:12.23', 'sh600309万华化学0.469当前价:53.24', 'sh600436片仔癀2.812当前价:200.46', 'sh600519贵州茅台12.656当前价:1437.2', 'sh600585海螺水泥14.297当前价:21.97', 'sh600600青岛啤酒25.078当前价:70.77', 'sh600809山西汾酒10.469当前价:179.39', 'sh600893航发动力24.062当前价:35.26', 'sh600905三峡能源14.219当前价:4.26', 'sh601390中国中铁22.812当前价:5.58', 'sh601633长城汽车2.031当前价:21.36', 'sh601669中国电建19.922当前价:4.86', 'sh601888中国中免14.688当前价:60.88', 'sh688111金山办公28.906当前价:268.57']
+
+Process finished with exit code 0
