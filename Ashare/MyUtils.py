@@ -29,6 +29,9 @@ def get_from_gtime(code):
     str = requests.get(URL).content
     str = str.decode('GBK')
     array = str.split('~')
+    if len(array) <= 45:
+        map = {}
+        return map
     map= {'name': array[1],
              'code': array[2], #代码
              'price': float(array[3].strip()) if len(array[3].strip())>0 else 0.00, #当前价

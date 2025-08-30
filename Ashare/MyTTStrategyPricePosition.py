@@ -5,7 +5,7 @@ import MyTT;
 from Ashare import *
 
 stock_code_index_end=-1
-day_count=1000
+day_count=1999
 stock_code_index_start = 0
 
 #读A股全量股票文件
@@ -23,6 +23,7 @@ pe_map_pos={}
 pe_map_info={}
 
 with open('all_stocks_basic.txt', 'r', encoding='utf-8') as file:
+#with open('all_stocks_hk.txt', 'r', encoding='utf-8') as file:
     lines = file.readlines()
     for line in lines[0:]:
         array=line.split()
@@ -37,6 +38,8 @@ while stock_code_index < len(allstockcode_array):
     stock_code = allstockcode_array[stock_code_index]
     stock_price_df = MyUtils.get_price_tx(stock_code, frequency='1d', count=day_count)
     stock_map = MyUtils.get_from_gtime(stock_code)
+    if len(stock_map) == 0:
+        continue
     if stock_code[2:] != stock_map['code']:
         print('数据有问题！')
         break
