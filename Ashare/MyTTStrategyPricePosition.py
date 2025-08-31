@@ -45,7 +45,7 @@ while stock_code_index < len(allstockcode_array):
         break
     print(stock_code_index, stock_code, stock_map['name'],'--------------------------------------------------------')
     # 参考stock_map
-    if stock_map['total_market_value'] < 800 or stock_map['pe'] <= 0:
+    if stock_map['total_market_value'] < 500 or stock_map['pe'] <= 0:
         stock_code_index = stock_code_index + 1
         continue
     print(stock_code_index, stock_code, stock_map['name'],'--------------------------------------------------------')
