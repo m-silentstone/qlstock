@@ -21,9 +21,9 @@ pe_map_code={}
 pe_map_name={}
 pe_map_pos={}
 pe_map_info={}
-
-with open('all_stocks_basic.txt', 'r', encoding='utf-8') as file:
-#with open('all_stocks_hk.txt', 'r', encoding='utf-8') as file:
+print(time.strftime("------ %Y-%m-%d %H:%M:%S ------", time.localtime()))
+#with open('all_stocks_basic.txt', 'r', encoding='utf-8') as file:
+with open('all_stocks_hk.txt', 'r', encoding='utf-8') as file:
     lines = file.readlines()
     for line in lines[0:]:
         array=line.split()
