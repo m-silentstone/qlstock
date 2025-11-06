@@ -43,7 +43,7 @@ ETF_POOL = [
 ]
 
 print(time.strftime("------ %Y-%m-%d %H:%M:%S ------", time.localtime()))
-get_top_momentum_etf(ETF_POOL)
+print(get_top_momentum_etf(ETF_POOL))
 
 
 
