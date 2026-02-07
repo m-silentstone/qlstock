@@ -1,17 +1,23 @@
 import math
 
+from pandas.core.interchange.dataframe_protocol import DataFrame
+
 import MyUtils;import time;
+import matplotlib.pyplot as plt ;from matplotlib.ticker import MultipleLocator
 import MyTT;
 from Ashare import *
 stock_count=1
 day_count=150
+plot_code='sz000001'
+plot_df = None
+
 #读A股全量股票文件
 allstockcode_array=[]
 with open('all_stocks_basic.txt', 'r', encoding='utf-8') as file:
     lines = file.readlines()
     for line in lines[0:]:
         array=line.split()
-        code_array=array[1].split('.')
+        code_array=array[0].split('.')
         allstockcode_array.append(str(code_array[1]+code_array[0]).lower())
 
 i=0
@@ -160,6 +166,8 @@ for stock_code in allstockcode_array:
                            ):
         print(stock_price_df)
     print(stock_map)
+    if stock_code == plot_code:
+        plot_df = stock_price_df
     time.sleep(1)
 
 
@@ -173,6 +181,13 @@ for stock_code in allstockcode_array:
 # def sell_check(code, stock_price_df, stockHoldInfo):
 #     hold_info.positions[code].closeable_amount
 
-
-
+# 绘图------------------------------------------------
+if plot_df is not None:
+    plt.ylabel(plot_code)
+    plt.plot(plot_df.index, plot_df.close.values, marker = '.')
+    # 布林带
+    plt.plot(plot_df.index, plot_df['BOLL_UPPER'].values, 'r-')
+    plt.plot(plot_df.index, plot_df['BOLL_MID'].values, 'r-')
+    plt.plot(plot_df.index, plot_df['BOLL_LOWER'].values, 'r-')
+    plt.show()
 
