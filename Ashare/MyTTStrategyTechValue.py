@@ -1,5 +1,6 @@
 import math
 
+import numpy as np
 from pandas.core.interchange.dataframe_protocol import DataFrame
 
 import MyUtils;import time;
@@ -7,9 +8,9 @@ import matplotlib.pyplot as plt ;from matplotlib.ticker import MultipleLocator
 import MyTT;
 from Ashare import *
 stock_count=1
-day_count=150
+day_count=500
 plot_code='sz000001'
-plot_df = None
+high_low_threshhold = 0.15
 
 #读A股全量股票文件
 allstockcode_array=[]
@@ -20,6 +21,8 @@ with open('all_stocks_basic.txt', 'r', encoding='utf-8') as file:
         code_array=array[0].split('.')
         allstockcode_array.append(str(code_array[1]+code_array[0]).lower())
 
+plot_df = None
+plot_map = None
 i=0
 for stock_code in allstockcode_array:
     i = i + 1
@@ -122,6 +125,14 @@ for stock_code in allstockcode_array:
     MFI = MyUtils.mfi(CLOSE,HIGH,LOW,VOLUME,14)
     stock_price_df['MFI'] = MFI
 
+    hlpoint_map = {}
+    hlpoint_map['change_close'] = []
+    hlpoint_map['change_date'] = []
+    current_close = stock_price_df.iloc[0]['close']
+    current_date = stock_price_df.index[0]
+    hlpoint_map['change_close'].append(current_close)
+    hlpoint_map['change_date'].append(current_date)
+    hlpoint_map_flag = None
     for index, row in stock_price_df.iterrows():
         # status列
         change=abs(float(row['close'])-float(row['open']))
@@ -158,7 +169,41 @@ for stock_code in allstockcode_array:
         if row['RSI24'] > 65 or row['RSI24'] < 35:
             stock_price_df.loc[index, 'status'] += 'RSI='+str(row['RSI24'])+','
 
-
+        # 趋势高低点
+        change_ratio = (stock_price_df.loc[index, 'close'] - current_close) * 1.0 / current_close
+        if np.abs(change_ratio) >= high_low_threshhold:
+            print("记录标识点---")
+        print('高低点判断：', index, stock_price_df.loc[index, 'close'], current_close, change_ratio)
+        if hlpoint_map_flag is None:
+            if (stock_price_df.loc[index, 'close'] - current_close)*1.0 / current_close >= high_low_threshhold:
+                hlpoint_map_flag = 'up'
+                current_close = stock_price_df.loc[index, 'close']
+                current_date = index
+            elif (stock_price_df.loc[index, 'close'] - current_close)*(-1.0) / current_close >= high_low_threshhold:
+                hlpoint_map_flag = 'down'
+                current_close = stock_price_df.loc[index, 'close']
+                current_date = index
+        else:
+            if hlpoint_map_flag == 'up':
+                if current_close < stock_price_df.loc[index, 'close']:
+                    current_close = stock_price_df.loc[index, 'close']
+                    current_date = index
+                elif (stock_price_df.loc[index, 'close'] - current_close)*(-1.0) / current_close >= high_low_threshhold:
+                    hlpoint_map['change_close'].append(current_close)
+                    hlpoint_map['change_date'].append(current_date)
+                    current_close = stock_price_df.loc[index, 'close']
+                    current_date = index
+                    hlpoint_map_flag = 'down'
+            elif hlpoint_map_flag == 'down':
+                if current_close > stock_price_df.loc[index, 'close']:
+                    current_close = stock_price_df.loc[index, 'close']
+                    current_date = index
+                elif (stock_price_df.loc[index, 'close'] - current_close) * 1.0 / current_close >= high_low_threshhold:
+                    hlpoint_map['change_close'].append(current_close)
+                    hlpoint_map['change_date'].append(current_date)
+                    current_close = stock_price_df.loc[index, 'close']
+                    current_date = index
+                    hlpoint_map_flag = 'up'
     #print(stock_price_df)
     with pd.option_context('display.max_rows', None,
                            'display.max_columns', None,
@@ -168,26 +213,17 @@ for stock_code in allstockcode_array:
     print(stock_map)
     if stock_code == plot_code:
         plot_df = stock_price_df
+        plot_map = hlpoint_map
     time.sleep(1)
-
-
-
-# def buy_check(code, stock_price_df):
-#
-#
-#
-#
-#
-# def sell_check(code, stock_price_df, stockHoldInfo):
-#     hold_info.positions[code].closeable_amount
 
 # 绘图------------------------------------------------
 if plot_df is not None:
     plt.ylabel(plot_code)
     plt.plot(plot_df.index, plot_df.close.values, marker = '.')
     # 布林带
-    plt.plot(plot_df.index, plot_df['BOLL_UPPER'].values, 'r-')
-    plt.plot(plot_df.index, plot_df['BOLL_MID'].values, 'r-')
-    plt.plot(plot_df.index, plot_df['BOLL_LOWER'].values, 'r-')
+    plt.plot(plot_df.index, plot_df['BOLL_UPPER'].values, 'r--')
+    plt.plot(plot_df.index, plot_df['BOLL_MID'].values, 'r--')
+    plt.plot(plot_df.index, plot_df['BOLL_LOWER'].values, 'r--')
+    plt.plot(plot_map['change_date'], plot_map['change_close'], 'r^')
     plt.show()
 
