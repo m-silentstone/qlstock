@@ -1,5 +1,6 @@
 import math
 
+import matplotlib
 import numpy as np
 from pandas.core.interchange.dataframe_protocol import DataFrame
 
@@ -8,12 +9,16 @@ import matplotlib.pyplot as plt ;from matplotlib.ticker import MultipleLocator
 import MyTT;
 from Ashare import *
 
-day_count=300
-stock_code='sz000858'
-high_low_threshhold = 0.05
+day_count=1000
+stock_code='sh000905'
+high_low_threshhold = 0.03
+# 中文字体为黑体
+matplotlib.rcParams['font.family'] = 'SimHei'
+more_day_count = 30
+
 
 def stock_plot(stock_code, high_low_threshhold, day_count):
-    stock_price_df = MyUtils.get_price_tx(stock_code, frequency='1d', count=day_count+30)
+    stock_price_df = MyUtils.get_price_tx(stock_code, frequency='1d', count=day_count+more_day_count)
     stock_map = MyUtils.get_from_gtime(stock_code)
     if stock_code[2:] != stock_map['code']:
         print('数据有问题！')
@@ -110,10 +115,12 @@ def stock_plot(stock_code, high_low_threshhold, day_count):
     MFI = MyUtils.mfi(CLOSE,HIGH,LOW,VOLUME,14)
     stock_price_df['MFI'] = MFI
 
+    stock_price_df = stock_price_df[more_day_count:]
     hlpoint_map = {}
-    hlpoint_map['change_close'] = []
+    price_key = 'MA5'
+    hlpoint_map['change_price'] = []
     hlpoint_map['change_date'] = []
-    current_close = stock_price_df.iloc[0]['close']
+    current_price = stock_price_df.iloc[0][price_key]
     current_date = stock_price_df.index[0]
     hlpoint_map_flag = None
     for index, row in stock_price_df.iterrows():
@@ -154,45 +161,47 @@ def stock_plot(stock_code, high_low_threshhold, day_count):
             stock_price_df.loc[index, 'status'] += 'RSI='+str(row['RSI24'])+','
         '''
         # 趋势高低点
-        change_ratio = (stock_price_df.loc[index, 'close'] - current_close) * 1.0 / current_close
-        # print('高低点判断：', index, stock_price_df.loc[index, 'close'], current_close, change_ratio)
+        change_ratio = (stock_price_df.loc[index, price_key] - current_price) * 1.0 / current_price
+        # print('高低点判断：', index, stock_price_df.loc[index, price_key], current_price, change_ratio)
         if hlpoint_map_flag is None:
             if change_ratio >= high_low_threshhold:
                 hlpoint_map_flag = 'up'
-                current_close = stock_price_df.loc[index, 'close']
+                current_price = stock_price_df.loc[index, price_key]
                 current_date = index
             elif change_ratio*(-1.0) >= high_low_threshhold:
                 hlpoint_map_flag = 'down'
-                current_close = stock_price_df.loc[index, 'close']
+                current_price = stock_price_df.loc[index, price_key]
                 current_date = index
         else:
             if hlpoint_map_flag == 'up':
-                if current_close < stock_price_df.loc[index, 'close']:
-                    current_close = stock_price_df.loc[index, 'close']
+                if current_price < stock_price_df.loc[index, price_key]:
+                    current_price = stock_price_df.loc[index, price_key]
                     current_date = index
                 elif change_ratio*(-1.0) >= high_low_threshhold:
-                    hlpoint_map['change_close'].append(current_close)
+                    hlpoint_map['change_price'].append(current_price)
                     hlpoint_map['change_date'].append(current_date)
-                    current_close = stock_price_df.loc[index, 'close']
+                    current_price = stock_price_df.loc[index, price_key]
                     current_date = index
                     hlpoint_map_flag = 'down'
             elif hlpoint_map_flag == 'down':
-                if current_close > stock_price_df.loc[index, 'close']:
-                    current_close = stock_price_df.loc[index, 'close']
+                if current_price > stock_price_df.loc[index, price_key]:
+                    current_price = stock_price_df.loc[index, price_key]
                     current_date = index
                 elif change_ratio >= high_low_threshhold:
-                    hlpoint_map['change_close'].append(current_close)
+                    hlpoint_map['change_price'].append(current_price)
                     hlpoint_map['change_date'].append(current_date)
-                    current_close = stock_price_df.loc[index, 'close']
+                    current_price = stock_price_df.loc[index, price_key]
                     current_date = index
                     hlpoint_map_flag = 'up'
-    plt.ylabel(stock_code)
+    plt.ylabel(stock_code+'  '+stock_map['name'])
     plt.plot(stock_price_df.index, stock_price_df.close.values, marker = '.')
     # 布林带
     plt.plot(stock_price_df.index, stock_price_df['BOLL_UPPER'].values, 'k--')
     plt.plot(stock_price_df.index, stock_price_df['BOLL_MID'].values, 'k--')
     plt.plot(stock_price_df.index, stock_price_df['BOLL_LOWER'].values, 'k--')
-    plt.plot(hlpoint_map['change_date'], hlpoint_map['change_close'], 'r^')
+    plt.plot(hlpoint_map['change_date'], hlpoint_map['change_price'], 'r^')
+    for date,price in zip(hlpoint_map['change_date'], hlpoint_map['change_price']):
+        plt.text(date, price+3, '({},{})'.format(date.strftime("%Y-%m-%d"), np.round(price,3)))
     plt.show()
 
 # 执行---------------------------------------------------------------------
