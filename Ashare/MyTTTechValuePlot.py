@@ -10,11 +10,12 @@ import MyTT;
 from Ashare import *
 
 day_count=1000
+more_day_count = 30
 stock_code='sh000905'
-high_low_threshhold = 0.03
+high_low_threshhold = 0.02
 # 中文字体为黑体
 matplotlib.rcParams['font.family'] = 'SimHei'
-more_day_count = 30
+price_key = 'close'
 
 
 def stock_plot(stock_code, high_low_threshhold, day_count):
@@ -117,7 +118,6 @@ def stock_plot(stock_code, high_low_threshhold, day_count):
 
     stock_price_df = stock_price_df[more_day_count:]
     hlpoint_map = {}
-    price_key = 'MA5'
     hlpoint_map['change_price'] = []
     hlpoint_map['change_ratio'] = []
     hlpoint_map['change_date'] = []
@@ -166,14 +166,14 @@ def stock_plot(stock_code, high_low_threshhold, day_count):
             stock_price_df.loc[index, 'status'] += 'RSI='+str(row['RSI24'])+','
         '''
         # 趋势高低点
-        change_ratio = round((stock_price_df.loc[index, price_key] - current_price) * 1.0 / current_price, 2)
+        change_ratio = (stock_price_df.loc[index, price_key] - current_price) * 1.0 / current_price
         # print('高低点判断：', index, stock_price_df.loc[index, price_key], current_price, change_ratio)
         if hlpoint_map_flag is None:
-            if change_ratio >= high_low_threshhold:
+            if change_ratio > high_low_threshhold:
                 hlpoint_map_flag = 'up'
                 current_price = stock_price_df.loc[index, price_key]
                 current_date = index
-            elif change_ratio*(-1.0) >= high_low_threshhold:
+            elif change_ratio*(-1.0) > high_low_threshhold:
                 hlpoint_map_flag = 'down'
                 current_price = stock_price_df.loc[index, price_key]
                 current_date = index
@@ -182,7 +182,7 @@ def stock_plot(stock_code, high_low_threshhold, day_count):
                 if current_price < stock_price_df.loc[index, price_key]:
                     current_price = stock_price_df.loc[index, price_key]
                     current_date = index
-                elif change_ratio*(-1.0) >= high_low_threshhold:
+                elif change_ratio*(-1.0) > high_low_threshhold:
                     hlpoint_map['change_price'].append(current_price)
                     hlpoint_map['change_date'].append(current_date)
                     hlpoint_map['change_ratio'].append((hlpoint_map['change_price'][-1] - hlpoint_map['change_price'][-2]) * 1.0 / hlpoint_map['change_price'][-2])
@@ -193,7 +193,7 @@ def stock_plot(stock_code, high_low_threshhold, day_count):
                 if current_price > stock_price_df.loc[index, price_key]:
                     current_price = stock_price_df.loc[index, price_key]
                     current_date = index
-                elif change_ratio >= high_low_threshhold:
+                elif change_ratio > high_low_threshhold:
                     hlpoint_map['change_price'].append(current_price)
                     hlpoint_map['change_date'].append(current_date)
                     hlpoint_map['change_ratio'].append((hlpoint_map['change_price'][-1] - hlpoint_map['change_price'][-2]) * 1.0 / hlpoint_map['change_price'][-2])
@@ -211,6 +211,10 @@ def stock_plot(stock_code, high_low_threshhold, day_count):
     for date,price,ratio in zip(hlpoint_map['change_date'], hlpoint_map['change_price'],hlpoint_map['change_ratio']):
         plt.text(date, price+3, '({},{},{}%)'.format(date.strftime("%Y-%m-%d"), np.round(price,3), round(ratio*100, 2)))
     plt.show()
+
+    # hlpoint_map['change_ratio'].sort()
+    # print('change_ratio:')
+    # print(hlpoint_map['change_ratio'])
 
 # 执行---------------------------------------------------------------------
 stock_plot(stock_code, high_low_threshhold, day_count)
