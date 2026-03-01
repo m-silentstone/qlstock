@@ -12,13 +12,16 @@ from Ashare import *
 day_count=5000
 more_day_count = 30
 stock_code='sh000905'
-high_low_threshhold = 0.02
+high_low_threshhold = 0.1
 # 中文字体为黑体
 matplotlib.rcParams['font.family'] = 'SimHei'
 price_key = 'close'
 
 
 def stock_plot(stock_code, high_low_threshhold, day_count):
+    if day_count < 2:
+        print('计算历史时间太短！')
+        return
     stock_map = MyUtils.get_from_gtime(stock_code)
     if stock_code[2:] != stock_map['code']:
         print('数据有问题！')
@@ -38,7 +41,6 @@ def stock_plot(stock_code, high_low_threshhold, day_count):
         stock_price_df = pd.concat([element_stock_price_df, stock_price_df])
         time.sleep(0.2)
 
-    print('len(stock_price_df):', len(stock_price_df))
     print(stock_code, stock_map['name'],'--------------------------------------------------------')
     #日线
     CLOSE=stock_price_df.close.values
@@ -131,10 +133,13 @@ def stock_plot(stock_code, high_low_threshhold, day_count):
     MFI = MyUtils.mfi(CLOSE,HIGH,LOW,VOLUME,14)
     stock_price_df['MFI'] = MFI
 
+    # 计算趋势高低点
     stock_price_df = stock_price_df[more_day_count:]
+    print('len(stock_price_df):', len(stock_price_df))
     hlpoint_map = {}
     hlpoint_map['change_price'] = []
     hlpoint_map['change_ratio'] = []
+    hlpoint_map['change_day_length'] = []
     hlpoint_map['change_date'] = []
 
     current_price = stock_price_df.iloc[0][price_key]
@@ -144,6 +149,7 @@ def stock_plot(stock_code, high_low_threshhold, day_count):
     hlpoint_map['change_price'].append(stock_price_df.iloc[0][price_key])
     hlpoint_map['change_date'].append(stock_price_df.index[0])
     hlpoint_map['change_ratio'].append(0.0)
+    hlpoint_map['change_day_length'].append(0)
     hlpoint_map_flag = None
     for index, row in stock_price_df.iterrows():
         '''
@@ -203,6 +209,7 @@ def stock_plot(stock_code, high_low_threshhold, day_count):
                     hlpoint_map['change_price'].append(current_price)
                     hlpoint_map['change_date'].append(current_date)
                     hlpoint_map['change_ratio'].append((hlpoint_map['change_price'][-1] - hlpoint_map['change_price'][-2]) * 1.0 / hlpoint_map['change_price'][-2])
+                    hlpoint_map['change_day_length'].append(int((hlpoint_map['change_date'][-1] - hlpoint_map['change_date'][-2])/pd.Timedelta(1,'d')))
                     current_price = stock_price_df.loc[index, price_key]
                     current_date = index
                     hlpoint_map_flag = 'down'
@@ -214,9 +221,16 @@ def stock_plot(stock_code, high_low_threshhold, day_count):
                     hlpoint_map['change_price'].append(current_price)
                     hlpoint_map['change_date'].append(current_date)
                     hlpoint_map['change_ratio'].append((hlpoint_map['change_price'][-1] - hlpoint_map['change_price'][-2]) * 1.0 / hlpoint_map['change_price'][-2])
+                    hlpoint_map['change_day_length'].append(int((hlpoint_map['change_date'][-1] - hlpoint_map['change_date'][-2])/pd.Timedelta(1,'d')))
                     current_price = stock_price_df.loc[index, price_key]
                     current_date = index
                     hlpoint_map_flag = 'up'
+    hlpoint_map['change_price'].append(stock_price_df.iloc[-1][price_key])
+    hlpoint_map['change_date'].append(stock_price_df.index[-1])
+    hlpoint_map['change_ratio'].append((hlpoint_map['change_price'][-1] - hlpoint_map['change_price'][-2]) * 1.0 / hlpoint_map['change_price'][-2])
+    hlpoint_map['change_day_length'].append(
+        int((hlpoint_map['change_date'][-1] - hlpoint_map['change_date'][-2]) / pd.Timedelta(1, 'd')))
+    #绘图过程
     plt.ylabel(stock_code+'  '+stock_map['name'])
     #plt.plot(stock_price_df.index, stock_price_df.close.values, marker = '.')
     plt.plot(stock_price_df.index, stock_price_df[price_key], marker = ',')
@@ -225,13 +239,13 @@ def stock_plot(stock_code, high_low_threshhold, day_count):
     plt.plot(stock_price_df.index, stock_price_df['BOLL_MID'].values, 'k--')
     plt.plot(stock_price_df.index, stock_price_df['BOLL_LOWER'].values, 'k--')
     plt.plot(hlpoint_map['change_date'], hlpoint_map['change_price'], 'r^')
-    for date,price,ratio in zip(hlpoint_map['change_date'], hlpoint_map['change_price'],hlpoint_map['change_ratio']):
-        plt.text(date, price+3, '({},{},{}%)'.format(date.strftime("%Y-%m-%d"), np.round(price,3), round(ratio*100, 2)))
+    for date,price,ratio,daylength in zip(hlpoint_map['change_date'], hlpoint_map['change_price'],hlpoint_map['change_ratio'], hlpoint_map['change_day_length']):
+        plt.text(date, price+3, '({},{},{}%,{}days)'.format(date.strftime("%Y-%m-%d"), np.round(price,3), round(ratio*100, 2), daylength))
     plt.show()
 
-    # hlpoint_map['change_ratio'].sort()
-    # print('change_ratio:')
-    # print(hlpoint_map['change_ratio'])
+    #for change_ratio in hlpoint_map['change_ratio']:
+    #for change_day_length in hlpoint_map['change_day_length']:
+
 
 # 执行---------------------------------------------------------------------
 stock_plot(stock_code, high_low_threshhold, day_count)
