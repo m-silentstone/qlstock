@@ -4,7 +4,7 @@ import matplotlib
 import numpy as np
 from pandas.core.interchange.dataframe_protocol import DataFrame
 
-import MyUtils;import time;
+import MyUtils;import time
 import matplotlib.pyplot as plt ;from matplotlib.ticker import MultipleLocator
 import MyTT;
 from Ashare import *
@@ -19,7 +19,8 @@ price_key = 'close'
 
 
 def stock_plot(stock_code, high_low_threshhold, day_count):
-    stock_price_df = MyUtils.get_price_tx(stock_code, frequency='1d', count=day_count+more_day_count)
+    today_str = time.strftime('%Y-%m-%d', time.localtime())  # 结果包含end_date的价格
+    stock_price_df = MyUtils.get_price_tx(stock_code, end_date=today_str, frequency='1d', count=day_count+more_day_count)
     stock_map = MyUtils.get_from_gtime(stock_code)
     if stock_code[2:] != stock_map['code']:
         print('数据有问题！')
@@ -124,6 +125,8 @@ def stock_plot(stock_code, high_low_threshhold, day_count):
 
     current_price = stock_price_df.iloc[0][price_key]
     current_date = stock_price_df.index[0]
+    end_date = stock_price_df.index[-1]
+    print('起始：', current_date.strftime('%Y-%m-%d'), current_price, '结束日期', end_date.strftime('%Y-%m-%d'), stock_price_df.iloc[-1][price_key])
     hlpoint_map['change_price'].append(stock_price_df.iloc[0][price_key])
     hlpoint_map['change_date'].append(stock_price_df.index[0])
     hlpoint_map['change_ratio'].append(0.0)
@@ -201,7 +204,7 @@ def stock_plot(stock_code, high_low_threshhold, day_count):
                     current_date = index
                     hlpoint_map_flag = 'up'
     plt.ylabel(stock_code+'  '+stock_map['name'])
-    plt.plot(stock_price_df.index, stock_price_df.close.values, marker = '.')
+    #plt.plot(stock_price_df.index, stock_price_df.close.values, marker = '.')
     plt.plot(stock_price_df.index, stock_price_df[price_key], marker = ',')
     # 布林带
     plt.plot(stock_price_df.index, stock_price_df['BOLL_UPPER'].values, 'k--')
