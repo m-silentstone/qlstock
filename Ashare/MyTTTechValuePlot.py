@@ -2,14 +2,14 @@ import math
 
 import matplotlib
 import numpy as np
-from pandas.core.interchange.dataframe_protocol import DataFrame
+import pandas as pd
 
 import MyUtils;import time
 import matplotlib.pyplot as plt ;from matplotlib.ticker import MultipleLocator
 import MyTT;
 from Ashare import *
 
-day_count=1000
+day_count=5000
 more_day_count = 30
 stock_code='sh000905'
 high_low_threshhold = 0.02
@@ -19,12 +19,26 @@ price_key = 'close'
 
 
 def stock_plot(stock_code, high_low_threshhold, day_count):
-    today_str = time.strftime('%Y-%m-%d', time.localtime())  # 结果包含end_date的价格
-    stock_price_df = MyUtils.get_price_tx(stock_code, end_date=today_str, frequency='1d', count=day_count+more_day_count)
     stock_map = MyUtils.get_from_gtime(stock_code)
     if stock_code[2:] != stock_map['code']:
         print('数据有问题！')
         return
+    round_days = 300
+    enddate_str = time.strftime('%Y-%m-%d', time.localtime())  # 结果包含end_date的价格
+    stock_price_df = MyUtils.get_price_tx(stock_code, end_date=enddate_str, frequency='1d',
+                                                  count=np.minimum(round_days, day_count + more_day_count))
+    remain_days = day_count + more_day_count - len(stock_price_df)
+    while remain_days > 0:
+        element_end_date = (stock_price_df.index[0] + pd.Timedelta(days=-1)).strftime('%Y-%m-%d')
+        element_stock_price_df = MyUtils.get_price_tx(stock_code, end_date=element_end_date, frequency='1d',
+                                                      count=np.minimum(round_days, remain_days))
+        if element_stock_price_df is None or len(element_stock_price_df) == 0:
+            break
+        remain_days = remain_days - len(element_stock_price_df)
+        stock_price_df = pd.concat([element_stock_price_df, stock_price_df])
+        time.sleep(0.2)
+
+    print('len(stock_price_df):', len(stock_price_df))
     print(stock_code, stock_map['name'],'--------------------------------------------------------')
     #日线
     CLOSE=stock_price_df.close.values
