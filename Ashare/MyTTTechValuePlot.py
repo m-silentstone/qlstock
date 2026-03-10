@@ -233,7 +233,6 @@ def stock_plot(stock_code, high_low_threshhold, day_count):
     hlpoint_map['change_day_length'].append(
         int((hlpoint_map['change_date'][-1] - hlpoint_map['change_date'][-2]) / pd.Timedelta(1, 'd')))
     #绘图过程
-    plt.subplot(2, 2, 1)
     plt.title("趋势点")
     plt.ylabel(stock_code+'  '+stock_map['name'])
     #plt.plot(stock_price_df.index, stock_price_df.close.values, marker = '.')
@@ -245,13 +244,7 @@ def stock_plot(stock_code, high_low_threshhold, day_count):
     plt.plot(hlpoint_map['change_date'], hlpoint_map['change_price'], 'r^')
     for date,price,ratio,daylength in zip(hlpoint_map['change_date'], hlpoint_map['change_price'],hlpoint_map['change_ratio'], hlpoint_map['change_day_length']):
         plt.text(date, price+3, '({},{},{}%,{}days)'.format(date.strftime("%Y-%m-%d"), np.round(price,3), round(ratio*100, 2), daylength))
-    plt.subplot(2, 2, 2)
-    plt.title("价格变动率分位计数")
-    plt.hist(hlpoint_map['change_ratio'], bins=100)
-    plt.subplot(2, 2, 3)
-    plt.title("持续天数分位计数")
-    plt.hist(hlpoint_map['change_day_length'], bins=100)
-    plt.suptitle('股票价格图组')
+    plt.tight_layout()
     plt.show()
 
 # 执行---------------------------------------------------------------------
