@@ -226,6 +226,8 @@ def calculate_trend_points(stock_price_df, high_low_threshold, price_key):
         hlpoint_map['change_ratio'].append((hlpoint_map['change_price'][-1] - hlpoint_map['change_price'][-2]) * 1.0 / hlpoint_map['change_price'][-2])
         hlpoint_map['change_day_length'].append(
         int((hlpoint_map['change_date'][-1] - hlpoint_map['change_date'][-2]) / pd.Timedelta(1, 'd')))
+    print('【涨跌幅】均值：', np.mean(hlpoint_map['change_ratio']), '中位数：', np.median(hlpoint_map['change_ratio']))
+    print('【持续时间】均值：', np.mean(hlpoint_map['change_day_length']), '中位数：', np.median(hlpoint_map['change_day_length']))
     return hlpoint_map
 
 
@@ -307,7 +309,7 @@ def stock_plot(stock_code, high_low_threshold, day_count):
     stock_price_df = stock_price_df[more_day_count:]
     print('数据长度:', len(stock_price_df))
     hlpoint_map = calculate_trend_points(stock_price_df, high_low_threshold, price_key)
-    
+
     # 绘制趋势图
     plot_trend(stock_price_df, hlpoint_map, stock_code, stock_map['name'], price_key)
     # 分位数绘图
