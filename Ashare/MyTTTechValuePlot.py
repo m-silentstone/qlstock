@@ -196,8 +196,8 @@ def calculate_trend_points(stock_price_df, high_low_threshold, price_key):
                 if hlpoint_map['change_price'][-1] < stock_price_df.loc[index, price_key]:
                     hlpoint_map['change_price'][-1] = stock_price_df.loc[index, price_key]
                     hlpoint_map['change_date'][-1] = index
-                    hlpoint_map['change_ratio'][-1] = change_ratio
-                    hlpoint_map['change_day_length'][-1] = change_day_length
+                    hlpoint_map['change_ratio'][-1] = (stock_price_df.loc[index, price_key] - hlpoint_map['change_price'][-2]) * 1.0 / hlpoint_map['change_price'][-2]
+                    hlpoint_map['change_day_length'][-1] = int((index - hlpoint_map['change_date'][-2]) / pd.Timedelta(1, 'd'))
                 elif change_ratio * (-1.0) > high_low_threshold and change_day_length >= high_low_day_threshold:
                     # 记录高点并转向
                     hlpoint_map['change_price'].append(stock_price_df.loc[index, price_key])
@@ -209,8 +209,8 @@ def calculate_trend_points(stock_price_df, high_low_threshold, price_key):
                 if hlpoint_map['change_price'][-1] > stock_price_df.loc[index, price_key]:
                     hlpoint_map['change_price'][-1] = stock_price_df.loc[index, price_key]
                     hlpoint_map['change_date'][-1] = index
-                    hlpoint_map['change_ratio'][-1] = change_ratio
-                    hlpoint_map['change_day_length'][-1] = change_day_length
+                    hlpoint_map['change_ratio'][-1] = (stock_price_df.loc[index, price_key] - hlpoint_map['change_price'][-2]) * 1.0 / hlpoint_map['change_price'][-2]
+                    hlpoint_map['change_day_length'][-1] = int((index - hlpoint_map['change_date'][-2]) / pd.Timedelta(1, 'd'))
                 elif change_ratio > high_low_threshold and change_day_length >= high_low_day_threshold:
                     # 记录低点并转向
                     hlpoint_map['change_price'].append(stock_price_df.loc[index, price_key])
@@ -270,6 +270,16 @@ def plot_trend(stock_price_df, hlpoint_map, stock_code, stock_name, price_key):
     plt.tight_layout()
     plt.show()
 
+def plot_statistics_hist(stock_price_df, hlpoint_map, stock_code, stock_name, price_key):
+    plt.subplot(2, 1, 1)
+    plt.title("价格变动率分位计数")
+    plt.hist(hlpoint_map['change_ratio'], bins=100)
+    plt.subplot(2, 1, 2)
+    plt.title("持续天数分位计数")
+    plt.hist(hlpoint_map['change_day_length'], bins=100)
+    plt.suptitle('股票价格图组')
+    plt.show()
+
 
 def stock_plot(stock_code, high_low_threshold, day_count):
     """
@@ -300,6 +310,8 @@ def stock_plot(stock_code, high_low_threshold, day_count):
     
     # 绘制趋势图
     plot_trend(stock_price_df, hlpoint_map, stock_code, stock_map['name'], price_key)
+    # 分位数绘图
+    plot_statistics_hist(stock_price_df, hlpoint_map, stock_code, stock_map['name'], price_key)
 
 # 执行---------------------------------------------------------------------
 stock_plot(stock_code, high_low_threshold, day_count)
