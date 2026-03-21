@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt ;from matplotlib.ticker import MultipleLocator
 import MyTT;
 from Ashare import *
 
-day_count = 3000
+day_count = 4000
 more_day_count = 30
 stock_code = 'sh000905'
 high_low_threshold = 0.1
@@ -162,7 +162,11 @@ def calculate_trend_points(stock_price_df, high_low_threshold, price_key):
         'change_price': [],
         'change_ratio': [],
         'change_day_length': [],
-        'change_date': []
+        'change_date': [],
+        'up_ratio': [],
+        'up_day_length': [],
+        'down_ratio': [],
+        'down_day_length': []
     }
 
     print('起始：', stock_price_df.index[0].strftime('%Y-%m-%d'), '结束日期', stock_price_df.index[-1].strftime('%Y-%m-%d'))
@@ -226,8 +230,18 @@ def calculate_trend_points(stock_price_df, high_low_threshold, price_key):
         hlpoint_map['change_ratio'].append((hlpoint_map['change_price'][-1] - hlpoint_map['change_price'][-2]) * 1.0 / hlpoint_map['change_price'][-2])
         hlpoint_map['change_day_length'].append(
         int((hlpoint_map['change_date'][-1] - hlpoint_map['change_date'][-2]) / pd.Timedelta(1, 'd')))
-    print('【涨跌幅】均值：', np.mean(hlpoint_map['change_ratio']), '中位数：', np.median(hlpoint_map['change_ratio']))
-    print('【持续时间】均值：', np.mean(hlpoint_map['change_day_length']), '中位数：', np.median(hlpoint_map['change_day_length']))
+
+    for ratio,day_length in zip(hlpoint_map['change_ratio'], hlpoint_map['change_day_length']):
+        if ratio > 0:
+            hlpoint_map['up_ratio'].append(ratio)
+            hlpoint_map['up_day_length'].append(day_length)
+        elif ratio < 0 :
+            hlpoint_map['down_ratio'].append(ratio)
+            hlpoint_map['down_day_length'].append(day_length)
+    print('【涨幅】均值：', round(np.mean(hlpoint_map['up_ratio']), 4), '中位数：', round(np.median(hlpoint_map['up_ratio']), 4))
+    print('【涨幅持续时间】均值：', round(np.mean(hlpoint_map['up_day_length']), 1), '中位数：', round(np.median(hlpoint_map['up_day_length']), 1))
+    print('【跌幅】均值：', round(np.mean(hlpoint_map['down_ratio']), 4), '中位数：', round(np.median(hlpoint_map['down_ratio']), 4))
+    print('【跌幅持续时间】均值：', round(np.mean(hlpoint_map['down_day_length']), 1), '中位数：', round(np.median(hlpoint_map['down_day_length']), 1))
     return hlpoint_map
 
 
