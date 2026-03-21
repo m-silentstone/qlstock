@@ -13,6 +13,8 @@ day_count = 3000
 more_day_count = 30
 stock_code = 'sh000905'
 high_low_threshold = 0.1
+high_low_day_threshold = 10
+
 # 中文字体为黑体
 matplotlib.rcParams['font.family'] = 'SimHei'
 # 负号显示
@@ -163,10 +165,7 @@ def calculate_trend_points(stock_price_df, high_low_threshold, price_key):
         'change_date': []
     }
 
-    current_price = stock_price_df.iloc[0][price_key]
-    current_date = stock_price_df.index[0]
-    end_date = stock_price_df.index[-1]
-    print('起始：', current_date.strftime('%Y-%m-%d'), current_price, '结束日期', end_date.strftime('%Y-%m-%d'), stock_price_df.iloc[-1][price_key])
+    print('起始：', stock_price_df.index[0].strftime('%Y-%m-%d'), '结束日期', stock_price_df.index[-1].strftime('%Y-%m-%d'))
     
     # 初始化第一个点
     hlpoint_map['change_price'].append(stock_price_df.iloc[0][price_key])
@@ -175,55 +174,58 @@ def calculate_trend_points(stock_price_df, high_low_threshold, price_key):
     hlpoint_map['change_day_length'].append(0)
     
     hlpoint_map_flag = None
-    
     for index, row in stock_price_df.iterrows():
         # 趋势高低点
-        change_ratio = (stock_price_df.loc[index, price_key] - current_price) * 1.0 / current_price
-        
+        change_day_length = int((index - hlpoint_map['change_date'][-1]) / pd.Timedelta(1, 'd'))
+        change_ratio = (stock_price_df.loc[index, price_key] - hlpoint_map['change_price'][-1]) * 1.0 / hlpoint_map['change_price'][-1]
         if hlpoint_map_flag is None:
-            if change_ratio > high_low_threshold:
+            if change_ratio > high_low_threshold and change_day_length >= high_low_day_threshold:
                 hlpoint_map_flag = 'up'
-                current_price = stock_price_df.loc[index, price_key]
-                current_date = index
-            elif change_ratio * (-1.0) > high_low_threshold:
+                hlpoint_map['change_price'].append(stock_price_df.loc[index, price_key])
+                hlpoint_map['change_date'].append(index)
+                hlpoint_map['change_ratio'].append(change_ratio)
+                hlpoint_map['change_day_length'].append(change_day_length)
+            elif change_ratio * (-1.0) > high_low_threshold and change_day_length >= high_low_day_threshold:
                 hlpoint_map_flag = 'down'
-                current_price = stock_price_df.loc[index, price_key]
-                current_date = index
+                hlpoint_map['change_price'].append(stock_price_df.loc[index, price_key])
+                hlpoint_map['change_date'].append(index)
+                hlpoint_map['change_ratio'].append(change_ratio)
+                hlpoint_map['change_day_length'].append(change_day_length)
         else:
             if hlpoint_map_flag == 'up':
-                if current_price < stock_price_df.loc[index, price_key]:
-                    current_price = stock_price_df.loc[index, price_key]
-                    current_date = index
-                elif change_ratio * (-1.0) > high_low_threshold:
+                if hlpoint_map['change_price'][-1] < stock_price_df.loc[index, price_key]:
+                    hlpoint_map['change_price'][-1] = stock_price_df.loc[index, price_key]
+                    hlpoint_map['change_date'][-1] = index
+                    hlpoint_map['change_ratio'][-1] = change_ratio
+                    hlpoint_map['change_day_length'][-1] = change_day_length
+                elif change_ratio * (-1.0) > high_low_threshold and change_day_length >= high_low_day_threshold:
                     # 记录高点并转向
-                    hlpoint_map['change_price'].append(current_price)
-                    hlpoint_map['change_date'].append(current_date)
-                    hlpoint_map['change_ratio'].append((hlpoint_map['change_price'][-1] - hlpoint_map['change_price'][-2]) * 1.0 / hlpoint_map['change_price'][-2])
-                    hlpoint_map['change_day_length'].append(int((hlpoint_map['change_date'][-1] - hlpoint_map['change_date'][-2]) / pd.Timedelta(1, 'd')))
-                    current_price = stock_price_df.loc[index, price_key]
-                    current_date = index
+                    hlpoint_map['change_price'].append(stock_price_df.loc[index, price_key])
+                    hlpoint_map['change_date'].append(index)
+                    hlpoint_map['change_ratio'].append(change_ratio)
+                    hlpoint_map['change_day_length'].append(change_day_length)
                     hlpoint_map_flag = 'down'
             elif hlpoint_map_flag == 'down':
-                if current_price > stock_price_df.loc[index, price_key]:
-                    current_price = stock_price_df.loc[index, price_key]
-                    current_date = index
-                elif change_ratio > high_low_threshold:
+                if hlpoint_map['change_price'][-1] > stock_price_df.loc[index, price_key]:
+                    hlpoint_map['change_price'][-1] = stock_price_df.loc[index, price_key]
+                    hlpoint_map['change_date'][-1] = index
+                    hlpoint_map['change_ratio'][-1] = change_ratio
+                    hlpoint_map['change_day_length'][-1] = change_day_length
+                elif change_ratio > high_low_threshold and change_day_length >= high_low_day_threshold:
                     # 记录低点并转向
-                    hlpoint_map['change_price'].append(current_price)
-                    hlpoint_map['change_date'].append(current_date)
-                    hlpoint_map['change_ratio'].append((hlpoint_map['change_price'][-1] - hlpoint_map['change_price'][-2]) * 1.0 / hlpoint_map['change_price'][-2])
-                    hlpoint_map['change_day_length'].append(int((hlpoint_map['change_date'][-1] - hlpoint_map['change_date'][-2]) / pd.Timedelta(1, 'd')))
-                    current_price = stock_price_df.loc[index, price_key]
-                    current_date = index
+                    hlpoint_map['change_price'].append(stock_price_df.loc[index, price_key])
+                    hlpoint_map['change_date'].append(index)
+                    hlpoint_map['change_ratio'].append(change_ratio)
+                    hlpoint_map['change_day_length'].append(change_day_length)
                     hlpoint_map_flag = 'up'
     
     # 添加最后一个点
-    hlpoint_map['change_price'].append(stock_price_df.iloc[-1][price_key])
-    hlpoint_map['change_date'].append(stock_price_df.index[-1])
-    hlpoint_map['change_ratio'].append((hlpoint_map['change_price'][-1] - hlpoint_map['change_price'][-2]) * 1.0 / hlpoint_map['change_price'][-2])
-    hlpoint_map['change_day_length'].append(
+    if hlpoint_map['change_date'][-1] != stock_price_df.index[-1]:
+        hlpoint_map['change_price'].append(stock_price_df.iloc[-1][price_key])
+        hlpoint_map['change_date'].append(stock_price_df.index[-1])
+        hlpoint_map['change_ratio'].append((hlpoint_map['change_price'][-1] - hlpoint_map['change_price'][-2]) * 1.0 / hlpoint_map['change_price'][-2])
+        hlpoint_map['change_day_length'].append(
         int((hlpoint_map['change_date'][-1] - hlpoint_map['change_date'][-2]) / pd.Timedelta(1, 'd')))
-    
     return hlpoint_map
 
 
