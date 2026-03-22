@@ -9,9 +9,9 @@ import matplotlib.pyplot as plt ;from matplotlib.ticker import MultipleLocator
 import MyTT;
 from Ashare import *
 
-day_count = 4000
-more_day_count = 30
-stock_code = 'sh000905'
+day_count = 3000
+more_day_count = 60
+stock_code = 'sh000300'
 high_low_threshold = 0.1
 high_low_day_threshold = 10
 
@@ -80,6 +80,7 @@ def calculate_indicators(stock_price_df):
     stock_price_df['MA10'] = MyUtils.ma(CLOSE, 10)
     stock_price_df['MA20'] = MyUtils.ma(CLOSE, 20)
     stock_price_df['MA30'] = MyUtils.ma(CLOSE, 30)
+    stock_price_df['MA60'] = MyUtils.ma(CLOSE, 30)
     
     # 成交量移动平均线
     stock_price_df['VMA5'] = MyUtils.ma(VOLUME, 5)
@@ -262,14 +263,40 @@ def plot_trend(stock_price_df, hlpoint_map, stock_code, stock_name, price_key):
     # 绘制价格线
     plt.plot(stock_price_df.index, stock_price_df[price_key], marker=',')
     
-    # 绘制布林带
-    plt.plot(stock_price_df.index, stock_price_df['BOLL_UPPER'].values, 'k--')
-    plt.plot(stock_price_df.index, stock_price_df['BOLL_MID'].values, 'k--')
-    plt.plot(stock_price_df.index, stock_price_df['BOLL_LOWER'].values, 'k--')
+    # # 绘制布林带
+    # plt.plot(stock_price_df.index, stock_price_df['BOLL_UPPER'].values, 'k--')
+    # plt.plot(stock_price_df.index, stock_price_df['BOLL_MID'].values, 'k--')
+    # plt.plot(stock_price_df.index, stock_price_df['BOLL_LOWER'].values, 'k--')
+    # # 绘制均线
+    # plt.plot(stock_price_df.index, stock_price_df['MA60'].values, 'r-')
+    # plt.plot(stock_price_df.index, stock_price_df['MA10'].values, 'g-')
+
     
     # 绘制趋势点
     plt.plot(hlpoint_map['change_date'], hlpoint_map['change_price'], 'r^')
-    
+
+    # 趋势线
+    if len(hlpoint_map['change_ratio']) > 3:
+        trendline_date1 = None
+        trendline_date2 = hlpoint_map['change_date'][-3]
+        trendline_price1 = None
+        trendline_price2 = hlpoint_map['change_price'][-3]
+        isup = hlpoint_map['change_ratio'][-2] > 0
+        point_index = -5
+        while point_index * -1 <= len(hlpoint_map['change_ratio']):
+            if isup and hlpoint_map['change_price'][point_index] < trendline_price2:
+                trendline_price1 = hlpoint_map['change_price'][point_index]
+                trendline_date1 = hlpoint_map['change_date'][point_index]
+                break
+            elif not isup and hlpoint_map['change_price'][point_index] > trendline_price2:
+                trendline_price1 = hlpoint_map['change_price'][point_index]
+                trendline_date1 = hlpoint_map['change_date'][point_index]
+                break
+        if trendline_price1 is not None and trendline_date1 is not None:
+            k = (trendline_price2 - trendline_price1) / (trendline_date2.value - trendline_date1.value)
+            b = trendline_price1 - k * trendline_date1.value
+            plt.plot([trendline_date1, hlpoint_map['change_date'][-1]], [trendline_price1, k * hlpoint_map['change_date'][-1].value + b], 'k--')
+
     # 添加趋势点标注
     for date, price, ratio, daylength in zip(
         hlpoint_map['change_date'], 
@@ -289,10 +316,10 @@ def plot_trend(stock_price_df, hlpoint_map, stock_code, stock_name, price_key):
 def plot_statistics_hist(stock_price_df, hlpoint_map, stock_code, stock_name, price_key):
     plt.subplot(2, 1, 1)
     plt.title("价格变动率分位计数")
-    plt.hist(hlpoint_map['change_ratio'], bins=100)
+    plt.hist(hlpoint_map['change_ratio'], bins=30)
     plt.subplot(2, 1, 2)
     plt.title("持续天数分位计数")
-    plt.hist(hlpoint_map['change_day_length'], bins=100)
+    plt.hist(hlpoint_map['change_day_length'], bins=30)
     plt.suptitle('股票价格图组')
     plt.show()
 
