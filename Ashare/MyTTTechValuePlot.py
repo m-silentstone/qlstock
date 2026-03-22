@@ -267,8 +267,8 @@ def plot_trend(stock_price_df, hlpoint_map, stock_code, stock_name, price_key):
     # plt.plot(stock_price_df.index, stock_price_df['BOLL_UPPER'].values, 'k--')
     # plt.plot(stock_price_df.index, stock_price_df['BOLL_MID'].values, 'k--')
     # plt.plot(stock_price_df.index, stock_price_df['BOLL_LOWER'].values, 'k--')
-    # # 绘制均线
-    # plt.plot(stock_price_df.index, stock_price_df['MA60'].values, 'r-')
+    # 绘制均线
+    plt.plot(stock_price_df.index, stock_price_df['MA60'].values, 'r-')
     # plt.plot(stock_price_df.index, stock_price_df['MA10'].values, 'g-')
 
     
@@ -295,7 +295,12 @@ def plot_trend(stock_price_df, hlpoint_map, stock_code, stock_name, price_key):
         if trendline_price1 is not None and trendline_date1 is not None:
             k = (trendline_price2 - trendline_price1) / (trendline_date2.value - trendline_date1.value)
             b = trendline_price1 - k * trendline_date1.value
+            # 趋势线（123准则1）
             plt.plot([trendline_date1, hlpoint_map['change_date'][-1]], [trendline_price1, k * hlpoint_map['change_date'][-1].value + b], 'k--')
+            # 趋势线（123准则2）
+            plt.plot([trendline_date1, hlpoint_map['change_date'][-1]], [hlpoint_map['change_price'][-4], hlpoint_map['change_price'][-4]], 'k--')
+            # 趋势相反的极值线（123准则3）
+            plt.plot([trendline_date1, hlpoint_map['change_date'][-1]], [hlpoint_map['change_price'][-3], hlpoint_map['change_price'][-3]], 'k--')
 
     # 添加趋势点标注
     for date, price, ratio, daylength in zip(
@@ -306,7 +311,7 @@ def plot_trend(stock_price_df, hlpoint_map, stock_code, stock_name, price_key):
     ):
         plt.text(
             date, 
-            price + 3, 
+            price*1.01,
             '({},{},{}%,{}days)'.format(date.strftime("%Y-%m-%d"), np.round(price, 3), round(ratio * 100, 2), daylength)
         )
     
