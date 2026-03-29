@@ -9,11 +9,12 @@ import matplotlib.pyplot as plt ;from matplotlib.ticker import MultipleLocator
 import MyTT;
 from Ashare import *
 
-day_count = 3000
+day_count = 1000
 more_day_count = 60
-stock_code = 'sh000300'
-high_low_threshold = 0.1
-high_low_day_threshold = 10
+stock_code = 'sh601728'
+high_low_threshold = 0.05
+high_low_day_threshold = 5
+calc_date = '2025-05-30'
 
 # 中文字体为黑体
 matplotlib.rcParams['font.family'] = 'SimHei'
@@ -22,7 +23,7 @@ matplotlib.rcParams['axes.unicode_minus'] = False
 price_key = 'close'
 
 
-def get_stock_data(stock_code, day_count, more_day_count):
+def get_stock_data(stock_code, day_count, more_day_count, calc_date):
     """
     获取股票历史数据
     
@@ -42,6 +43,8 @@ def get_stock_data(stock_code, day_count, more_day_count):
     
     round_days = 300
     enddate_str = time.strftime('%Y-%m-%d', time.localtime())  # 结果包含end_date的价格
+    if calc_date is not None:
+        enddate_str = calc_date
     stock_price_df = MyUtils.get_price_tx(stock_code, end_date=enddate_str, frequency='1d',
                                           count=np.minimum(round_days, day_count + more_day_count))
     
@@ -292,6 +295,7 @@ def plot_trend(stock_price_df, hlpoint_map, stock_code, stock_name, price_key):
                 trendline_price1 = hlpoint_map['change_price'][point_index]
                 trendline_date1 = hlpoint_map['change_date'][point_index]
                 break
+            point_index = point_index - 2
         if trendline_price1 is not None and trendline_date1 is not None:
             k = (trendline_price2 - trendline_price1) / (trendline_date2.value - trendline_date1.value)
             b = trendline_price1 - k * trendline_date1.value
@@ -342,7 +346,7 @@ def stock_plot(stock_code, high_low_threshold, day_count):
         print('计算历史时间太短！')
         return
     
-    stock_map, stock_price_df = get_stock_data(stock_code, day_count, more_day_count)
+    stock_map, stock_price_df = get_stock_data(stock_code, day_count, more_day_count, calc_date)
     if stock_map is None or stock_price_df is None:
         return
 
@@ -359,7 +363,7 @@ def stock_plot(stock_code, high_low_threshold, day_count):
     # 绘制趋势图
     plot_trend(stock_price_df, hlpoint_map, stock_code, stock_map['name'], price_key)
     # 分位数绘图
-    plot_statistics_hist(stock_price_df, hlpoint_map, stock_code, stock_map['name'], price_key)
+    #plot_statistics_hist(stock_price_df, hlpoint_map, stock_code, stock_map['name'], price_key)
 
 # 执行---------------------------------------------------------------------
 stock_plot(stock_code, high_low_threshold, day_count)
