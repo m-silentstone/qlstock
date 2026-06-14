@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt ;from matplotlib.ticker import MultipleLocator
 import MyTT;
 from Ashare import *
 
-day_count = 1000
+day_count = 200
 more_day_count = 60
 stock_code = 'sh601728'
 high_low_threshold = 0.05
@@ -20,6 +20,8 @@ calc_date = '2026-06-12'
 matplotlib.rcParams['font.family'] = 'SimHei'
 # 负号显示
 matplotlib.rcParams['axes.unicode_minus'] = False
+# 交互模式
+plt.ion()
 price_key = 'close'
 
 
@@ -406,7 +408,7 @@ def stock_plot(stock_code, high_low_threshold, day_count):
 
 # 执行---------------------------------------------------------------------
 
-
+print(matplotlib.pyplot.isinteractive())
 stock_plot(stock_code, high_low_threshold, day_count)
 
 
