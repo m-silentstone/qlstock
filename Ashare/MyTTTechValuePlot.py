@@ -14,7 +14,7 @@ more_day_count = 60
 stock_code = 'sh601728'
 high_low_threshold = 0.05
 high_low_day_threshold = 5
-calc_date = '2025-05-30'
+calc_date = '2026-06-12'
 
 # 中文字体为黑体
 matplotlib.rcParams['font.family'] = 'SimHei'

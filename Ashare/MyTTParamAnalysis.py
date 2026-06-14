@@ -10,6 +10,8 @@ if len(check_stock_codes) > 0:
     for check_stock_code in check_stock_codes:
         time.sleep(0.1)
         stock_map = MyUtils.get_from_gtime(check_stock_code)
+        if 'pe' not in stock_map.keys() or 'name' not in stock_map.keys():
+            continue
         print(check_stock_code, stock_map['name'], stock_map['pe'], '--------------------------------------------------------')
         print(stock_map)
     print('程序运行结束...')
