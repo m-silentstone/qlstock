@@ -14,18 +14,17 @@ more_day_count = 60
 stock_code = 'sh601728'
 high_low_threshold = 0.05
 high_low_day_threshold = 5
-calc_date = '2025-05-30'
+#calc_date = '2025-05-30'
 stock_code_index_start = 0
-stock_code_index_end = 300
+stock_code_index_end = 200
 
-stock_list_file = 'all_stocks_hk.txt'
+stock_list_file = 'all_stocks_basic.txt'
 
 # 中文字体为黑体
 matplotlib.rcParams['font.family'] = 'SimHei'
 # 负号显示
 matplotlib.rcParams['axes.unicode_minus'] = False
 price_key = 'close'
-
 
 def get_stock_data(stock_code, day_count, more_day_count, calc_date):
     """
@@ -61,11 +60,8 @@ def get_stock_data(stock_code, day_count, more_day_count, calc_date):
             break
         remain_days = remain_days - len(element_stock_price_df)
         stock_price_df = pd.concat([element_stock_price_df, stock_price_df])
-        time.sleep(0.2)
-    
+        time.sleep(0.1)
     return stock_map, stock_price_df
-
-
 
 def filter_stock(stock_code, day_count):
     stock_map = MyUtils.get_from_gtime(stock_code)
@@ -123,7 +119,6 @@ def stock_filter_calc_plot(day_count):
     plot_stocks(stock_score_map)
 
 # 执行---------------------------------------------------------------------
-
 stock_filter_calc_plot(day_count)
 
 
