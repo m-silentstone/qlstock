@@ -15,6 +15,8 @@ stock_code = 'sh601728'
 high_low_threshold = 0.05
 high_low_day_threshold = 5
 calc_date = '2025-05-30'
+stock_code_index_start = 0
+stock_code_index_end = 300
 
 stock_list_file = 'all_stocks_hk.txt'
 
@@ -68,18 +70,30 @@ def get_stock_data(stock_code, day_count, more_day_count, calc_date):
 def filter_stock(stock_code, day_count):
     stock_map = MyUtils.get_from_gtime(stock_code)
     if 'pe' not in stock_map.keys() or 'total_market_value' not in stock_map.keys():
-        return False
+        return None
     if 0 < stock_map['pe'] <= 15 and stock_map['total_market_value'] >= 800:
         print(stock_code, stock_map['name'], stock_map['pe'],
               '--------------------------------------------------------')
         print(stock_map)
-        return True
-    return False
+        return stock_map
+    return None
 
-def calc_stock_score(stock_code, day_count, stock_score_map):
+def calc_stock_score(stock_map, day_count, stock_score_map):
+    print('calc:', stock_map['code'])
+    score = stock_map['pe']
+    score_store(score, stock_map, stock_score_map)
     return
 
+def score_store(score, stock_map, stock_score_map):
+    stock_map_list = stock_score_map.get(score);
+    if stock_map_list is None:
+        stock_map_list = []
+    stock_map_list.append(stock_map)
+    stock_score_map[score] = stock_map_list
+
 def plot_stocks(stock_score_map):
+    for key in sorted(stock_score_map):
+        print(key, stock_score_map[key])
     return
 
 def stock_filter_calc_plot(day_count):
@@ -94,15 +108,18 @@ def stock_filter_calc_plot(day_count):
             array = line.split()
             code_array = array[0].split('.')
             allstockcode_array.append(str(code_array[1] + code_array[0]).lower())
-    stock_code_index = -1
+    stock_code_index = stock_code_index_start - 1
     while stock_code_index < len(allstockcode_array):
+        if stock_code_index_end > 0 and stock_code_index >= stock_code_index_end:
+            break
         stock_code_index = stock_code_index + 1
         print('stock_code_index:' + str(stock_code_index))
         stock_code = allstockcode_array[stock_code_index];
-        if filter_stock(stock_code, day_count):
+        stock_map = filter_stock(stock_code, day_count)
+        if stock_map is None:
             continue
-        calc_stock_score(stock_code, day_count, stock_score_map)
-        time.sleep(0.2)
+        calc_stock_score(stock_map, day_count, stock_score_map)
+        time.sleep(0.1)
     plot_stocks(stock_score_map)
 
 # 执行---------------------------------------------------------------------
