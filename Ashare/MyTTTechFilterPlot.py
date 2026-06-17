@@ -9,16 +9,16 @@ import matplotlib.pyplot as plt ;from matplotlib.ticker import MultipleLocator
 import MyTT;
 from Ashare import *
 
-day_count = 1000
+day_count = 2500
 more_day_count = 60
-stock_code = 'sh601728'
+#stock_code = 'sh601728'
 high_low_threshold = 0.05
 high_low_day_threshold = 5
 #calc_date = '2025-05-30'
 stock_code_index_start = 0
 stock_code_index_end = 200
 
-stock_list_file = 'all_stocks_basic.txt'
+stock_list_file = 'focus_stock_index.txt'
 
 # 中文字体为黑体
 matplotlib.rcParams['font.family'] = 'SimHei'
@@ -67,12 +67,10 @@ def filter_stock(stock_code, day_count):
     stock_map = MyUtils.get_from_gtime(stock_code)
     if 'pe' not in stock_map.keys() or 'total_market_value' not in stock_map.keys():
         return None
-    if 0 < stock_map['pe'] <= 15 and stock_map['total_market_value'] >= 800:
-        print(stock_code, stock_map['name'], stock_map['pe'],
-              '--------------------------------------------------------')
-        print(stock_map)
-        return stock_map
-    return None
+    # if stock_map['pe'] <= 0 or stock_map['pe'] > 15 or stock_map['total_market_value'] < 800:
+    #     return None
+    print(stock_map, '--------------------------------------------------------')
+    return stock_map
 
 def calc_stock_score(stock_map, day_count, stock_score_map):
     print('calc:', stock_map['code'])
@@ -104,17 +102,18 @@ def stock_filter_calc_plot(day_count):
             array = line.split()
             code_array = array[0].split('.')
             allstockcode_array.append(str(code_array[1] + code_array[0]).lower())
-    stock_code_index = stock_code_index_start - 1
+    stock_code_index = stock_code_index_start
     while stock_code_index < len(allstockcode_array):
         if stock_code_index_end > 0 and stock_code_index >= stock_code_index_end:
             break
-        stock_code_index = stock_code_index + 1
         print('stock_code_index:' + str(stock_code_index))
         stock_code = allstockcode_array[stock_code_index];
         stock_map = filter_stock(stock_code, day_count)
         if stock_map is None:
+            stock_code_index = stock_code_index + 1
             continue
         calc_stock_score(stock_map, day_count, stock_score_map)
+        stock_code_index = stock_code_index + 1
         time.sleep(0.1)
     plot_stocks(stock_score_map)
 
