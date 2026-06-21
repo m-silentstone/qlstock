@@ -9,12 +9,15 @@ import matplotlib.pyplot as plt ;from matplotlib.ticker import MultipleLocator
 import MyTT;
 from Ashare import *
 
-day_count = 200
-more_day_count = 60
 stock_code = 'sh601728'
 high_low_threshold = 0.05
 high_low_day_threshold = 5
-calc_date = '2026-06-12'
+global_day_count = 200
+global_more_day_count = 60
+global_enddate_date = '2026-06-12'
+global_stock_code_index_start = 3433
+global_stock_code_index_end = 9999
+global_stock_list_file = 'all_stocks_basic.txt'
 
 # 中文字体为黑体
 matplotlib.rcParams['font.family'] = 'SimHei'
@@ -25,7 +28,7 @@ plt.ion()
 price_key = 'close'
 
 
-def get_stock_data(stock_code, day_count, more_day_count, calc_date):
+def get_stock_data(stock_code, day_count, more_day_count):
     """
     获取股票历史数据
     
@@ -45,8 +48,8 @@ def get_stock_data(stock_code, day_count, more_day_count, calc_date):
     
     round_days = 300
     enddate_str = time.strftime('%Y-%m-%d', time.localtime())  # 结果包含end_date的价格
-    if calc_date is not None:
-        enddate_str = calc_date
+    if global_enddate_date is not None:
+        enddate_str = global_enddate_date
     stock_price_df = MyUtils.get_price_tx(stock_code, end_date=enddate_str, frequency='1d',
                                           count=np.minimum(round_days, day_count + more_day_count))
     
@@ -182,11 +185,12 @@ def calculate_trend_points(stock_code, stock_price_df, high_low_threshold, price
     hlpoint_map['change_date'].append(stock_price_df.index[0])
     hlpoint_map['change_ratio'].append(0.0)
     hlpoint_map['change_day_length'].append(0)
+    hlpoint_map['is_trend_change'] = False
     
     hlpoint_map['isup'] = None
     for index, row in stock_price_df.iterrows():
         # 趋势高低点
-        change_day_length = int((index - hlpoint_map['change_date'][-1]) / pd.Timedelta(1, 'd'))
+        change_day_length = int((index - hlpoint_map['change_date'][-1]) / pd.Timedelta(1, 'D'))
         change_ratio = (stock_price_df.loc[index, price_key] - hlpoint_map['change_price'][-1]) * 1.0 / hlpoint_map['change_price'][-1]
         if hlpoint_map['isup'] is None:
             if change_ratio > high_low_threshold and change_day_length >= high_low_day_threshold:
@@ -207,7 +211,7 @@ def calculate_trend_points(stock_code, stock_price_df, high_low_threshold, price
                     hlpoint_map['change_price'][-1] = stock_price_df.loc[index, price_key]
                     hlpoint_map['change_date'][-1] = index
                     hlpoint_map['change_ratio'][-1] = (stock_price_df.loc[index, price_key] - hlpoint_map['change_price'][-2]) * 1.0 / hlpoint_map['change_price'][-2]
-                    hlpoint_map['change_day_length'][-1] = int((index - hlpoint_map['change_date'][-2]) / pd.Timedelta(1, 'd'))
+                    hlpoint_map['change_day_length'][-1] = int((index - hlpoint_map['change_date'][-2]) / pd.Timedelta(1, 'D'))
                 elif change_ratio * (-1.0) > high_low_threshold and change_day_length >= high_low_day_threshold:
                     # 记录高点并转向
                     hlpoint_map['change_price'].append(stock_price_df.loc[index, price_key])
@@ -220,7 +224,7 @@ def calculate_trend_points(stock_code, stock_price_df, high_low_threshold, price
                     hlpoint_map['change_price'][-1] = stock_price_df.loc[index, price_key]
                     hlpoint_map['change_date'][-1] = index
                     hlpoint_map['change_ratio'][-1] = (stock_price_df.loc[index, price_key] - hlpoint_map['change_price'][-2]) * 1.0 / hlpoint_map['change_price'][-2]
-                    hlpoint_map['change_day_length'][-1] = int((index - hlpoint_map['change_date'][-2]) / pd.Timedelta(1, 'd'))
+                    hlpoint_map['change_day_length'][-1] = int((index - hlpoint_map['change_date'][-2]) / pd.Timedelta(1, 'D'))
                 elif change_ratio > high_low_threshold and change_day_length >= high_low_day_threshold:
                     # 记录低点并转向
                     hlpoint_map['change_price'].append(stock_price_df.loc[index, price_key])
@@ -235,7 +239,7 @@ def calculate_trend_points(stock_code, stock_price_df, high_low_threshold, price
     hlpoint_map['change_ratio'].append(
         (hlpoint_map['change_price'][-1] - hlpoint_map['change_price'][-2]) * 1.0 / hlpoint_map['change_price'][-2])
     hlpoint_map['change_day_length'].append(
-        int((hlpoint_map['change_date'][-1] - hlpoint_map['change_date'][-2]) / pd.Timedelta(1, 'd')))
+        int((hlpoint_map['change_date'][-1] - hlpoint_map['change_date'][-2]) / pd.Timedelta(1, 'D')))
     for ratio,day_length in zip(hlpoint_map['change_ratio'], hlpoint_map['change_day_length']):
         if ratio > 0:
             hlpoint_map['up_ratio'].append(ratio)
@@ -249,6 +253,7 @@ def calculate_trend_points(stock_code, stock_price_df, high_low_threshold, price
     print('【跌幅持续时间】均值：', round(np.mean(hlpoint_map['down_day_length']), 1), '中位数：', round(np.median(hlpoint_map['down_day_length']), 1))
 
     if hlpoint_map['change_ratio'] is not None and len(hlpoint_map['change_ratio']) > 3:
+        print('change_ratio list ready...')
         trendline_date1 = None
         trendline_date2 = hlpoint_map['change_date'][-3]
         trendline_price1 = None
@@ -259,13 +264,16 @@ def calculate_trend_points(stock_code, stock_price_df, high_low_threshold, price
             if isup and hlpoint_map['change_price'][point_index] < trendline_price2:
                 trendline_price1 = hlpoint_map['change_price'][point_index]
                 trendline_date1 = hlpoint_map['change_date'][point_index]
+                print('isup and trendline_price1 ready...')
                 break
             elif not isup and hlpoint_map['change_price'][point_index] > trendline_price2:
                 trendline_price1 = hlpoint_map['change_price'][point_index]
                 trendline_date1 = hlpoint_map['change_date'][point_index]
+                print('isdown and trendline_price1 ready...')
                 break
             point_index = point_index - 2
         if trendline_price1 is not None and trendline_date1 is not None:
+            print('trendline_price1 and trendline_date1 ready...')
             k = (trendline_price2 - trendline_price1) / (trendline_date2.value - trendline_date1.value)
             b = trendline_price1 - k * trendline_date1.value
 
@@ -285,8 +293,14 @@ def calculate_trend_points(stock_code, stock_price_df, high_low_threshold, price
             # 趋势相反的极值线（123准则3）
             # plt.plot([trendline_date1, hlpoint_map['change_date'][-1]], [hlpoint_map['change_price'][-3], hlpoint_map['change_price'][-3]], 'k--')
             hlpoint_map['is_trend_change'] = is_trend_change1 and is_trend_change2
-            if hlpoint_map['isup'] is False and hlpoint_map['is_trend_change']:
-                print('符合123：', stock_code)
+
+            if hlpoint_map['is_trend_change']:
+                if hlpoint_map['isup'] is False:
+                    print('下跌趋势可能结束，符合123：', stock_code)
+                else:
+                    print('上升趋势可能结束，符合123：', stock_code)
+            else:
+                print('不符合123：', stock_code)
     return hlpoint_map
 
 
@@ -303,7 +317,7 @@ def plot_trend(stock_price_df, hlpoint_map, stock_code, stock_name, price_key):
     """
     plt.title("趋势点")
     plt.ylabel(f"{stock_code}  {stock_name}")
-    
+
     # 绘制价格线
     plt.plot(stock_price_df.index, stock_price_df[price_key], marker=',')
     
@@ -361,7 +375,7 @@ def plot_trend(stock_price_df, hlpoint_map, stock_code, stock_name, price_key):
         )
     
     plt.tight_layout()
-    plt.show()
+    plt.show(block=True)
 
 def plot_statistics_hist(stock_price_df, hlpoint_map, stock_code, stock_name, price_key):
     plt.subplot(2, 1, 1)
@@ -371,7 +385,7 @@ def plot_statistics_hist(stock_price_df, hlpoint_map, stock_code, stock_name, pr
     plt.title("持续天数分位计数")
     plt.hist(hlpoint_map['change_day_length'], bins=30)
     plt.suptitle('股票价格图组')
-    plt.show()
+    plt.show(block=True)
 
 
 def stock_plot(stock_code, high_low_threshold, day_count):
@@ -387,7 +401,8 @@ def stock_plot(stock_code, high_low_threshold, day_count):
         print('计算历史时间太短！')
         return
     
-    stock_map, stock_price_df = get_stock_data(stock_code, day_count, more_day_count, calc_date)
+    stock_map, stock_price_df = get_stock_data(stock_code, day_count, global_more_day_count)
+    time.sleep(0.1)
     if stock_map is None or stock_price_df is None:
         return
 
@@ -397,19 +412,59 @@ def stock_plot(stock_code, high_low_threshold, day_count):
     stock_price_df = calculate_indicators(stock_price_df)
 
     # 计算趋势高低点
-    stock_price_df = stock_price_df[more_day_count:]
+    stock_price_df = stock_price_df[global_more_day_count:]
     print('数据长度:', len(stock_price_df))
     hlpoint_map = calculate_trend_points(stock_code, stock_price_df, high_low_threshold, price_key)
 
-    # 绘制趋势图
-    plot_trend(stock_price_df, hlpoint_map, stock_code, stock_map['name'], price_key)
-    # 分位数绘图
-    #plot_statistics_hist(stock_price_df, hlpoint_map, stock_code, stock_map['name'], price_key)
+    if hlpoint_map['is_trend_change'] is True:
+        # 绘制趋势图
+        plot_trend(stock_price_df, hlpoint_map, stock_code, stock_map['name'], price_key)
+        # 分位数绘图
+        #plot_statistics_hist(stock_price_df, hlpoint_map, stock_code, stock_map['name'], price_key)
+        return True
+    return False
+
+def filter_stock(stock_code, day_count):
+    stock_map = MyUtils.get_from_gtime(stock_code)
+    time.sleep(0.1)
+    if 'pe' not in stock_map.keys() or 'total_market_value' not in stock_map.keys():
+        return None
+    if stock_map['total_market_value'] < 800:
+        return None
+    print(stock_map, '--------------------------------------------------------')
+    return stock_map
+
+def scan_stocks():
+    if global_day_count < 2:
+        print('计算历史时间太短！')
+        return
+    allstockcode_array = []
+    stock_score_map = {}
+    with open(global_stock_list_file, 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+        for line in lines[0:]:
+            array = line.split()
+            code_array = array[0].split('.')
+            allstockcode_array.append(str(code_array[1] + code_array[0]).lower())
+        stock_code_index = max(0, global_stock_code_index_start)
+        while stock_code_index < len(allstockcode_array):
+            if global_stock_code_index_end > 0 and stock_code_index >= global_stock_code_index_end:
+                break
+            print('stock_code_index:' + str(stock_code_index))
+            stock_code = allstockcode_array[stock_code_index];
+            stock_map = filter_stock(stock_code, global_day_count)
+            if stock_map is None:
+                stock_code_index = stock_code_index + 1
+                continue
+            is_trend_change = stock_plot(stock_code, high_low_threshold, global_day_count)
+            if is_trend_change:
+                break
+            stock_code_index = stock_code_index + 1
+
+
 
 # 执行---------------------------------------------------------------------
-
+scan_stocks()
 print(matplotlib.pyplot.isinteractive())
-stock_plot(stock_code, high_low_threshold, day_count)
-
 
 
