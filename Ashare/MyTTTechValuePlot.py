@@ -222,7 +222,7 @@ def calculate_trend_points(stock_code, stock_name, stock_price_df, high_low_thre
                     hlpoint_map['change_ratio'][-1] = (stock_price_df.loc[index, price_key] - hlpoint_map['change_price'][-2]) * 1.0 / hlpoint_map['change_price'][-2]
                     hlpoint_map['change_day_length'][-1] = int((index - hlpoint_map['change_date'][-2]) / pd.Timedelta(1, 'D'))
                 elif change_ratio * (-1.0) > high_low_threshold and change_day_length >= high_low_day_threshold:
-                    # 记录高点并转向
+                    # 记录并转向
                     hlpoint_map['change_price'].append(stock_price_df.loc[index, price_key])
                     hlpoint_map['change_date'].append(index)
                     hlpoint_map['change_ratio'].append(change_ratio)
@@ -235,7 +235,7 @@ def calculate_trend_points(stock_code, stock_name, stock_price_df, high_low_thre
                     hlpoint_map['change_ratio'][-1] = (stock_price_df.loc[index, price_key] - hlpoint_map['change_price'][-2]) * 1.0 / hlpoint_map['change_price'][-2]
                     hlpoint_map['change_day_length'][-1] = int((index - hlpoint_map['change_date'][-2]) / pd.Timedelta(1, 'D'))
                 elif change_ratio > high_low_threshold and change_day_length >= high_low_day_threshold:
-                    # 记录低点并转向
+                    # 记录并转向
                     hlpoint_map['change_price'].append(stock_price_df.loc[index, price_key])
                     hlpoint_map['change_date'].append(index)
                     hlpoint_map['change_ratio'].append(change_ratio)
@@ -260,7 +260,8 @@ def calculate_trend_points(stock_code, stock_name, stock_price_df, high_low_thre
     print('【涨幅持续时间】均值：', round(np.mean(hlpoint_map['up_day_length']), 1), '中位数：', round(np.median(hlpoint_map['up_day_length']), 1))
     print('【跌幅】均值：', round(np.mean(hlpoint_map['down_ratio']), 4), '中位数：', round(np.median(hlpoint_map['down_ratio']), 4))
     print('【跌幅持续时间】均值：', round(np.mean(hlpoint_map['down_day_length']), 1), '中位数：', round(np.median(hlpoint_map['down_day_length']), 1))
-    print('【当前趋势上升】：', hlpoint_map['isup'])
+    if len(hlpoint_map['change_ratio']) >= 2:
+        print('【当前趋势上升】：', hlpoint_map['change_ratio'][-2]>0)
 
     if hlpoint_map['change_ratio'] is not None and len(hlpoint_map['change_ratio']) > 3:
         print('change_ratio list ready...')
@@ -268,7 +269,7 @@ def calculate_trend_points(stock_code, stock_name, stock_price_df, high_low_thre
         trendline_date2 = hlpoint_map['change_date'][-3]
         trendline_price1 = None
         trendline_price2 = hlpoint_map['change_price'][-3]
-        isup = hlpoint_map['isup']
+        isup = (hlpoint_map['change_ratio'][-2]>0)
         point_index = -5
         while point_index * -1 <= len(hlpoint_map['change_ratio']):
             if isup and hlpoint_map['change_price'][point_index] < trendline_price2:
