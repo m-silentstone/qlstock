@@ -9,16 +9,18 @@ import matplotlib.pyplot as plt ;from matplotlib.ticker import MultipleLocator
 import MyTT;
 from Ashare import *
 
-#global_stock_code = 'sh688008'
-global_stock_code = None
+global_stock_code = 'sh688981'
+#global_stock_code = None
 high_low_threshold = 0.05
 high_low_day_threshold = 5
 global_day_count = 200
 global_more_day_count = 60
 global_enddate_date = None
-global_stock_code_index_start = 4661
+global_stock_code_index_start = 4971
 global_stock_code_index_end = 9999
 global_stock_list_file = 'all_stocks_basic.txt'
+#global_price_key = 'close'
+global_price_key = 'MA5'
 
 # 中文字体为黑体
 matplotlib.rcParams['font.family'] = 'SimHei'
@@ -26,7 +28,6 @@ matplotlib.rcParams['font.family'] = 'SimHei'
 matplotlib.rcParams['axes.unicode_minus'] = False
 # 交互模式
 plt.ion()
-global_price_key = 'close'
 
 
 def get_stock_data(stock_code, day_count, more_day_count, need_filter):
