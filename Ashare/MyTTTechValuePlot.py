@@ -9,14 +9,14 @@ import matplotlib.pyplot as plt ;from matplotlib.ticker import MultipleLocator
 import MyTT;
 from Ashare import *
 
-global_stock_code = 'sh688008'
-#global_stock_code = None
+#global_stock_code = 'sh688008'
+global_stock_code = None
 high_low_threshold = 0.05
 high_low_day_threshold = 5
 global_day_count = 200
 global_more_day_count = 60
 global_enddate_date = None
-global_stock_code_index_start = 4447
+global_stock_code_index_start = 4661
 global_stock_code_index_end = 9999
 global_stock_list_file = 'all_stocks_basic.txt'
 
@@ -242,7 +242,7 @@ def calculate_trend_points(stock_code, stock_name, stock_price_df, high_low_thre
                     hlpoint_map['change_day_length'].append(change_day_length)
                     hlpoint_map['isup'] = True
 
-    # 添加最后一个点（[-1]是最新价格，[-2,-4,-6]和up趋势一致，[-3,-5,-7]和up趋势相反）
+    # 添加最后一个点（[-1]是最新价格，[-2,-4,-6]和up趋势一致，[-3,-5,-7]和up趋势相反）有可能[-1]和[-2]是同一个点，一致性处理为了趋势在[-2]
     hlpoint_map['change_price'].append(stock_price_df.iloc[-1][price_key])
     hlpoint_map['change_date'].append(stock_price_df.index[-1])
     hlpoint_map['change_ratio'].append(
@@ -260,63 +260,60 @@ def calculate_trend_points(stock_code, stock_name, stock_price_df, high_low_thre
     print('【涨幅持续时间】均值：', round(np.mean(hlpoint_map['up_day_length']), 1), '中位数：', round(np.median(hlpoint_map['up_day_length']), 1))
     print('【跌幅】均值：', round(np.mean(hlpoint_map['down_ratio']), 4), '中位数：', round(np.median(hlpoint_map['down_ratio']), 4))
     print('【跌幅持续时间】均值：', round(np.mean(hlpoint_map['down_day_length']), 1), '中位数：', round(np.median(hlpoint_map['down_day_length']), 1))
-    if len(hlpoint_map['change_ratio']) >= 2:
-        print('【当前趋势上升】：', hlpoint_map['change_ratio'][-2]>0)
-
-    if hlpoint_map['change_ratio'] is not None and len(hlpoint_map['change_ratio']) > 3:
-        print('change_ratio list ready...')
-        trendline_date1 = None
-        trendline_date2 = hlpoint_map['change_date'][-3]
-        trendline_price1 = None
-        trendline_price2 = hlpoint_map['change_price'][-3]
-        isup = (hlpoint_map['change_ratio'][-2]>0)
-        point_index = -5
-        while point_index * -1 <= len(hlpoint_map['change_ratio']):
-            if isup and hlpoint_map['change_price'][point_index] < trendline_price2:
-                trendline_price1 = hlpoint_map['change_price'][point_index]
-                trendline_date1 = hlpoint_map['change_date'][point_index]
-                print('isup and trendline_price1 ready...')
-                break
-            elif not isup and hlpoint_map['change_price'][point_index] > trendline_price2:
-                trendline_price1 = hlpoint_map['change_price'][point_index]
-                trendline_date1 = hlpoint_map['change_date'][point_index]
-                print('isdown and trendline_price1 ready...')
-                break
-            point_index = point_index - 2
-        if trendline_price1 is not None and trendline_date1 is not None:
-            print('trendline_price1 and trendline_date1 ready...')
-            k = (trendline_price2 - trendline_price1) / (trendline_date2.value - trendline_date1.value)
-            b = trendline_price1 - k * trendline_date1.value
-
-            # 趋势线（123准则1：突破趋势线）
-            price_diff = stock_price_df.iloc[-1][price_key] - (k * hlpoint_map['change_date'][-1].value + b)
-            is_trend_change1 = (price_diff < 0 and isup) or (price_diff > 0 and not isup)
-            print('rule1:', is_trend_change1)
-            # 趋势线（123准则2：趋势中不再有更高点或更低点，或最新价格已回落至极值以内）
-            leak_price_diff = hlpoint_map['change_price'][-2] - hlpoint_map['change_price'][-4]
-            leak_price_diff_ration = abs(leak_price_diff / hlpoint_map['change_price'][-4])
-            is_trend_change2_1 = isup and (leak_price_diff < 0 or (
-                        leak_price_diff_ration < 0.05 and stock_price_df.iloc[-1][price_key] -
-                        hlpoint_map['change_price'][-4] < 0))
-            is_trend_change2_2 = (not isup) and (leak_price_diff > 0 or (
-                        leak_price_diff_ration < 0.05 and stock_price_df.iloc[-1][price_key] -
-                        hlpoint_map['change_price'][-4] > 0))
-            is_trend_change2 = is_trend_change2_1 or is_trend_change2_2
-            print('rule2:', is_trend_change2)
-            # 趋势相反的极值线（123准则3：价格已突破原反向点，比如上升趋势时价格已低于上一低点）
-            price_diff3 = stock_price_df.iloc[-1][price_key] - hlpoint_map['change_price'][-3]
-            is_trend_change3 = (isup and price_diff3 < 0) or (not isup and price_diff3 > 0)
-            print('rule3:', is_trend_change3)
-            # plt.plot([trendline_date1, hlpoint_map['change_date'][-1]], [hlpoint_map['change_price'][-3], hlpoint_map['change_price'][-3]], 'k--')
-            hlpoint_map['is_trend_change'] = is_trend_change1 and is_trend_change2
-
-            if hlpoint_map['is_trend_change']:
-                if hlpoint_map['isup'] is False:
-                    print('下跌趋势可能结束，符合123：', stock_code)
-                else:
-                    print('上升趋势可能结束，符合123：', stock_code)
+    if len(hlpoint_map['change_ratio']) <= 3:
+        return
+    isup = (hlpoint_map['change_ratio'][-2] > 0)
+    print('isup?', isup)
+    print('change_ratio list ready...')
+    trendline_date1 = None
+    trendline_date2 = hlpoint_map['change_date'][-3]
+    trendline_price1 = None
+    trendline_price2 = hlpoint_map['change_price'][-3]
+    point_index = -5
+    while point_index * -1 <= len(hlpoint_map['change_ratio']):
+        if isup and hlpoint_map['change_price'][point_index] < trendline_price2:
+            trendline_price1 = hlpoint_map['change_price'][point_index]
+            trendline_date1 = hlpoint_map['change_date'][point_index]
+            print('isup and trendline_price1 ready...')
+            break
+        elif not isup and hlpoint_map['change_price'][point_index] > trendline_price2:
+            trendline_price1 = hlpoint_map['change_price'][point_index]
+            trendline_date1 = hlpoint_map['change_date'][point_index]
+            print('isdown and trendline_price1 ready...')
+            break
+        point_index = point_index - 2
+    if trendline_price1 is not None and trendline_date1 is not None:
+        print('trendline_price1 and trendline_date1 ready...')
+        k = (trendline_price2 - trendline_price1) / (trendline_date2.value - trendline_date1.value)
+        b = trendline_price1 - k * trendline_date1.value
+        # 趋势线（123准则1：突破趋势线）
+        price_diff = stock_price_df.iloc[-1][price_key] - (k * hlpoint_map['change_date'][-1].value + b)
+        is_trend_change1 = (price_diff < 0 and isup) or (price_diff > 0 and not isup)
+        print('rule1:', is_trend_change1)
+        # 趋势线（123准则2：趋势中不再有更高点或更低点，或最新价格已回落至最高低点以内）
+        leak_price_diff = hlpoint_map['change_price'][-2] - hlpoint_map['change_price'][-4]
+        leak_price_diff_ration = abs(leak_price_diff / hlpoint_map['change_price'][-4])
+        is_trend_change2_1 = isup and (leak_price_diff < 0 or (
+                    leak_price_diff_ration < 0.05 and stock_price_df.iloc[-1][price_key] -
+                    hlpoint_map['change_price'][-4] < 0))
+        is_trend_change2_2 = (not isup) and (leak_price_diff > 0 or (
+                    leak_price_diff_ration < 0.05 and stock_price_df.iloc[-1][price_key] -
+                    hlpoint_map['change_price'][-4] > 0))
+        is_trend_change2 = is_trend_change2_1 or is_trend_change2_2
+        print('rule2:', is_trend_change2)
+        # 趋势相反的极值线（123准则3：价格已突破原反向点。上升趋势时价格已低于上一低点或下降趋势时价格已高于上一高点）
+        price_diff3 = stock_price_df.iloc[-1][price_key] - hlpoint_map['change_price'][-3]
+        is_trend_change3 = (isup and price_diff3 < 0) or (not isup and price_diff3 > 0)
+        print('rule3:', is_trend_change3)
+        # plt.plot([trendline_date1, hlpoint_map['change_date'][-1]], [hlpoint_map['change_price'][-3], hlpoint_map['change_price'][-3]], 'k--')
+        hlpoint_map['is_trend_change'] = is_trend_change1 and is_trend_change2
+        if hlpoint_map['is_trend_change']:
+            if hlpoint_map['isup'] is False:
+                print('下跌趋势可能结束，符合123：', stock_code)
             else:
-                print('不符合123：', stock_code)
+                print('上升趋势可能结束，符合123：', stock_code)
+        else:
+            print('不符合123：', stock_code)
     return hlpoint_map
 
 
