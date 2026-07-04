@@ -9,18 +9,17 @@ import matplotlib.pyplot as plt ;from matplotlib.ticker import MultipleLocator
 import MyTT;
 from Ashare import *
 
-global_stock_code = 'sh688981'
-#global_stock_code = None
+#global_stock_code = 'sh688981'
+global_stock_code = None
 global_high_low_threshold = 0.05
 global_high_low_day_threshold = 1
 global_day_count = 200
 global_more_day_count = 60
 global_enddate_date = None
-global_stock_code_index_start = 4971
+global_stock_code_index_start = 1588
 global_stock_code_index_end = 9999
 global_stock_list_file = 'all_stocks_basic.txt'
-#global_price_key = 'close'
-global_price_key = 'MA5'
+global_price_key = 'MA5'  # close
 
 # 中文字体为黑体
 matplotlib.rcParams['font.family'] = 'SimHei'
@@ -29,39 +28,21 @@ matplotlib.rcParams['axes.unicode_minus'] = False
 # 交互模式
 plt.ion()
 
-
-def get_stock_data(stock_code, day_count, more_day_count, need_filter):
-    """
-    获取股票历史数据
-    
-    Args:
-        need_filter:
-        stock_code: 股票代码
-        day_count: 要获取的天数
-        more_day_count: 额外获取的天数
-    
-    Returns:
-        stock_map: 股票基本信息
-        stock_price_df: 股票价格数据
-    """
+def get_stock_info_data(stock_code):
     stock_map = MyUtils.get_from_gtime(stock_code)
-    if stock_code[2:] != stock_map['code']:
+    if stock_map is None or len(stock_map) == 0 or stock_code[2:] != stock_map['code']:
         print('数据有问题！')
-        return None, None
-    if need_filter:
-        is_filtered = filter_stock(stock_map)
-        if not is_filtered:
-            return None, None
-        else:
-            print('符合筛选规则', stock_map['code'], stock_map['name'])
-    round_days = 300
+        return None
+    return stock_map
+
+def get_stock_price_data(stock_code):
+    round_days = 250
     enddate_str = time.strftime('%Y-%m-%d', time.localtime())  # 结果包含end_date的价格
     if global_enddate_date is not None:
         enddate_str = global_enddate_date
     stock_price_df = MyUtils.get_price_tx(stock_code, end_date=enddate_str, frequency='1d',
-                                          count=np.minimum(round_days, day_count + more_day_count))
-    
-    remain_days = day_count + more_day_count - len(stock_price_df)
+                                          count=np.minimum(round_days, global_day_count + global_more_day_count))
+    remain_days = global_day_count + global_more_day_count - len(stock_price_df)
     while remain_days > 0:
         element_end_date = (stock_price_df.index[0] + pd.Timedelta(days=-1)).strftime('%Y-%m-%d')
         element_stock_price_df = MyUtils.get_price_tx(stock_code, end_date=element_end_date, frequency='1d',
@@ -70,10 +51,8 @@ def get_stock_data(stock_code, day_count, more_day_count, need_filter):
             break
         remain_days = remain_days - len(element_stock_price_df)
         stock_price_df = pd.concat([element_stock_price_df, stock_price_df])
-        time.sleep(0.2)
-    
-    return stock_map, stock_price_df
-
+        time.sleep(0.1)
+    return stock_price_df
 
 def calculate_indicators(stock_price_df):
     """
@@ -164,16 +143,6 @@ def calculate_indicators(stock_price_df):
 
 
 def calculate_trend_points(stock_code, stock_name, stock_price_df, price_key):
-    """
-    计算趋势高低点
-    
-    Args:
-        stock_price_df: 股票价格数据
-        price_key: 价格键名
-    
-    Returns:
-        hlpoint_map: 趋势高低点数据
-    """
     hlpoint_map = {
         'code': stock_code,
         'name': stock_name,
@@ -186,16 +155,13 @@ def calculate_trend_points(stock_code, stock_name, stock_price_df, price_key):
         'down_ratio': [],
         'down_day_length': []
     }
-
     print('起始：', stock_price_df.index[0].strftime('%Y-%m-%d'), '结束日期', stock_price_df.index[-1].strftime('%Y-%m-%d'))
-    
     # 初始化第一个点
     hlpoint_map['change_price'].append(stock_price_df.iloc[0][price_key])
     hlpoint_map['change_date'].append(stock_price_df.index[0])
     hlpoint_map['change_ratio'].append(0.0)
     hlpoint_map['change_day_length'].append(0)
     hlpoint_map['is_trend_change'] = False
-    
     hlpoint_map['isup'] = None
     for index, row in stock_price_df.iterrows():
         # 趋势高低点
@@ -241,7 +207,6 @@ def calculate_trend_points(stock_code, stock_name, stock_price_df, price_key):
                     hlpoint_map['change_ratio'].append(change_ratio)
                     hlpoint_map['change_day_length'].append(change_day_length)
                     hlpoint_map['isup'] = True
-
     # 添加最后一个点（[-1]是最新价格，[-2,-4,-6]和up趋势一致，[-3,-5,-7]和up趋势相反）有可能[-1]和[-2]是同一个点，一致性处理为了趋势在[-2]
     hlpoint_map['change_price'].append(stock_price_df.iloc[-1][price_key])
     hlpoint_map['change_date'].append(stock_price_df.index[-1])
@@ -399,31 +364,20 @@ def plot_statistics_hist(stock_price_df, hlpoint_map, price_key):
     plt.show(block=True)
 
 
-def stock_points_calc(stock_code, day_count, need_filtered = True):
-    """
-    绘制股票趋势图
-    
-    Args:
-        need_filtered:
-        stock_code: 股票代码
-        day_count: 要分析的天数
-    """
-    if day_count < 2:
-        print('计算历史时间太短！')
-        return None, None
-    stock_map, stock_price_df = get_stock_data(stock_code, day_count, global_more_day_count, need_filtered)
-    time.sleep(0.1)
-    if stock_map is None or stock_price_df is None:
-        return None, None
-    print(stock_code, stock_map['name'], '--------------------------------------------------------')
+def stock_points_calc(stock_info_map, stock_price_df):
+    if stock_info_map is None or stock_price_df is None:
+        return None
+    stock_code = stock_info_map['code']
+    print(stock_code, stock_info_map['name'], '--------------------------------------------------------')
     # 计算技术指标
-    stock_price_df = calculate_indicators(stock_price_df)
+    calculate_indicators(stock_price_df)
     # 计算趋势高低点
     stock_price_df = stock_price_df[global_more_day_count:]
     print('数据长度:', len(stock_price_df))
-    hlpoint_map = calculate_trend_points(stock_code, stock_map['name'], stock_price_df, global_price_key)
-    return hlpoint_map, stock_price_df
+    hlpoint_map = calculate_trend_points(stock_code, stock_info_map['name'], stock_price_df, global_price_key)
+    return hlpoint_map
 
+# 股票筛选（包含筛选条件）True表示符合条件；False表示被排除
 def filter_stock(stock_map):
     if 'pe' not in stock_map.keys() or 'total_market_value' not in stock_map.keys():
         return False
@@ -446,11 +400,22 @@ def scan_stocks():
             allstockcode_array.append(str(code_array[1] + code_array[0]).lower())
         stock_code_index = max(0, global_stock_code_index_start)
         while stock_code_index < len(allstockcode_array):
-            if global_stock_code_index_end > 0 and stock_code_index >= global_stock_code_index_end:
+            if stock_code_index >= global_stock_code_index_end > 0:
                 break
-            print('stock_code_index:' + str(stock_code_index))
-            stock_code = allstockcode_array[stock_code_index];
-            hlpoint_map, stock_price_df = stock_points_calc(stock_code, global_day_count)
+            stock_code = allstockcode_array[stock_code_index]
+            stock_info_map = get_stock_info_data(stock_code)
+            if stock_info_map is None:
+                stock_code_index = stock_code_index + 1
+                continue
+            print('stock:' + str(stock_code_index), stock_info_map['code'], stock_info_map['name'])
+            if not filter_stock(stock_info_map):
+                stock_code_index = stock_code_index + 1
+                continue
+            stock_price_df = get_stock_price_data(stock_code)
+            if stock_price_df is None:
+                stock_code_index = stock_code_index + 1
+                continue
+            hlpoint_map = stock_points_calc(stock_info_map, stock_price_df)
             if hlpoint_map is not None and hlpoint_map['is_trend_change']:
                 # 绘制趋势图
                 plot_trend(stock_price_df, hlpoint_map, global_price_key)
@@ -460,7 +425,9 @@ def scan_stocks():
             stock_code_index = stock_code_index + 1
 
 def specific_stock_calc(stock_code):
-    hlpoint_map, stock_price_df = stock_points_calc(stock_code, global_day_count, False)
+    stock_info_map = get_stock_info_data(stock_code)
+    stock_price_df = get_stock_price_data(stock_code)
+    hlpoint_map = stock_points_calc(stock_info_map, stock_price_df)
     # 绘制趋势图
     plot_trend(stock_price_df, hlpoint_map, global_price_key)
     # 分位数绘图
