@@ -9,16 +9,19 @@ import matplotlib.pyplot as plt ;from matplotlib.ticker import MultipleLocator
 import MyTT;
 from Ashare import *
 
-#global_stock_code = 'sh688981'
-global_stock_code = None
+#global_stock_code = 'sh601698'
+global_stock_code = 'hk01093'
+#global_stock_code = None
 global_high_low_threshold = 0.05
 global_high_low_day_threshold = 1
+global_ma_cross_key = 'MA30'
+
 global_day_count = 200
 global_more_day_count = 60
 global_enddate_date = None
 global_stock_code_index_start = 0
-global_stock_code_index_end = 9999
-global_stock_list_file = 'all_stocks_basic.txt'
+global_stock_code_index_end = 500
+global_stock_list_file = 'all_stocks_hk.txt'
 global_price_key = 'MA5'  # close
 
 # 中文字体为黑体
@@ -138,10 +141,42 @@ def calculate_indicators(stock_price_df):
     
     # MFI
     stock_price_df['MFI'] = MyUtils.mfi(CLOSE, HIGH, LOW, VOLUME, 14)
-    
+
+    stock_price_df = stock_price_df[global_more_day_count:]
     return stock_price_df
 
 
+def ma_cross_calc(stock_code, stock_name, stock_price_df, price_key):
+    if len(stock_price_df) < 30:
+        print('stock_price_df 长度过小')
+        return None
+    hlpoint_map = {
+        'code': stock_code,
+        'name': stock_name,
+        'isup': None,
+        'is_trend_change': None
+    }
+    if stock_price_df.iloc[-1][price_key] < stock_price_df.iloc[-1][global_ma_cross_key]:
+        hlpoint_map['isup'] = False
+        hlpoint_map['is_trend_change'] = False
+        df_index = -1
+        while df_index >= -5:
+            df_index = df_index -1
+            if stock_price_df.iloc[df_index][price_key] > stock_price_df.iloc[df_index][global_ma_cross_key]:
+                hlpoint_map['is_trend_change'] = True
+                break
+    else:
+        hlpoint_map['isup'] = True
+        hlpoint_map['is_trend_change'] = False
+        df_index = -1
+        while df_index >= -5:
+            df_index = df_index - 1
+            if stock_price_df.iloc[df_index][price_key] < stock_price_df.iloc[df_index][global_ma_cross_key]:
+                hlpoint_map['is_trend_change'] = True
+                break
+    return hlpoint_map
+
+# 趋势高低点123判断
 def calculate_trend_points(stock_code, stock_name, stock_price_df, price_key):
     hlpoint_map = {
         'code': stock_code,
@@ -282,7 +317,24 @@ def calculate_trend_points(stock_code, stock_name, stock_price_df, price_key):
     return hlpoint_map
 
 
-def plot_trend(stock_price_df, hlpoint_map, price_key):
+def plot_ma(stock_price_df, hlpoint_map, price_key):
+    plt.title("均线")
+    plt.ylabel(f"{hlpoint_map['code']}  {hlpoint_map['name']}")
+
+    # 绘制价格线
+    plt.plot(stock_price_df.index, stock_price_df[price_key], marker=',')
+    # # 绘制布林带
+    # plt.plot(stock_price_df.index, stock_price_df['BOLL_UPPER'].values, 'k--')
+    # plt.plot(stock_price_df.index, stock_price_df['BOLL_MID'].values, 'k--')
+    # plt.plot(stock_price_df.index, stock_price_df['BOLL_LOWER'].values, 'k--')
+    # 绘制均线
+    plt.plot(stock_price_df.index, stock_price_df['MA60'].values, 'g-')
+    plt.plot(stock_price_df.index, stock_price_df[global_ma_cross_key].values, 'r-')
+    plt.tight_layout()
+    plt.show(block=True)
+
+
+def plot_trend123(stock_price_df, hlpoint_map, price_key):
     """
     绘制趋势图
     
@@ -377,17 +429,43 @@ def plot_statistics_hist(stock_price_df, hlpoint_map, price_key):
 #     hlpoint_map = calculate_trend_points(stock_code, stock_info_map['name'], stock_price_df, global_price_key)
 #     return hlpoint_map
 
+def stock_points_calc_plot_trend(stock_info_map, stock_price_df):
+    if stock_info_map is None or stock_price_df is None:
+        return
+    stock_code = stock_info_map['code']
+    print(stock_code, stock_info_map['name'], '--------------------------------------------------------')
+    # 计算技术指标
+    stock_price_df = calculate_indicators(stock_price_df)
+    # 计算趋势高低点
+    print('数据长度:', len(stock_price_df))
+    hlpoint_map = calculate_trend_points(stock_code, stock_info_map['name'], stock_price_df, global_price_key)
+    # 绘制趋势图
+    plot_trend123(stock_price_df, hlpoint_map, global_price_key)
+
+def stock_points_calc_plot_ma(stock_info_map, stock_price_df):
+    if stock_info_map is None or stock_price_df is None:
+        return
+    stock_code = stock_info_map['code']
+    print(stock_code, stock_info_map['name'], '--------------------------------------------------------')
+    # 计算技术指标
+    stock_price_df = calculate_indicators(stock_price_df)
+    # 计算趋势高低点
+    print('数据长度:', len(stock_price_df))
+    hlpoint_map = ma_cross_calc(stock_code, stock_info_map['name'], stock_price_df, global_price_key)
+    # 绘制趋势图
+    plot_ma(stock_price_df, hlpoint_map, global_price_key)
+
 def stock_points_check(stock_info_map, stock_price_df):
     if stock_info_map is None or stock_price_df is None:
         return False, None
     stock_code = stock_info_map['code']
     print(stock_code, stock_info_map['name'], '--------------------------------------------------------')
     # 计算技术指标
-    calculate_indicators(stock_price_df)
+    stock_price_df = calculate_indicators(stock_price_df)
     # 计算趋势高低点
-    stock_price_df = stock_price_df[global_more_day_count:]
     print('数据长度:', len(stock_price_df))
     hlpoint_map = calculate_trend_points(stock_code, stock_info_map['name'], stock_price_df, global_price_key)
+    #hlpoint_map = ma_cross_calc(stock_code, stock_info_map['name'], stock_price_df, global_price_key)
     is_qualified = (hlpoint_map is not None) and ('is_trend_change' in hlpoint_map.keys()) and (hlpoint_map['is_trend_change'])
     return is_qualified, hlpoint_map
 
@@ -449,9 +527,9 @@ def scan_stocks():
 def specific_stock_calc(stock_code):
     stock_info_map = get_stock_info_data(stock_code)
     stock_price_df = get_stock_price_data(stock_code)
-    is_qualified, hlpoint_map = stock_points_check(stock_info_map, stock_price_df)
-    # 绘制趋势图
-    plot_trend(stock_price_df, hlpoint_map, global_price_key)
+    # 计算指标和绘图
+    #stock_points_calc_plot_trend(stock_info_map, stock_price_df)
+    stock_points_calc_plot_ma(stock_info_map, stock_price_df)
     # 分位数绘图
     # plot_statistics_hist(stock_price_df, stock_map['name'], price_key)
 
