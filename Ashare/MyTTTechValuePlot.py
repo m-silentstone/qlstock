@@ -16,7 +16,7 @@ global_high_low_day_threshold = 1
 global_day_count = 200
 global_more_day_count = 60
 global_enddate_date = None
-global_stock_code_index_start = 1588
+global_stock_code_index_start = 0
 global_stock_code_index_end = 9999
 global_stock_list_file = 'all_stocks_basic.txt'
 global_price_key = 'MA5'  # close
@@ -181,7 +181,7 @@ def calculate_trend_points(stock_code, stock_name, stock_price_df, price_key):
                 hlpoint_map['change_ratio'].append(change_ratio)
                 hlpoint_map['change_day_length'].append(change_day_length)
         else:
-            if hlpoint_map['isup'] is True:
+            if hlpoint_map['isup']:
                 if hlpoint_map['change_price'][-1] < stock_price_df.loc[index, price_key]:
                     hlpoint_map['change_price'][-1] = stock_price_df.loc[index, price_key]
                     hlpoint_map['change_date'][-1] = index
@@ -194,7 +194,7 @@ def calculate_trend_points(stock_code, stock_name, stock_price_df, price_key):
                     hlpoint_map['change_ratio'].append(change_ratio)
                     hlpoint_map['change_day_length'].append(change_day_length)
                     hlpoint_map['isup'] = False
-            elif hlpoint_map['isup'] is False:
+            elif not hlpoint_map['isup']:
                 if hlpoint_map['change_price'][-1] > stock_price_df.loc[index, price_key]:
                     hlpoint_map['change_price'][-1] = stock_price_df.loc[index, price_key]
                     hlpoint_map['change_date'][-1] = index
@@ -226,9 +226,9 @@ def calculate_trend_points(stock_code, stock_name, stock_price_df, price_key):
     print('【跌幅】均值：', round(np.mean(hlpoint_map['down_ratio']), 4), '中位数：', round(np.median(hlpoint_map['down_ratio']), 4))
     print('【跌幅持续时间】均值：', round(np.mean(hlpoint_map['down_day_length']), 1), '中位数：', round(np.median(hlpoint_map['down_day_length']), 1))
     if len(hlpoint_map['change_ratio']) <= 3:
-        return
-    isup = (hlpoint_map['change_ratio'][-2] > 0)
-    print('isup?', isup)
+        return None
+    hlpoint_map['isup'] = hlpoint_map['change_ratio'][-2] > 0
+    print('isup?', hlpoint_map['isup'])
     print('change_ratio list ready...')
     trendline_date1 = None
     trendline_date2 = hlpoint_map['change_date'][-3]
@@ -236,12 +236,12 @@ def calculate_trend_points(stock_code, stock_name, stock_price_df, price_key):
     trendline_price2 = hlpoint_map['change_price'][-3]
     point_index = -5
     while point_index * -1 <= len(hlpoint_map['change_ratio']):
-        if isup and hlpoint_map['change_price'][point_index] < trendline_price2:
+        if hlpoint_map['isup'] and hlpoint_map['change_price'][point_index] < trendline_price2:
             trendline_price1 = hlpoint_map['change_price'][point_index]
             trendline_date1 = hlpoint_map['change_date'][point_index]
             print('isup and trendline_price1 ready...')
             break
-        elif not isup and hlpoint_map['change_price'][point_index] > trendline_price2:
+        elif not hlpoint_map['isup'] and hlpoint_map['change_price'][point_index] > trendline_price2:
             trendline_price1 = hlpoint_map['change_price'][point_index]
             trendline_date1 = hlpoint_map['change_date'][point_index]
             print('isdown and trendline_price1 ready...')
@@ -253,30 +253,30 @@ def calculate_trend_points(stock_code, stock_name, stock_price_df, price_key):
         b = trendline_price1 - k * trendline_date1.value
         # 趋势线（123准则1：突破趋势线）
         price_diff = stock_price_df.iloc[-1][price_key] - (k * hlpoint_map['change_date'][-1].value + b)
-        is_trend_change1 = (price_diff < 0 and isup) or (price_diff > 0 and not isup)
+        is_trend_change1 = (price_diff < 0 and hlpoint_map['isup']) or (price_diff > 0 and not hlpoint_map['isup'])
         print('rule1:', is_trend_change1)
         # 趋势线（123准则2：趋势中不再有更高点或更低点，或最新价格已回落至最高低点以内）
         leak_price_diff = hlpoint_map['change_price'][-2] - hlpoint_map['change_price'][-4]
         leak_price_diff_ration = abs(leak_price_diff / hlpoint_map['change_price'][-4])
-        is_trend_change2_1 = isup and (leak_price_diff < 0 or (
+        is_trend_change2_1 = hlpoint_map['isup'] and (leak_price_diff < 0 or (
                     leak_price_diff_ration < 0.05 and stock_price_df.iloc[-1][price_key] -
                     hlpoint_map['change_price'][-4] < 0))
-        is_trend_change2_2 = (not isup) and (leak_price_diff > 0 or (
+        is_trend_change2_2 = (not hlpoint_map['isup']) and (leak_price_diff > 0 or (
                     leak_price_diff_ration < 0.05 and stock_price_df.iloc[-1][price_key] -
                     hlpoint_map['change_price'][-4] > 0))
         is_trend_change2 = is_trend_change2_1 or is_trend_change2_2
         print('rule2:', is_trend_change2)
         # 趋势相反的极值线（123准则3：价格已突破原反向点。上升趋势时价格已低于上一低点或下降趋势时价格已高于上一高点）
         price_diff3 = stock_price_df.iloc[-1][price_key] - hlpoint_map['change_price'][-3]
-        is_trend_change3 = (isup and price_diff3 < 0) or (not isup and price_diff3 > 0)
+        is_trend_change3 = (hlpoint_map['isup'] and price_diff3 < 0) or (not hlpoint_map['isup'] and price_diff3 > 0)
         print('rule3:', is_trend_change3)
         # plt.plot([trendline_date1, hlpoint_map['change_date'][-1]], [hlpoint_map['change_price'][-3], hlpoint_map['change_price'][-3]], 'k--')
         hlpoint_map['is_trend_change'] = is_trend_change1 and is_trend_change2
         if hlpoint_map['is_trend_change']:
-            if hlpoint_map['isup'] is False:
-                print('下跌趋势可能结束，符合123：', stock_code)
-            else:
+            if hlpoint_map['isup']:
                 print('上升趋势可能结束，符合123：', stock_code)
+            else:
+                print('下跌趋势可能结束，符合123：', stock_code)
         else:
             print('不符合123：', stock_code)
     return hlpoint_map
@@ -364,9 +364,22 @@ def plot_statistics_hist(stock_price_df, hlpoint_map, price_key):
     plt.show(block=True)
 
 
-def stock_points_calc(stock_info_map, stock_price_df):
+# def stock_points_calc(stock_info_map, stock_price_df):
+#     if stock_info_map is None or stock_price_df is None:
+#         return None
+#     stock_code = stock_info_map['code']
+#     print(stock_code, stock_info_map['name'], '--------------------------------------------------------')
+#     # 计算技术指标
+#     calculate_indicators(stock_price_df)
+#     # 计算趋势高低点
+#     stock_price_df = stock_price_df[global_more_day_count:]
+#     print('数据长度:', len(stock_price_df))
+#     hlpoint_map = calculate_trend_points(stock_code, stock_info_map['name'], stock_price_df, global_price_key)
+#     return hlpoint_map
+
+def stock_points_check(stock_info_map, stock_price_df):
     if stock_info_map is None or stock_price_df is None:
-        return None
+        return False, None
     stock_code = stock_info_map['code']
     print(stock_code, stock_info_map['name'], '--------------------------------------------------------')
     # 计算技术指标
@@ -375,7 +388,8 @@ def stock_points_calc(stock_info_map, stock_price_df):
     stock_price_df = stock_price_df[global_more_day_count:]
     print('数据长度:', len(stock_price_df))
     hlpoint_map = calculate_trend_points(stock_code, stock_info_map['name'], stock_price_df, global_price_key)
-    return hlpoint_map
+    is_qualified = (hlpoint_map is not None) and ('is_trend_change' in hlpoint_map.keys()) and (hlpoint_map['is_trend_change'])
+    return is_qualified, hlpoint_map
 
 # 股票筛选（包含筛选条件）True表示符合条件；False表示被排除
 def filter_stock(stock_map):
@@ -415,19 +429,27 @@ def scan_stocks():
             if stock_price_df is None:
                 stock_code_index = stock_code_index + 1
                 continue
-            hlpoint_map = stock_points_calc(stock_info_map, stock_price_df)
-            if hlpoint_map is not None and hlpoint_map['is_trend_change']:
-                # 绘制趋势图
-                plot_trend(stock_price_df, hlpoint_map, global_price_key)
-                # 分位数绘图
-                # plot_statistics_hist(stock_price_df, hlpoint_map, stock_code, stock_map['name'], price_key)
-                break
+            is_qualified, hlpoint_map = stock_points_check(stock_info_map, stock_price_df)
+            if is_qualified:
+                if not hlpoint_map['isup']:
+                    stock_score_map[stock_code] = 100
+                else:
+                    stock_score_map[stock_code] = 0
             stock_code_index = stock_code_index + 1
+            # hlpoint_map = stock_points_calc(stock_info_map, stock_price_df)
+            # if hlpoint_map is not None and hlpoint_map['is_trend_change']:
+            #     # 绘制趋势图
+            #     plot_trend(stock_price_df, hlpoint_map, global_price_key)
+            #     # 分位数绘图
+            #     # plot_statistics_hist(stock_price_df, hlpoint_map, stock_code, stock_map['name'], price_key)
+            #     break
+        print(stock_score_map)
+
 
 def specific_stock_calc(stock_code):
     stock_info_map = get_stock_info_data(stock_code)
     stock_price_df = get_stock_price_data(stock_code)
-    hlpoint_map = stock_points_calc(stock_info_map, stock_price_df)
+    is_qualified, hlpoint_map = stock_points_check(stock_info_map, stock_price_df)
     # 绘制趋势图
     plot_trend(stock_price_df, hlpoint_map, global_price_key)
     # 分位数绘图
