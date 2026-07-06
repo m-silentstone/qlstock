@@ -73,12 +73,12 @@ def calculate_indicators(stock_price_df):
     LOW = stock_price_df.low.values
     VOLUME = stock_price_df.volume.values
     
-    # 价格移动平均线
+    # 价格移动平均线（不复权）
     stock_price_df['MA5'] = MyUtils.ma(CLOSE, 5)
     stock_price_df['MA10'] = MyUtils.ma(CLOSE, 10)
     stock_price_df['MA20'] = MyUtils.ma(CLOSE, 20)
     stock_price_df['MA30'] = MyUtils.ma(CLOSE, 30)
-    stock_price_df['MA60'] = MyUtils.ma(CLOSE, 30)
+    stock_price_df['MA60'] = MyUtils.ma(CLOSE, 60)
     
     # 成交量移动平均线
     stock_price_df['VMA5'] = MyUtils.ma(VOLUME, 5)
@@ -322,7 +322,7 @@ def plot_ma(stock_price_df, hlpoint_map, price_key):
     plt.ylabel(f"{hlpoint_map['code']}  {hlpoint_map['name']}")
 
     # 绘制价格线
-    plt.plot(stock_price_df.index, stock_price_df[price_key], marker=',')
+    plt.plot(stock_price_df.index, stock_price_df[price_key], marker='.')
     # # 绘制布林带
     # plt.plot(stock_price_df.index, stock_price_df['BOLL_UPPER'].values, 'k--')
     # plt.plot(stock_price_df.index, stock_price_df['BOLL_MID'].values, 'k--')
