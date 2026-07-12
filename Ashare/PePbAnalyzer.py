@@ -1,9 +1,20 @@
 import numpy as np
 import pandas as pd
+import time
 import requests
 import json
 import argparse
+
+from fontTools.misc.cython import returns
+
 import MyUtils
+
+#global_stock_code = 'sz000001'
+global_stock_code = None
+global_day_count = 1000
+global_stock_code_index_start = 0
+global_stock_code_index_end = 9999
+global_stock_list_file = 'all_large_stocks_field.txt'
 
 # 尝试导入baostock
 try:
@@ -395,7 +406,7 @@ def print_analysis_result(result):
         print(f"注意: 估算数据假设EPS和BPS不变，仅供参考")
     else:
         print(f"数据来源: 真实历史PE/PB数据")
-    print(f"{'='*60}")
+    print(f"{'='*20}")
     
     # PE分析
     print("\n【PE市盈率分析】")
@@ -443,20 +454,37 @@ def print_analysis_result(result):
     else:
         print("数据不足，无法计算PB分位")
     
-    print(f"\n{'='*60}")
+    print(f"\n{'='*20}")
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='获取股票PE/PB历史数据并分析分位情况')
-    parser.add_argument('stock_code', type=str, nargs='?', default='sz000001', help='股票代码（如sh000905）')
-    parser.add_argument('day_count', type=int, nargs='?', default=1000, help='历史天数')
-    args = parser.parse_args()
-    
-    stock_code = args.stock_code
-    day_count = args.day_count
-    
-    # 分析PE和PB分位情况
-    result = analyze_pe_pb(stock_code, day_count)
-    
-    # 打印分析结果
-    print_analysis_result(result)
+    if global_day_count is None:
+        day_count = 1000
+    else:
+        day_count = global_day_count
+    if global_stock_code is not None:
+        stock_code = global_stock_code
+        # 分析PE和PB分位情况
+        result = analyze_pe_pb(stock_code, day_count)
+        # 打印分析结果
+        print_analysis_result(result)
+    else:
+        allstockcode_array = []
+        stock_score_map = {}
+        with open(global_stock_list_file, 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+            for line in lines[0:]:
+                array = line.split()
+                code_array = array[0].split('.')
+                allstockcode_array.append(str(code_array[1] + code_array[0]).lower())
+            stock_code_index = max(0, global_stock_code_index_start)
+            while stock_code_index < len(allstockcode_array):
+                if stock_code_index >= global_stock_code_index_end > 0:
+                    break
+                stock_code = allstockcode_array[stock_code_index]
+                # 分析PE和PB分位情况
+                result = analyze_pe_pb(stock_code, day_count)
+                # 打印分析结果
+                print_analysis_result(result)
+                stock_code_index = stock_code_index + 1
+                time.sleep(0.3)
