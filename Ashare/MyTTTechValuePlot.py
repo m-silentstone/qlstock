@@ -16,9 +16,9 @@ global_high_low_threshold = 0.05
 global_high_low_day_threshold = 1
 global_ma_cross_key = 'MA30'
 
-global_day_count = 200
-global_more_day_count = 60
-global_enddate_date = None
+# global_day_count = 200
+# global_more_day_count = 60
+# global_enddate_date = None
 global_stock_code_index_start = 0
 global_stock_code_index_end = 500
 global_stock_list_file = 'all_stocks_hk.txt'
@@ -31,119 +31,119 @@ matplotlib.rcParams['axes.unicode_minus'] = False
 # 交互模式
 plt.ion()
 
-def get_stock_info_data(stock_code):
-    stock_map = MyUtils.get_from_gtime(stock_code)
-    if stock_map is None or len(stock_map) == 0 or stock_code[2:] != stock_map['code']:
-        print('数据有问题！')
-        return None
-    return stock_map
-
-def get_stock_price_data(stock_code):
-    round_days = 250
-    enddate_str = time.strftime('%Y-%m-%d', time.localtime())  # 结果包含end_date的价格
-    if global_enddate_date is not None:
-        enddate_str = global_enddate_date
-    stock_price_df = MyUtils.get_price_tx(stock_code, end_date=enddate_str, frequency='1d',
-                                          count=np.minimum(round_days, global_day_count + global_more_day_count))
-    remain_days = global_day_count + global_more_day_count - len(stock_price_df)
-    while remain_days > 0:
-        element_end_date = (stock_price_df.index[0] + pd.Timedelta(days=-1)).strftime('%Y-%m-%d')
-        element_stock_price_df = MyUtils.get_price_tx(stock_code, end_date=element_end_date, frequency='1d',
-                                                      count=np.minimum(round_days, remain_days))
-        if element_stock_price_df is None or len(element_stock_price_df) == 0:
-            break
-        remain_days = remain_days - len(element_stock_price_df)
-        stock_price_df = pd.concat([element_stock_price_df, stock_price_df])
-        time.sleep(0.1)
-    return stock_price_df
-
-def calculate_indicators(stock_price_df):
-    """
-    计算各种技术指标
-    
-    Args:
-        stock_price_df: 股票价格数据
-    
-    Returns:
-        stock_price_df: 添加了技术指标的股票价格数据
-    """
-    # 提取基础数据到数组，减少重复访问DataFrame
-    CLOSE = stock_price_df.close.values
-    HIGH = stock_price_df.high.values
-    LOW = stock_price_df.low.values
-    VOLUME = stock_price_df.volume.values
-    
-    # 价格移动平均线（不复权）
-    stock_price_df['MA5'] = MyUtils.ma(CLOSE, 5)
-    stock_price_df['MA10'] = MyUtils.ma(CLOSE, 10)
-    stock_price_df['MA20'] = MyUtils.ma(CLOSE, 20)
-    stock_price_df['MA30'] = MyUtils.ma(CLOSE, 30)
-    stock_price_df['MA60'] = MyUtils.ma(CLOSE, 60)
-    
-    # 成交量移动平均线
-    stock_price_df['VMA5'] = MyUtils.ma(VOLUME, 5)
-    stock_price_df['VMA10'] = MyUtils.ma(VOLUME, 10)
-    stock_price_df['VMA20'] = MyUtils.ma(VOLUME, 20)
-    stock_price_df['VMA30'] = MyUtils.ma(VOLUME, 30)
-    
-    # 乖离率
-    stock_price_df['BIAS6'] = MyUtils.bias(CLOSE, 6)
-    stock_price_df['BIAS12'] = MyUtils.bias(CLOSE, 12)
-    stock_price_df['BIAS24'] = MyUtils.bias(CLOSE, 24)
-    
-    # RSI相对强弱指数
-    stock_price_df['RSI24'] = MyUtils.rsi(CLOSE, 24)
-    
-    # CCI 商品通道指数
-    stock_price_df['CCI14'] = MyUtils.cci(CLOSE, HIGH, LOW)
-    
-    # DMA 移动平均线差
-    DMA_DIF, DMA_DIFMA = MyUtils.dma(CLOSE)
-    stock_price_df['DMA_DIF'] = DMA_DIF
-    stock_price_df['DMA_DIFMA'] = DMA_DIFMA
-    
-    # WR 威廉指数
-    stock_price_df['WR10'] = MyUtils.wr(CLOSE, HIGH, LOW, 10)
-    stock_price_df['WR6'] = MyUtils.wr(CLOSE, HIGH, LOW, 6)
-    
-    # ENE-S
-    ENE_UPPER, ENE_MID, ENE_LOWER = MyUtils.ene(CLOSE)
-    stock_price_df['ENE_UPPER'] = ENE_UPPER
-    stock_price_df['ENE_MID'] = ENE_MID
-    stock_price_df['ENE_LOWER'] = ENE_LOWER
-    
-    # 布林带
-    BOLL_UPPER, BOLL_MID, BOLL_LOWER = MyUtils.boll(CLOSE)
-    stock_price_df['BOLL_UPPER'] = BOLL_UPPER
-    stock_price_df['BOLL_MID'] = BOLL_MID
-    stock_price_df['BOLL_LOWER'] = BOLL_LOWER
-    
-    # MACD
-    DIF, DEA, MACD = MyUtils.macd(CLOSE)
-    stock_price_df['DIF'] = DIF
-    stock_price_df['DEA'] = DEA
-    stock_price_df['MACD'] = MACD
-    
-    # VMACD
-    VDIF, VDEA, VMACD = MyUtils.vmacd(CLOSE, VOLUME)
-    stock_price_df['VDIF'] = VDIF
-    stock_price_df['VDEA'] = VDEA
-    stock_price_df['VMACD'] = VMACD
-    
-    # KDJ
-    KDJ_K, KDJ_D, KDJ_J = MyUtils.kdj(CLOSE, HIGH, LOW)
-    stock_price_df['KDJ_K'] = KDJ_K
-    stock_price_df['KDJ_D'] = KDJ_D
-    stock_price_df['KDJ_J'] = KDJ_J
-    
-    # ATR
-    stock_price_df['ATR14'] = MyUtils.atr(CLOSE, HIGH, LOW, 14)
-    
-    # MFI
-    stock_price_df['MFI'] = MyUtils.mfi(CLOSE, HIGH, LOW, VOLUME, 14)
-
-    stock_price_df = stock_price_df[global_more_day_count:]
-    return stock_price_df
+# def get_stock_info_data(stock_code):
+#     stock_map = MyUtils.get_from_gtime(stock_code)
+#     if stock_map is None or len(stock_map) == 0 or stock_code[2:] != stock_map['code']:
+#         print('数据有问题！')
+#         return None
+#     return stock_map
+#
+# def get_stock_price_data(stock_code):
+#     round_days = 250
+#     enddate_str = time.strftime('%Y-%m-%d', time.localtime())  # 结果包含end_date的价格
+#     if global_enddate_date is not None:
+#         enddate_str = global_enddate_date
+#     stock_price_df = MyUtils.get_price_tx(stock_code, end_date=enddate_str, frequency='1d',
+#                                           count=np.minimum(round_days, global_day_count + global_more_day_count))
+#     remain_days = global_day_count + global_more_day_count - len(stock_price_df)
+#     while remain_days > 0:
+#         element_end_date = (stock_price_df.index[0] + pd.Timedelta(days=-1)).strftime('%Y-%m-%d')
+#         element_stock_price_df = MyUtils.get_price_tx(stock_code, end_date=element_end_date, frequency='1d',
+#                                                       count=np.minimum(round_days, remain_days))
+#         if element_stock_price_df is None or len(element_stock_price_df) == 0:
+#             break
+#         remain_days = remain_days - len(element_stock_price_df)
+#         stock_price_df = pd.concat([element_stock_price_df, stock_price_df])
+#         time.sleep(0.1)
+#     return stock_price_df
+#
+# def calculate_indicators(stock_price_df):
+#     """
+#     计算各种技术指标
+#
+#     Args:
+#         stock_price_df: 股票价格数据
+#
+#     Returns:
+#         stock_price_df: 添加了技术指标的股票价格数据
+#     """
+#     # 提取基础数据到数组，减少重复访问DataFrame
+#     CLOSE = stock_price_df.close.values
+#     HIGH = stock_price_df.high.values
+#     LOW = stock_price_df.low.values
+#     VOLUME = stock_price_df.volume.values
+#
+#     # 价格移动平均线（不复权）
+#     stock_price_df['MA5'] = MyUtils.ma(CLOSE, 5)
+#     stock_price_df['MA10'] = MyUtils.ma(CLOSE, 10)
+#     stock_price_df['MA20'] = MyUtils.ma(CLOSE, 20)
+#     stock_price_df['MA30'] = MyUtils.ma(CLOSE, 30)
+#     stock_price_df['MA60'] = MyUtils.ma(CLOSE, 60)
+#
+#     # 成交量移动平均线
+#     stock_price_df['VMA5'] = MyUtils.ma(VOLUME, 5)
+#     stock_price_df['VMA10'] = MyUtils.ma(VOLUME, 10)
+#     stock_price_df['VMA20'] = MyUtils.ma(VOLUME, 20)
+#     stock_price_df['VMA30'] = MyUtils.ma(VOLUME, 30)
+#
+#     # 乖离率
+#     stock_price_df['BIAS6'] = MyUtils.bias(CLOSE, 6)
+#     stock_price_df['BIAS12'] = MyUtils.bias(CLOSE, 12)
+#     stock_price_df['BIAS24'] = MyUtils.bias(CLOSE, 24)
+#
+#     # RSI相对强弱指数
+#     stock_price_df['RSI24'] = MyUtils.rsi(CLOSE, 24)
+#
+#     # CCI 商品通道指数
+#     stock_price_df['CCI14'] = MyUtils.cci(CLOSE, HIGH, LOW)
+#
+#     # DMA 移动平均线差
+#     DMA_DIF, DMA_DIFMA = MyUtils.dma(CLOSE)
+#     stock_price_df['DMA_DIF'] = DMA_DIF
+#     stock_price_df['DMA_DIFMA'] = DMA_DIFMA
+#
+#     # WR 威廉指数
+#     stock_price_df['WR10'] = MyUtils.wr(CLOSE, HIGH, LOW, 10)
+#     stock_price_df['WR6'] = MyUtils.wr(CLOSE, HIGH, LOW, 6)
+#
+#     # ENE-S
+#     ENE_UPPER, ENE_MID, ENE_LOWER = MyUtils.ene(CLOSE)
+#     stock_price_df['ENE_UPPER'] = ENE_UPPER
+#     stock_price_df['ENE_MID'] = ENE_MID
+#     stock_price_df['ENE_LOWER'] = ENE_LOWER
+#
+#     # 布林带
+#     BOLL_UPPER, BOLL_MID, BOLL_LOWER = MyUtils.boll(CLOSE)
+#     stock_price_df['BOLL_UPPER'] = BOLL_UPPER
+#     stock_price_df['BOLL_MID'] = BOLL_MID
+#     stock_price_df['BOLL_LOWER'] = BOLL_LOWER
+#
+#     # MACD
+#     DIF, DEA, MACD = MyUtils.macd(CLOSE)
+#     stock_price_df['DIF'] = DIF
+#     stock_price_df['DEA'] = DEA
+#     stock_price_df['MACD'] = MACD
+#
+#     # VMACD
+#     VDIF, VDEA, VMACD = MyUtils.vmacd(CLOSE, VOLUME)
+#     stock_price_df['VDIF'] = VDIF
+#     stock_price_df['VDEA'] = VDEA
+#     stock_price_df['VMACD'] = VMACD
+#
+#     # KDJ
+#     KDJ_K, KDJ_D, KDJ_J = MyUtils.kdj(CLOSE, HIGH, LOW)
+#     stock_price_df['KDJ_K'] = KDJ_K
+#     stock_price_df['KDJ_D'] = KDJ_D
+#     stock_price_df['KDJ_J'] = KDJ_J
+#
+#     # ATR
+#     stock_price_df['ATR14'] = MyUtils.atr(CLOSE, HIGH, LOW, 14)
+#
+#     # MFI
+#     stock_price_df['MFI'] = MyUtils.mfi(CLOSE, HIGH, LOW, VOLUME, 14)
+#
+#     stock_price_df = stock_price_df[global_more_day_count:]
+#     return stock_price_df
 
 
 def ma_cross_calc(stock_code, stock_name, stock_price_df, price_key):
@@ -435,7 +435,7 @@ def stock_points_calc_plot_trend(stock_info_map, stock_price_df):
     stock_code = stock_info_map['code']
     print(stock_code, stock_info_map['name'], '--------------------------------------------------------')
     # 计算技术指标
-    stock_price_df = calculate_indicators(stock_price_df)
+    stock_price_df = MyUtils.calculate_indicators(stock_price_df)
     # 计算趋势高低点
     print('数据长度:', len(stock_price_df))
     hlpoint_map = calculate_trend_points(stock_code, stock_info_map['name'], stock_price_df, global_price_key)
@@ -448,7 +448,7 @@ def stock_points_calc_plot_ma(stock_info_map, stock_price_df):
     stock_code = stock_info_map['code']
     print(stock_code, stock_info_map['name'], '--------------------------------------------------------')
     # 计算技术指标
-    stock_price_df = calculate_indicators(stock_price_df)
+    stock_price_df = MyUtils.calculate_indicators(stock_price_df)
     # 计算趋势高低点
     print('数据长度:', len(stock_price_df))
     hlpoint_map = ma_cross_calc(stock_code, stock_info_map['name'], stock_price_df, global_price_key)
@@ -461,7 +461,7 @@ def stock_points_check(stock_info_map, stock_price_df):
     stock_code = stock_info_map['code']
     print(stock_code, stock_info_map['name'], '--------------------------------------------------------')
     # 计算技术指标
-    stock_price_df = calculate_indicators(stock_price_df)
+    stock_price_df = MyUtils.calculate_indicators(stock_price_df)
     # 计算趋势高低点
     print('数据长度:', len(stock_price_df))
     hlpoint_map = calculate_trend_points(stock_code, stock_info_map['name'], stock_price_df, global_price_key)
@@ -479,7 +479,7 @@ def filter_stock(stock_map):
     return True
 
 def scan_stocks():
-    if global_day_count < 2:
+    if MyUtils.global_day_count < 2:
         print('计算历史时间太短！')
         return
     allstockcode_array = []
@@ -495,7 +495,7 @@ def scan_stocks():
             if stock_code_index >= global_stock_code_index_end > 0:
                 break
             stock_code = allstockcode_array[stock_code_index]
-            stock_info_map = get_stock_info_data(stock_code)
+            stock_info_map = MyUtils.get_stock_info_data(stock_code)
             if stock_info_map is None:
                 stock_code_index = stock_code_index + 1
                 continue
@@ -503,7 +503,7 @@ def scan_stocks():
             if not filter_stock(stock_info_map):
                 stock_code_index = stock_code_index + 1
                 continue
-            stock_price_df = get_stock_price_data(stock_code)
+            stock_price_df = MyUtils.get_stock_price_data(stock_code)
             if stock_price_df is None:
                 stock_code_index = stock_code_index + 1
                 continue
@@ -525,8 +525,8 @@ def scan_stocks():
 
 
 def specific_stock_calc(stock_code):
-    stock_info_map = get_stock_info_data(stock_code)
-    stock_price_df = get_stock_price_data(stock_code)
+    stock_info_map = MyUtils.get_stock_info_data(stock_code)
+    stock_price_df = MyUtils.get_stock_price_data(stock_code)
     # 计算指标和绘图
     #stock_points_calc_plot_trend(stock_info_map, stock_price_df)
     stock_points_calc_plot_ma(stock_info_map, stock_price_df)

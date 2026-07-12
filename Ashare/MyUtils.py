@@ -1,9 +1,13 @@
 from ctypes.wintypes import SMALL_RECT
-
 import pandas as pd
-
+import numpy as np
+import time
 from Ashare import *
 import numpy
+
+global_day_count = 200
+global_more_day_count = 60
+global_enddate_date = None
 
 def get_price_tx(code, end_date='', count=10, frequency='1d', fields=[]):  # 明确调用腾讯接口
     xcode = code.replace('.XSHG', '').replace('.XSHE', '')  # 证券代码编码兼容处理
@@ -202,3 +206,120 @@ def mfi(CLOSE,HIGH,LOW,VOLUME,n=14,m=6):
     MFI=100 - (100/(1+FUNDIN/FUNDOUT))
     MFIM=pd.Series(MFI).rolling(m).mean().values
     return numpy.round(MFIM, 3)
+
+# 获取股票基本信息
+def get_stock_info_data(stock_code):
+    stock_map = get_from_gtime(stock_code)
+    if stock_map is None or len(stock_map) == 0 or stock_code[2:] != stock_map['code']:
+        print('数据有问题！')
+        return None
+    return stock_map
+
+# 计算历史价格
+def get_stock_price_data(stock_code):
+    round_days = 250
+    enddate_str = time.strftime('%Y-%m-%d', time.localtime())  # 结果包含end_date的价格
+    if global_enddate_date is not None:
+        enddate_str = global_enddate_date
+    stock_price_df = get_price_tx(stock_code, end_date=enddate_str, frequency='1d',
+                                          count=np.minimum(round_days, global_day_count + global_more_day_count))
+    remain_days = global_day_count + global_more_day_count - len(stock_price_df)
+    while remain_days > 0:
+        element_end_date = (stock_price_df.index[0] + pd.Timedelta(days=-1)).strftime('%Y-%m-%d')
+        element_stock_price_df = get_price_tx(stock_code, end_date=element_end_date, frequency='1d',
+                                                      count=np.minimum(round_days, remain_days))
+        if element_stock_price_df is None or len(element_stock_price_df) == 0:
+            break
+        remain_days = remain_days - len(element_stock_price_df)
+        stock_price_df = pd.concat([element_stock_price_df, stock_price_df])
+        time.sleep(0.1)
+    return stock_price_df
+
+# 计算各种技术指标
+def calculate_indicators(stock_price_df):
+    """
+    计算各种技术指标
+
+    Args:
+        stock_price_df: 股票价格数据
+
+    Returns:
+        stock_price_df: 添加了技术指标的股票价格数据
+    """
+    # 提取基础数据到数组，减少重复访问DataFrame
+    CLOSE = stock_price_df.close.values
+    HIGH = stock_price_df.high.values
+    LOW = stock_price_df.low.values
+    VOLUME = stock_price_df.volume.values
+
+    # 价格移动平均线（不复权）
+    stock_price_df['MA5'] = ma(CLOSE, 5)
+    stock_price_df['MA10'] = ma(CLOSE, 10)
+    stock_price_df['MA20'] = ma(CLOSE, 20)
+    stock_price_df['MA30'] = ma(CLOSE, 30)
+    stock_price_df['MA60'] = ma(CLOSE, 60)
+
+    # 成交量移动平均线
+    stock_price_df['VMA5'] = ma(VOLUME, 5)
+    stock_price_df['VMA10'] = ma(VOLUME, 10)
+    stock_price_df['VMA20'] = ma(VOLUME, 20)
+    stock_price_df['VMA30'] = ma(VOLUME, 30)
+
+    # 乖离率
+    stock_price_df['BIAS6'] = bias(CLOSE, 6)
+    stock_price_df['BIAS12'] = bias(CLOSE, 12)
+    stock_price_df['BIAS24'] = bias(CLOSE, 24)
+
+    # RSI相对强弱指数
+    stock_price_df['RSI24'] = rsi(CLOSE, 24)
+
+    # CCI 商品通道指数
+    stock_price_df['CCI14'] = cci(CLOSE, HIGH, LOW)
+
+    # DMA 移动平均线差
+    DMA_DIF, DMA_DIFMA = dma(CLOSE)
+    stock_price_df['DMA_DIF'] = DMA_DIF
+    stock_price_df['DMA_DIFMA'] = DMA_DIFMA
+
+    # WR 威廉指数
+    stock_price_df['WR10'] = wr(CLOSE, HIGH, LOW, 10)
+    stock_price_df['WR6'] = wr(CLOSE, HIGH, LOW, 6)
+
+    # ENE-S
+    ENE_UPPER, ENE_MID, ENE_LOWER = ene(CLOSE)
+    stock_price_df['ENE_UPPER'] = ENE_UPPER
+    stock_price_df['ENE_MID'] = ENE_MID
+    stock_price_df['ENE_LOWER'] = ENE_LOWER
+
+    # 布林带
+    BOLL_UPPER, BOLL_MID, BOLL_LOWER = boll(CLOSE)
+    stock_price_df['BOLL_UPPER'] = BOLL_UPPER
+    stock_price_df['BOLL_MID'] = BOLL_MID
+    stock_price_df['BOLL_LOWER'] = BOLL_LOWER
+
+    # MACD
+    DIF, DEA, MACD = macd(CLOSE)
+    stock_price_df['DIF'] = DIF
+    stock_price_df['DEA'] = DEA
+    stock_price_df['MACD'] = MACD
+
+    # VMACD
+    VDIF, VDEA, VMACD = vmacd(CLOSE, VOLUME)
+    stock_price_df['VDIF'] = VDIF
+    stock_price_df['VDEA'] = VDEA
+    stock_price_df['VMACD'] = VMACD
+
+    # KDJ
+    KDJ_K, KDJ_D, KDJ_J = kdj(CLOSE, HIGH, LOW)
+    stock_price_df['KDJ_K'] = KDJ_K
+    stock_price_df['KDJ_D'] = KDJ_D
+    stock_price_df['KDJ_J'] = KDJ_J
+
+    # ATR
+    stock_price_df['ATR14'] = atr(CLOSE, HIGH, LOW, 14)
+
+    # MFI
+    stock_price_df['MFI'] = mfi(CLOSE, HIGH, LOW, VOLUME, 14)
+
+    stock_price_df = stock_price_df[global_more_day_count:]
+    return stock_price_df

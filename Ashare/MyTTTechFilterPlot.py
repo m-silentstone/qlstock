@@ -18,7 +18,7 @@ high_low_day_threshold = 5
 stock_code_index_start = 0
 stock_code_index_end = 200
 
-stock_list_file = 'focus_stock_index.txt'
+stock_list_file = 'all_focus_stock_index.txt'
 
 # 中文字体为黑体
 matplotlib.rcParams['font.family'] = 'SimHei'

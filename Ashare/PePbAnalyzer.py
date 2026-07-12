@@ -456,6 +456,52 @@ def print_analysis_result(result):
     
     print(f"\n{'='*20}")
 
+# PEPB过滤
+def filter_analysis_result_pepb(result):
+    if result is None:
+        return False
+    print(f"\n{'=' * 60}")
+    print(f"股票代码: {result['stock_code']}")
+    print(f"股票名称: {result['stock_name']}")
+    print(f"数据点数: {result['data_points']}")
+    if result.get('is_estimated', False):
+        print(f"数据来源: 基于价格估算（真实历史PE/PB数据不可用）")
+        print(f"注意: 估算数据假设EPS和BPS不变，仅供参考")
+    else:
+        print(f"数据来源: 真实历史PE/PB数据")
+    print(f"{'=' * 20}")
+    pe = result['pe_stats']
+    pb = result['pb_stats']
+    if pe is None or pb is None:
+        return False
+    print(f"当前PE: {pe['current']}")
+    print(f"当前PE分位: {pe['percentile']}%")
+    print(f"当前PB: {pb['current']}")
+    print(f"当前PB分位: {pb['percentile']}%")
+    if pe['percentile'] is None or pe['percentile'] > 25:
+        return False
+    if pb['percentile'] is None or pb['percentile'] > 25:
+        return False
+    print(f"股票代码: {result['stock_code']} 被PBPE分位选入...")
+    return True
+
+# MA过滤
+def filter_analysis_result_ma(stock_price_df):
+    if stock_price_df is None:
+        return False
+    if len(stock_price_df) < 30:
+        print('stock_price_df 长度过小')
+        return False
+    ma_cross_key = 'MA30'
+    if stock_price_df.iloc[-1]['close'] < stock_price_df.iloc[-1][ma_cross_key]:
+        return False
+    if stock_price_df.iloc[-1]['MA5'] < stock_price_df.iloc[-1][ma_cross_key]:
+        return False
+    df_index = -1
+    while df_index >= -5:
+        df_index = df_index - 1
+        if stock_price_df.iloc[df_index]['close'] < stock_price_df.iloc[df_index][ma_cross_key]:
+            return True
 
 if __name__ == '__main__':
     if global_day_count is None:
@@ -470,7 +516,7 @@ if __name__ == '__main__':
         print_analysis_result(result)
     else:
         allstockcode_array = []
-        stock_score_map = {}
+        filtered_stocks = {}
         with open(global_stock_list_file, 'r', encoding='utf-8') as file:
             lines = file.readlines()
             for line in lines[0:]:
@@ -479,12 +525,26 @@ if __name__ == '__main__':
                 allstockcode_array.append(str(code_array[1] + code_array[0]).lower())
             stock_code_index = max(0, global_stock_code_index_start)
             while stock_code_index < len(allstockcode_array):
+                time.sleep(0.2)
                 if stock_code_index >= global_stock_code_index_end > 0:
                     break
                 stock_code = allstockcode_array[stock_code_index]
                 # 分析PE和PB分位情况
                 result = analyze_pe_pb(stock_code, day_count)
-                # 打印分析结果
-                print_analysis_result(result)
+                # PEPB过滤
+                if not filter_analysis_result_pepb(result):
+                    stock_code_index = stock_code_index + 1
+                    continue
+                stock_info_map = MyUtils.get_stock_info_data(stock_code)
+                stock_price_df = MyUtils.get_stock_price_data(stock_code)
+                # 计算技术指标
+                MyUtils.calculate_indicators(stock_price_df)
+                # MA过滤
+                if not filter_analysis_result_ma(stock_price_df):
+                    stock_code_index = stock_code_index + 1
+                    continue
+                filtered_stocks[stock_code] = result
                 stock_code_index = stock_code_index + 1
-                time.sleep(0.3)
+            # 打印分析结果
+            print(f"{'=' * 60}")
+            print(filtered_stocks)
