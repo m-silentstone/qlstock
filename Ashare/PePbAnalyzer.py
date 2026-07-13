@@ -4,14 +4,15 @@ import time
 import requests
 import json
 import argparse
-
 from fontTools.misc.cython import returns
-
 import MyUtils
 
 #global_stock_code = 'sz000001'
 global_stock_code = None
-global_day_count = 1000
+global_ma_cross_key = 'MA60'
+global_pe_percent_threshold = 25
+global_pb_percent_threshold = 25
+global_day_count = 2000
 global_stock_code_index_start = 0
 global_stock_code_index_end = 9999
 global_stock_list_file = 'all_large_stocks_field.txt'
@@ -478,9 +479,9 @@ def filter_analysis_result_pepb(result):
     print(f"当前PE分位: {pe['percentile']}%")
     print(f"当前PB: {pb['current']}")
     print(f"当前PB分位: {pb['percentile']}%")
-    if pe['percentile'] is None or pe['percentile'] > 25:
+    if pe['percentile'] is None or pe['percentile'] > global_pe_percent_threshold:
         return False
-    if pb['percentile'] is None or pb['percentile'] > 25:
+    if pb['percentile'] is None or pb['percentile'] > global_pb_percent_threshold:
         return False
     print(f"股票代码: {result['stock_code']} 被PBPE分位选入...")
     return True
@@ -492,7 +493,7 @@ def filter_analysis_result_ma(stock_price_df):
     if len(stock_price_df) < 30:
         print('stock_price_df 长度过小')
         return False
-    ma_cross_key = 'MA30'
+    ma_cross_key = global_ma_cross_key
     if stock_price_df.iloc[-1]['close'] < stock_price_df.iloc[-1][ma_cross_key]:
         return False
     if stock_price_df.iloc[-1]['MA5'] < stock_price_df.iloc[-1][ma_cross_key]:
@@ -502,6 +503,16 @@ def filter_analysis_result_ma(stock_price_df):
         df_index = df_index - 1
         if stock_price_df.iloc[df_index]['close'] < stock_price_df.iloc[df_index][ma_cross_key]:
             return True
+    return False
+
+# 股票筛选（包含筛选条件）True表示符合条件；False表示被排除
+def filter_stock(stock_map):
+    if 'pe' not in stock_map.keys() or 'total_market_value' not in stock_map.keys():
+        return False
+    if stock_map['total_market_value'] < 800:
+        return False
+    print(stock_map, '--------------------------------------------------------')
+    return True
 
 if __name__ == '__main__':
     if global_day_count is None:
@@ -529,13 +540,17 @@ if __name__ == '__main__':
                 if stock_code_index >= global_stock_code_index_end > 0:
                     break
                 stock_code = allstockcode_array[stock_code_index]
+                stock_info_map = MyUtils.get_stock_info_data(stock_code)
+                # 基本信息过滤
+                if not filter_stock(stock_info_map):
+                    stock_code_index = stock_code_index + 1
+                    continue
                 # 分析PE和PB分位情况
                 result = analyze_pe_pb(stock_code, day_count)
                 # PEPB过滤
                 if not filter_analysis_result_pepb(result):
                     stock_code_index = stock_code_index + 1
                     continue
-                stock_info_map = MyUtils.get_stock_info_data(stock_code)
                 stock_price_df = MyUtils.get_stock_price_data(stock_code)
                 # 计算技术指标
                 MyUtils.calculate_indicators(stock_price_df)
@@ -543,6 +558,9 @@ if __name__ == '__main__':
                 if not filter_analysis_result_ma(stock_price_df):
                     stock_code_index = stock_code_index + 1
                     continue
+                # 入选
+                print('***选入:', stock_code)
+                print(result)
                 filtered_stocks[stock_code] = result
                 stock_code_index = stock_code_index + 1
             # 打印分析结果

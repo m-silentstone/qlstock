@@ -415,20 +415,6 @@ def plot_statistics_hist(stock_price_df, hlpoint_map, price_key):
     plt.suptitle('股票价格图组')
     plt.show(block=True)
 
-
-# def stock_points_calc(stock_info_map, stock_price_df):
-#     if stock_info_map is None or stock_price_df is None:
-#         return None
-#     stock_code = stock_info_map['code']
-#     print(stock_code, stock_info_map['name'], '--------------------------------------------------------')
-#     # 计算技术指标
-#     calculate_indicators(stock_price_df)
-#     # 计算趋势高低点
-#     stock_price_df = stock_price_df[global_more_day_count:]
-#     print('数据长度:', len(stock_price_df))
-#     hlpoint_map = calculate_trend_points(stock_code, stock_info_map['name'], stock_price_df, global_price_key)
-#     return hlpoint_map
-
 def stock_points_calc_plot_trend(stock_info_map, stock_price_df):
     if stock_info_map is None or stock_price_df is None:
         return
