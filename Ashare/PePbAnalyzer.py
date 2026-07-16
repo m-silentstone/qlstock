@@ -9,12 +9,12 @@ import MyUtils
 
 #global_stock_code = 'sz000001'
 global_stock_code = None
-global_ma_cross_key = 'MA60'
+global_ma_cross_key = 'MA30'
 global_pe_percent_threshold = 25
 global_pb_percent_threshold = 25
-global_volume_percent_threshold = 55
+global_volume_percent_threshold = 60
 global_day_count = 2000
-global_stock_code_index_start = 0
+global_stock_code_index_start = 53
 global_stock_code_index_end = 9999
 global_stock_list_file = 'all_large_stocks_field.txt'
 
@@ -388,6 +388,21 @@ def analyze_pe_pb(stock_code, day_count=1000):
     
     return analysis_result
 
+def analyze_volume(stock_price_df, day_count=10):
+    volumes_data = stock_price_df.volume.values[-1 * day_count:].tolist()
+    current_volume = stock_price_df.volume.values[-1]
+    volume_percentile = calculate_percentile(current_volume, volumes_data)
+    volume_stats = None
+    if len(volumes_data) > 0:
+        volume_stats = {
+            'min': round(min(volumes_data), 2),
+            'max': round(max(volumes_data), 2),
+            'mean': round(sum(volumes_data) / len(volumes_data), 2),
+            'median': round(sorted(volumes_data)[len(volumes_data) // 2], 2),
+            'current': round(current_volume, 2),
+            'percentile': volume_percentile
+        }
+    return volume_stats
 
 def print_analysis_result(result):
     """
@@ -494,9 +509,6 @@ def filter_analysis_result_ma(stock_price_df):
     if len(stock_price_df) < 30:
         print('stock_price_df 长度过小')
         return False
-    volume_days = 30
-    volumes_data = stock_price_df.volume.values[-1*volume_days:]
-    current_volume = stock_price_df.volume.values[-1]
     ma_cross_key = global_ma_cross_key
     if stock_price_df.iloc[-1]['close'] < stock_price_df.iloc[-1][ma_cross_key]:
         return False
@@ -506,14 +518,15 @@ def filter_analysis_result_ma(stock_price_df):
     while df_index >= -5:
         df_index = df_index - 1
         if stock_price_df.iloc[df_index]['close'] < stock_price_df.iloc[df_index][ma_cross_key]:
-            volume_percentile = calculate_percentile(current_volume, volumes_data)
-            print('df_index', df_index, 'volume', current_volume, 'volume_percentile:', volume_percentile)
-            if volume_percentile > global_volume_percent_threshold:
-                return True
-            else:
-                return False
-        current_volume = min(current_volume, stock_price_df.volume.values[df_index])
+            return True
     return False
+
+def filter_analysis_result_volume(result):
+    volumes = result['volume_stats']
+    if volumes['percentile'] is None or volumes['percentile'] < global_volume_percent_threshold:
+        return False
+    print(f"股票代码: {result['stock_code']} 被volume分位选入...")
+    return True
 
 # 股票筛选（包含筛选条件）True表示符合条件；False表示被排除
 def filter_stock(stock_map):
@@ -567,6 +580,11 @@ if __name__ == '__main__':
                 MyUtils.calculate_indicators(stock_price_df)
                 # MA过滤
                 if not filter_analysis_result_ma(stock_price_df):
+                    stock_code_index = stock_code_index + 1
+                    continue
+                result['volume_stats'] = analyze_volume(stock_price_df)
+                # volume过滤
+                if not filter_analysis_result_volume(result):
                     stock_code_index = stock_code_index + 1
                     continue
                 # 入选
