@@ -12,6 +12,7 @@ global_stock_code = None
 global_ma_cross_key = 'MA60'
 global_pe_percent_threshold = 25
 global_pb_percent_threshold = 25
+global_volume_percent_threshold = 55
 global_day_count = 2000
 global_stock_code_index_start = 0
 global_stock_code_index_end = 9999
@@ -493,6 +494,9 @@ def filter_analysis_result_ma(stock_price_df):
     if len(stock_price_df) < 30:
         print('stock_price_df 长度过小')
         return False
+    volume_days = 30
+    volumes_data = stock_price_df.volume.values[-1*volume_days:]
+    current_volume = stock_price_df.volume.values[-1]
     ma_cross_key = global_ma_cross_key
     if stock_price_df.iloc[-1]['close'] < stock_price_df.iloc[-1][ma_cross_key]:
         return False
@@ -502,7 +506,13 @@ def filter_analysis_result_ma(stock_price_df):
     while df_index >= -5:
         df_index = df_index - 1
         if stock_price_df.iloc[df_index]['close'] < stock_price_df.iloc[df_index][ma_cross_key]:
-            return True
+            volume_percentile = calculate_percentile(current_volume, volumes_data)
+            print('df_index', df_index, 'volume', current_volume, 'volume_percentile:', volume_percentile)
+            if volume_percentile > global_volume_percent_threshold:
+                return True
+            else:
+                return False
+        current_volume = min(current_volume, stock_price_df.volume.values[df_index])
     return False
 
 # 股票筛选（包含筛选条件）True表示符合条件；False表示被排除
@@ -539,6 +549,7 @@ if __name__ == '__main__':
                 time.sleep(0.2)
                 if stock_code_index >= global_stock_code_index_end > 0:
                     break
+                print('stock_code_index', stock_code_index)
                 stock_code = allstockcode_array[stock_code_index]
                 stock_info_map = MyUtils.get_stock_info_data(stock_code)
                 # 基本信息过滤
