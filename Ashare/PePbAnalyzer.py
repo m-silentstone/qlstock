@@ -13,8 +13,9 @@ global_ma_cross_key = 'MA30'
 global_pe_percent_threshold = 25
 global_pb_percent_threshold = 25
 global_volume_percent_threshold = 60
-global_day_count = 2000
-global_stock_code_index_start = 53
+global_stock_history_data_days = 2000
+global_ma_cross_days = 5
+global_stock_code_index_start = 0
 global_stock_code_index_end = 9999
 global_stock_list_file = 'all_large_stocks_field.txt'
 
@@ -60,7 +61,7 @@ def get_historical_pe_pb_baostock(stock_code, day_count=1000):
         # 计算日期范围
         end_date = pd.Timestamp.now().strftime('%Y-%m-%d')
         start_date = (pd.Timestamp.now() - pd.Timedelta(days=day_count * 2)).strftime('%Y-%m-%d')
-        
+
         # 登录baostock
         lg = bs.login()
         
@@ -503,7 +504,7 @@ def filter_analysis_result_pepb(result):
     return True
 
 # MA过滤
-def filter_analysis_result_ma(stock_price_df):
+def filter_analysis_result_ma(stock_price_df, day_count = 5):
     if stock_price_df is None:
         return False
     if len(stock_price_df) < 30:
@@ -515,7 +516,7 @@ def filter_analysis_result_ma(stock_price_df):
     if stock_price_df.iloc[-1]['MA5'] < stock_price_df.iloc[-1][ma_cross_key]:
         return False
     df_index = -1
-    while df_index >= -5:
+    while df_index >= -1 * day_count:
         df_index = df_index - 1
         if stock_price_df.iloc[df_index]['close'] < stock_price_df.iloc[df_index][ma_cross_key]:
             return True
@@ -538,10 +539,10 @@ def filter_stock(stock_map):
     return True
 
 if __name__ == '__main__':
-    if global_day_count is None:
+    if global_stock_history_data_days is None:
         day_count = 1000
     else:
-        day_count = global_day_count
+        day_count = global_stock_history_data_days
     if global_stock_code is not None:
         stock_code = global_stock_code
         # 分析PE和PB分位情况
@@ -579,10 +580,10 @@ if __name__ == '__main__':
                 # 计算技术指标
                 MyUtils.calculate_indicators(stock_price_df)
                 # MA过滤
-                if not filter_analysis_result_ma(stock_price_df):
+                if not filter_analysis_result_ma(stock_price_df, global_ma_cross_days):
                     stock_code_index = stock_code_index + 1
                     continue
-                result['volume_stats'] = analyze_volume(stock_price_df)
+                result['volume_stats'] = analyze_volume(stock_price_df, global_ma_cross_days * 2)
                 # volume过滤
                 if not filter_analysis_result_volume(result):
                     stock_code_index = stock_code_index + 1
