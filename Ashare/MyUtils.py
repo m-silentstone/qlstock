@@ -269,6 +269,7 @@ def calculate_indicators(stock_price_df):
     stock_price_df['BIAS6'] = bias(CLOSE, 6)
     stock_price_df['BIAS12'] = bias(CLOSE, 12)
     stock_price_df['BIAS24'] = bias(CLOSE, 24)
+    stock_price_df['BIAS30'] = bias(CLOSE, 30)
 
     # RSI相对强弱指数
     stock_price_df['RSI24'] = rsi(CLOSE, 24)
