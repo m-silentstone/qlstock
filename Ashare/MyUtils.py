@@ -4,6 +4,7 @@ import numpy as np
 import time
 from Ashare import *
 import numpy
+import requests
 
 global_day_count = 200
 global_more_day_count = 60

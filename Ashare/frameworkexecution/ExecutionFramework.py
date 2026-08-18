@@ -1,21 +1,15 @@
 import numpy as np
 import pandas as pd
 import time
-import requests
 import json
 import argparse
 from fontTools.misc.cython import returns
 import Ashare.MyUtils as myUtils
-from Ashare.frameworkexecution.DefaultStrategy import DefaultStrategy
+from Ashare.frameworkexecution.StrategyDefault import DefaultStrategy
 
 #global_stock_code = 'sz000001'
 global_stock_code = None
-global_ma_cross_key = 'MA30'
-global_pe_percent_threshold = 25
-global_pb_percent_threshold = 25
-global_volume_percent_threshold = 60
 global_stock_history_data_days = 2000
-global_ma_cross_days = 5
 global_stock_code_index_start = 0
 global_stock_code_index_end = 9999
 global_stock_list_file = '../all_large_stocks_field.txt'
@@ -407,74 +401,74 @@ strategyObj = DefaultStrategy()
 #         }
 #     return volume_stats
 
-def print_analysis_result(result):
-    """
-    打印分析结果
-    
-    Args:
-        result: 分析结果字典
-    """
-    if result is None:
-        return
-    
-    print(f"\n{'='*60}")
-    print(f"股票代码: {result['stock_code']}")
-    print(f"股票名称: {result['stock_name']}")
-    print(f"数据点数: {result['data_points']}")
-    if result.get('is_estimated', False):
-        print(f"数据来源: 基于价格估算（真实历史PE/PB数据不可用）")
-        print(f"注意: 估算数据假设EPS和BPS不变，仅供参考")
-    else:
-        print(f"数据来源: 真实历史PE/PB数据")
-    print(f"{'='*20}")
-    
-    # PE分析
-    print("\n【PE市盈率分析】")
-    pe = result['pe_stats']
-    if pe is not None:
-        print(f"当前PE: {pe['current']}")
-        print(f"历史最低PE: {pe['min']}")
-        print(f"历史最高PE: {pe['max']}")
-        print(f"历史平均PE: {pe['mean']}")
-        print(f"历史中位PE: {pe['median']}")
-        print(f"当前PE分位: {pe['percentile']}%")
-        
-        if pe['percentile'] is not None:
-            if pe['percentile'] < 20:
-                print("评价: 当前PE处于历史低位，可能被低估")
-            elif pe['percentile'] < 50:
-                print("评价: 当前PE处于历史中位偏低")
-            elif pe['percentile'] < 80:
-                print("评价: 当前PE处于历史中位偏高")
-            else:
-                print("评价: 当前PE处于历史高位，可能被高估")
-    else:
-        print("数据不足，无法计算PE分位")
-    
-    # PB分析
-    print("\n【PB市净率分析】")
-    pb = result['pb_stats']
-    if pb is not None:
-        print(f"当前PB: {pb['current']}")
-        print(f"历史最低PB: {pb['min']}")
-        print(f"历史最高PB: {pb['max']}")
-        print(f"历史平均PB: {pb['mean']}")
-        print(f"历史中位PB: {pb['median']}")
-        print(f"当前PB分位: {pb['percentile']}%")
-        
-        if pb['percentile'] is not None:
-            if pb['percentile'] < 20:
-                print("评价: 当前PB处于历史低位，可能被低估")
-            elif pb['percentile'] < 50:
-                print("评价: 当前PB处于历史中位偏低")
-            elif pb['percentile'] < 80:
-                print("评价: 当前PB处于历史中位偏高")
-            else:
-                print("评价: 当前PB处于历史高位，可能被高估")
-    else:
-        print("数据不足，无法计算PB分位")
-    
-    print(f"\n{'='*20}")
+# def print_analysis_result(result):
+#     """
+#     打印分析结果
+#
+#     Args:
+#         result: 分析结果字典
+#     """
+#     if result is None:
+#         return
+#
+#     print(f"\n{'='*60}")
+#     print(f"股票代码: {result['stock_code']}")
+#     print(f"股票名称: {result['stock_name']}")
+#     print(f"数据点数: {result['data_points']}")
+#     if result.get('is_estimated', False):
+#         print(f"数据来源: 基于价格估算（真实历史PE/PB数据不可用）")
+#         print(f"注意: 估算数据假设EPS和BPS不变，仅供参考")
+#     else:
+#         print(f"数据来源: 真实历史PE/PB数据")
+#     print(f"{'='*20}")
+#
+#     # PE分析
+#     print("\n【PE市盈率分析】")
+#     pe = result['pe_stats']
+#     if pe is not None:
+#         print(f"当前PE: {pe['current']}")
+#         print(f"历史最低PE: {pe['min']}")
+#         print(f"历史最高PE: {pe['max']}")
+#         print(f"历史平均PE: {pe['mean']}")
+#         print(f"历史中位PE: {pe['median']}")
+#         print(f"当前PE分位: {pe['percentile']}%")
+#
+#         if pe['percentile'] is not None:
+#             if pe['percentile'] < 20:
+#                 print("评价: 当前PE处于历史低位，可能被低估")
+#             elif pe['percentile'] < 50:
+#                 print("评价: 当前PE处于历史中位偏低")
+#             elif pe['percentile'] < 80:
+#                 print("评价: 当前PE处于历史中位偏高")
+#             else:
+#                 print("评价: 当前PE处于历史高位，可能被高估")
+#     else:
+#         print("数据不足，无法计算PE分位")
+#
+#     # PB分析
+#     print("\n【PB市净率分析】")
+#     pb = result['pb_stats']
+#     if pb is not None:
+#         print(f"当前PB: {pb['current']}")
+#         print(f"历史最低PB: {pb['min']}")
+#         print(f"历史最高PB: {pb['max']}")
+#         print(f"历史平均PB: {pb['mean']}")
+#         print(f"历史中位PB: {pb['median']}")
+#         print(f"当前PB分位: {pb['percentile']}%")
+#
+#         if pb['percentile'] is not None:
+#             if pb['percentile'] < 20:
+#                 print("评价: 当前PB处于历史低位，可能被低估")
+#             elif pb['percentile'] < 50:
+#                 print("评价: 当前PB处于历史中位偏低")
+#             elif pb['percentile'] < 80:
+#                 print("评价: 当前PB处于历史中位偏高")
+#             else:
+#                 print("评价: 当前PB处于历史高位，可能被高估")
+#     else:
+#         print("数据不足，无法计算PB分位")
+#
+#     print(f"\n{'='*20}")
 
 # # PEPB过滤
 # def filter_analysis_result_pepb(result):
@@ -584,11 +578,12 @@ if __name__ == '__main__':
     else:
         day_count = global_stock_history_data_days
     if global_stock_code is not None:
-        stock_code = global_stock_code
-        # 分析PE和PB分位情况
-        result = analyze_pe_pb(stock_code, day_count)
-        # 打印分析结果
-        print_analysis_result(result)
+        pass
+        # stock_code = global_stock_code
+        # # 分析PE和PB分位情况
+        # result = analyze_pe_pb(stock_code, day_count)
+        # # 打印分析结果
+        # print_analysis_result(result)
     else:
         allstockcode_array = []
         filtered_stocks = {}

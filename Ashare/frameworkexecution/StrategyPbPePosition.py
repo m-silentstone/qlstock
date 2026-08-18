@@ -5,7 +5,7 @@ import requests
 import json
 import argparse
 from fontTools.misc.cython import returns
-from Ashare.frameworkexecution.DefaultStrategy import DefaultStrategy
+from Ashare.frameworkexecution.StrategyDefault import DefaultStrategy
 import Ashare.MyUtils as myUtils
 
 # 尝试导入baostock
@@ -27,31 +27,34 @@ except ImportError:
     print("akshare未安装，将使用腾讯接口估算PE/PB数据")
 
 class PbPePositionStrategy(DefaultStrategy):
+    pe_percent_threshold = 25
+    pb_percent_threshold = 25
+    ma_cross_days = 5
+    ma_cross_key = 'MA30'
+    volume_percent_threshold = 60
+
     def __init__(self):
         pass
 
     # 股票分析和继续筛选 返回1：True表示符合条件；False表示被排除。返回2：股票详细信息
     def analyze_choose_stock(self, stock_code, stock_info_map, day_count):
         # 分析PE和PB分位情况
-        result = self.analyze_pe_pb(stock_code, day_count)
+        analysis_map = self.analyze_pe_pb(stock_code, day_count)
         # PEPB过滤
-        if not self.filter_analysis_result_pepb(result):
-            stock_code_index = stock_code_index + 1
-            continue
+        if not self.filter_analysis_result_pepb(analysis_map):
+            return False, analysis_map
         stock_price_df = myUtils.get_stock_price_data(stock_code)
         # 计算技术指标
         myUtils.calculate_indicators(stock_price_df)
         # MA过滤
-        if not self.filter_analysis_result_ma(stock_price_df, global_ma_cross_days):
-            stock_code_index = stock_code_index + 1
-            continue
-        result['volume_stats'] = analyze_volume(stock_price_df, global_ma_cross_days * 2)
+        if not self.filter_analysis_result_ma(stock_price_df, self.ma_cross_days):
+            return False, analysis_map
+        analysis_map['volume_stats'] = self.analyze_volume(stock_price_df, self.ma_cross_days * 2)
         # volume过滤
-        if not self.filter_analysis_result_volume(result):
-            stock_code_index = stock_code_index + 1
-            continue
+        if not self.filter_analysis_result_volume(analysis_map):
+            return False, analysis_map
         # 可替换的策略
-        return False, None
+        return True, analysis_map
 
 #-----------------------------
     def analyze_pe_pb(self, stock_code, day_count=1000):
@@ -123,7 +126,7 @@ class PbPePositionStrategy(DefaultStrategy):
                 'percentile': pb_percentile
             }
 
-        analysis_result = {
+        analysis_map = {
             'stock_code': stock_code,
             'stock_name': stock_map.get('name', ''),
             'pe_stats': pe_stats,
@@ -131,8 +134,7 @@ class PbPePositionStrategy(DefaultStrategy):
             'data_points': len(pe_pb_df),
             'is_estimated': is_estimated
         }
-
-        return analysis_result
+        return analysis_map
 
     def analyze_volume(self, stock_price_df, day_count=10):
         volumes_data = stock_price_df.volume.values[-1 * day_count:].tolist()
@@ -151,32 +153,32 @@ class PbPePositionStrategy(DefaultStrategy):
         return volume_stats
 
     # PEPB过滤
-    def filter_analysis_result_pepb(self, result):
-        if result is None:
+    def filter_analysis_result_pepb(self, analysis_map):
+        if analysis_map is None:
             return False
         print(f"\n{'=' * 60}")
-        print(f"股票代码: {result['stock_code']}")
-        print(f"股票名称: {result['stock_name']}")
-        print(f"数据点数: {result['data_points']}")
-        if result.get('is_estimated', False):
+        print(f"股票代码: {analysis_map['stock_code']}")
+        print(f"股票名称: {analysis_map['stock_name']}")
+        print(f"数据点数: {analysis_map['data_points']}")
+        if analysis_map.get('is_estimated', False):
             print(f"数据来源: 基于价格估算（真实历史PE/PB数据不可用）")
             print(f"注意: 估算数据假设EPS和BPS不变，仅供参考")
         else:
             print(f"数据来源: 真实历史PE/PB数据")
         print(f"{'=' * 20}")
-        pe = result['pe_stats']
-        pb = result['pb_stats']
+        pe = analysis_map['pe_stats']
+        pb = analysis_map['pb_stats']
         if pe is None or pb is None:
             return False
         print(f"当前PE: {pe['current']}")
         print(f"当前PE分位: {pe['percentile']}%")
         print(f"当前PB: {pb['current']}")
         print(f"当前PB分位: {pb['percentile']}%")
-        if pe['percentile'] is None or pe['percentile'] > global_pe_percent_threshold:
+        if pe['percentile'] is None or pe['percentile'] > self.pe_percent_threshold:
             return False
-        if pb['percentile'] is None or pb['percentile'] > global_pb_percent_threshold:
+        if pb['percentile'] is None or pb['percentile'] > self.pb_percent_threshold:
             return False
-        print(f"股票代码: {result['stock_code']} 被PBPE分位选入...")
+        print(f"股票代码: {analysis_map['stock_code']} 被PBPE分位选入...")
         return True
 
     # MA过滤
@@ -186,7 +188,7 @@ class PbPePositionStrategy(DefaultStrategy):
         if len(stock_price_df) < 30:
             print('stock_price_df 长度过小')
             return False
-        ma_cross_key = global_ma_cross_key
+        ma_cross_key = self.ma_cross_key
         if stock_price_df.iloc[-1]['close'] < stock_price_df.iloc[-1][ma_cross_key]:
             return False
         if stock_price_df.iloc[-1]['MA5'] < stock_price_df.iloc[-1][ma_cross_key]:
@@ -200,7 +202,7 @@ class PbPePositionStrategy(DefaultStrategy):
 
     def filter_analysis_result_volume(self, result):
         volumes = result['volume_stats']
-        if volumes['percentile'] is None or volumes['percentile'] < global_volume_percent_threshold:
+        if volumes['percentile'] is None or volumes['percentile'] < self.volume_percent_threshold:
             return False
         print(f"股票代码: {result['stock_code']} 被volume分位选入...")
         return True
