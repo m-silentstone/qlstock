@@ -1,6 +1,7 @@
 from ctypes.wintypes import SMALL_RECT
 import pandas as pd
 import numpy as np
+import Ashare.Ashare as ashare
 import time
 from Ashare import *
 import numpy
@@ -15,12 +16,12 @@ def get_price_tx(code, end_date='', count=10, frequency='1d', fields=[]):  # 明
     xcode = 'sh' + xcode if ('XSHG' in code) else 'sz' + xcode if ('XSHE' in code) else code
 
     if frequency in ['1d', '1w', '1M']:  # 1d日线  1w周线  1M月线
-        return get_price_day_tx(xcode, end_date=end_date, count=count,
+        return ashare.get_price_day_tx(xcode, end_date=end_date, count=count,
                                 frequency=frequency)
 
     if frequency in ['1m', '5m', '15m', '30m', '60m']:  # 分钟线 ,1m只有腾讯接口  5分钟5m   60分钟60m
         if frequency in '1m': return get_price_min_tx(xcode, end_date=end_date, count=count, frequency=frequency)
-        return get_price_day_tx(xcode, end_date=end_date, count=count,
+        return ashare.get_price_day_tx(xcode, end_date=end_date, count=count,
                                 frequency=frequency)
 
 
@@ -271,6 +272,7 @@ def calculate_indicators(stock_price_df):
     stock_price_df['BIAS12'] = bias(CLOSE, 12)
     stock_price_df['BIAS24'] = bias(CLOSE, 24)
     stock_price_df['BIAS30'] = bias(CLOSE, 30)
+    stock_price_df['BIAS60'] = bias(CLOSE, 60)
 
     # RSI相对强弱指数
     stock_price_df['RSI24'] = rsi(CLOSE, 24)

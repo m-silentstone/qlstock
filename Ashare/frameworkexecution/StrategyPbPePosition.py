@@ -29,7 +29,7 @@ except ImportError:
 class PbPePositionStrategy(DefaultStrategy):
     pe_percent_threshold = 25
     pb_percent_threshold = 25
-    ma_cross_days = 5
+    ma_cross_days = 10
     ma_cross_key = 'MA30'
     volume_percent_threshold = 60
 
@@ -46,14 +46,13 @@ class PbPePositionStrategy(DefaultStrategy):
         stock_price_df = myUtils.get_stock_price_data(stock_code)
         # 计算技术指标
         myUtils.calculate_indicators(stock_price_df)
-        # MA过滤
-        if not self.filter_analysis_result_ma(stock_price_df, self.ma_cross_days):
-            return False, analysis_map
-        analysis_map['volume_stats'] = self.analyze_volume(stock_price_df, self.ma_cross_days * 2)
-        # volume过滤
-        if not self.filter_analysis_result_volume(analysis_map):
-            return False, analysis_map
-        # 可替换的策略
+        # # MA过滤
+        # if not self.filter_analysis_result_ma(stock_price_df, self.ma_cross_days):
+        #     return False, analysis_map
+        # analysis_map['volume_stats'] = self.analyze_volume(stock_price_df, self.ma_cross_days * 2)
+        # # volume过滤
+        # if not self.filter_analysis_result_volume(analysis_map):
+        #     return False, analysis_map
         return True, analysis_map
 
 #-----------------------------

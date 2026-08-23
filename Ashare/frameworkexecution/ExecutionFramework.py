@@ -6,6 +6,8 @@ import argparse
 from fontTools.misc.cython import returns
 import Ashare.MyUtils as myUtils
 from Ashare.frameworkexecution.StrategyDefault import DefaultStrategy
+from Ashare.frameworkexecution.StrategyPbPePosition import PbPePositionStrategy
+from Ashare.frameworkexecution.StrategyBiasPosition import BiasPositionStrategy
 
 #global_stock_code = 'sz000001'
 global_stock_code = None
@@ -13,7 +15,58 @@ global_stock_history_data_days = 2000
 global_stock_code_index_start = 0
 global_stock_code_index_end = 9999
 global_stock_list_file = '../all_large_stocks_field.txt'
-strategyObj = DefaultStrategy()
+strategyObj = BiasPositionStrategy()
+
+
+if __name__ == '__main__':
+    if global_stock_history_data_days is None:
+        day_count = 1000
+    else:
+        day_count = global_stock_history_data_days
+    if global_stock_code is not None:
+        pass
+        # stock_code = global_stock_code
+        # # 分析PE和PB分位情况
+        # result = analyze_pe_pb(stock_code, day_count)
+        # # 打印分析结果
+        # print_analysis_result(result)
+    else:
+        allstockcode_array = []
+        filtered_stocks = {}
+        with open(global_stock_list_file, 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+            for line in lines[0:]:
+                array = line.split()
+                code_array = array[0].split('.')
+                allstockcode_array.append(str(code_array[1] + code_array[0]).lower())
+            stock_code_index = max(0, global_stock_code_index_start)
+            while stock_code_index < len(allstockcode_array):
+                time.sleep(0.2)
+                if stock_code_index >= global_stock_code_index_end > 0:
+                    break
+                print('stock_code_index', stock_code_index)
+                stock_code = allstockcode_array[stock_code_index]
+                stock_info_map = myUtils.get_stock_info_data(stock_code)
+                # 基本信息过滤
+                if not strategyObj.basic_filter_stock(stock_info_map):
+                    stock_code_index = stock_code_index + 1
+                    continue
+                # 分析过程
+                is_filtered, stock_detail_map = strategyObj.analyze_choose_stock(stock_code, stock_info_map, day_count)
+                # 判断选入
+                if not is_filtered:
+                    stock_code_index = stock_code_index + 1
+                    continue
+                print('***选入:', stock_code)
+                print(stock_detail_map)
+                filtered_stocks[stock_code] = stock_detail_map
+                stock_code_index = stock_code_index + 1
+            # 打印分析结果
+            print(f"{'=' * 60}")
+            print(filtered_stocks)
+
+
+
 
 # # 尝试导入baostock
 # try:
@@ -570,52 +623,3 @@ strategyObj = DefaultStrategy()
 #     return pepb_position_strategy(stock_code, stock_info_map, day_count)
 
 #===核心======================================
-
-
-if __name__ == '__main__':
-    if global_stock_history_data_days is None:
-        day_count = 1000
-    else:
-        day_count = global_stock_history_data_days
-    if global_stock_code is not None:
-        pass
-        # stock_code = global_stock_code
-        # # 分析PE和PB分位情况
-        # result = analyze_pe_pb(stock_code, day_count)
-        # # 打印分析结果
-        # print_analysis_result(result)
-    else:
-        allstockcode_array = []
-        filtered_stocks = {}
-        with open(global_stock_list_file, 'r', encoding='utf-8') as file:
-            lines = file.readlines()
-            for line in lines[0:]:
-                array = line.split()
-                code_array = array[0].split('.')
-                allstockcode_array.append(str(code_array[1] + code_array[0]).lower())
-            stock_code_index = max(0, global_stock_code_index_start)
-            while stock_code_index < len(allstockcode_array):
-                time.sleep(0.2)
-                if stock_code_index >= global_stock_code_index_end > 0:
-                    break
-                print('stock_code_index', stock_code_index)
-                stock_code = allstockcode_array[stock_code_index]
-                stock_info_map = myUtils.get_stock_info_data(stock_code)
-                # 基本信息过滤
-                if not strategyObj.basic_filter_stock(stock_info_map):
-                    stock_code_index = stock_code_index + 1
-                    continue
-                # 分析过程
-                is_filtered, stock_detail_map = strategyObj.analyze_choose_stock(stock_code, stock_info_map, day_count)
-                # 判断选入
-                if not is_filtered:
-                    stock_code_index = stock_code_index + 1
-                    continue
-                print('***选入:', stock_code)
-                print(stock_detail_map)
-                filtered_stocks[stock_code] = stock_detail_map
-                stock_code_index = stock_code_index + 1
-            # 打印分析结果
-            print(f"{'=' * 60}")
-            print(filtered_stocks)
-
