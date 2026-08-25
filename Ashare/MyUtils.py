@@ -73,7 +73,7 @@ BIAS 乖离率
 '''
 def bias(CLOSE, n):
     MA=pd.Series(CLOSE).rolling(n).mean().values
-    return numpy.round((CLOSE-MA)/MA*100)
+    return numpy.round((CLOSE-MA)/MA*100, 2)
 
 '''
 CCI 商品通道指数

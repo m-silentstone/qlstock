@@ -5,7 +5,7 @@ import requests
 import json
 import argparse
 from fontTools.misc.cython import returns
-from Ashare.frameworkexecution.StrategyDefault import DefaultStrategy
+from Ashare.frameworkexecution.StrategyDefault import StrategyDefault
 import Ashare.MyUtils as myUtils
 
 # 尝试导入baostock
@@ -26,7 +26,7 @@ except ImportError:
     HAS_AKSHARE = False
     print("akshare未安装，将使用腾讯接口估算PE/PB数据")
 
-class PbPePositionStrategy(DefaultStrategy):
+class StrategyPbPePosition(StrategyDefault):
     pe_percent_threshold = 25
     pb_percent_threshold = 25
     ma_cross_days = 10

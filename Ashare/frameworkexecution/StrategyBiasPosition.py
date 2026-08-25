@@ -5,11 +5,12 @@ import requests
 import json
 import argparse
 from fontTools.misc.cython import returns
-from Ashare.frameworkexecution.StrategyDefault import DefaultStrategy
+from Ashare.frameworkexecution.StrategyDefault import StrategyDefault
 import Ashare.MyUtils as myUtils
 
-class BiasPositionStrategy(DefaultStrategy):
+class StrategyBiasPosition(StrategyDefault):
     bias_percent_threshold = 25
+    bias_key = 'BIAS60'
 
     def __init__(self):
         pass
@@ -22,7 +23,7 @@ class BiasPositionStrategy(DefaultStrategy):
         return self.filter_bias(stock_code, stock_info_map, stock_price_df)
 
     def filter_bias(self, stock_code, stock_info_map, stock_price_df):
-        data_list = stock_price_df['BIAS60'].tolist()
+        data_list = stock_price_df[self.bias_key].tolist()
         current_data = data_list[-1]
         data_list = [x for x in data_list if np.isnan(x) == False]
         percentile = None

@@ -6,8 +6,8 @@ import json
 import argparse
 from fontTools.misc.cython import returns
 
-class DefaultStrategy:
-    name = 'DefaultStrategy'
+class StrategyDefault:
+    name = 'StrategyDefault'
     def __init__(self):
         pass
     # 计算特定stock

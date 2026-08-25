@@ -5,9 +5,9 @@ import json
 import argparse
 from fontTools.misc.cython import returns
 import Ashare.MyUtils as myUtils
-from Ashare.frameworkexecution.StrategyDefault import DefaultStrategy
-from Ashare.frameworkexecution.StrategyPbPePosition import PbPePositionStrategy
-from Ashare.frameworkexecution.StrategyBiasPosition import BiasPositionStrategy
+from Ashare.frameworkexecution.StrategyDefault import StrategyDefault
+from Ashare.frameworkexecution.StrategyPbPePosition import StrategyPbPePosition
+from Ashare.frameworkexecution.StrategyBiasPosition import StrategyBiasPosition
 
 #global_stock_code = 'sz000001'
 global_stock_code = None
@@ -15,7 +15,7 @@ global_stock_history_data_days = 2000
 global_stock_code_index_start = 0
 global_stock_code_index_end = 9999
 global_stock_list_file = '../all_large_stocks_field.txt'
-strategyObj = BiasPositionStrategy()
+strategyObj = StrategyPbPePosition()
 
 
 if __name__ == '__main__':
@@ -51,6 +51,7 @@ if __name__ == '__main__':
                 if not strategyObj.basic_filter_stock(stock_info_map):
                     stock_code_index = stock_code_index + 1
                     continue
+                time.sleep(0.2)
                 # 分析过程
                 is_filtered, stock_detail_map = strategyObj.analyze_choose_stock(stock_code, stock_info_map, day_count)
                 # 判断选入
