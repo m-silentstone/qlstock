@@ -106,9 +106,9 @@ class StrategyPbPePosition(StrategyDefault):
         pe_stats = None
         if len(pe_data) > 0:
             pe_stats = {
-                'min': round(min(pe_data), 2),
-                'max': round(max(pe_data), 2),
-                'mean': round(sum(pe_data) / len(pe_data), 2),
+                # 'min': round(min(pe_data), 2),
+                # 'max': round(max(pe_data), 2),
+                # 'mean': round(sum(pe_data) / len(pe_data), 2),
                 'median': round(sorted(pe_data)[len(pe_data) // 2], 2),
                 'current': round(current_pe, 2),
                 'percentile': pe_percentile
@@ -117,9 +117,9 @@ class StrategyPbPePosition(StrategyDefault):
         pb_stats = None
         if len(pb_data) > 0:
             pb_stats = {
-                'min': round(min(pb_data), 2),
-                'max': round(max(pb_data), 2),
-                'mean': round(sum(pb_data) / len(pb_data), 2),
+                # 'min': round(min(pb_data), 2),
+                # 'max': round(max(pb_data), 2),
+                # 'mean': round(sum(pb_data) / len(pb_data), 2),
                 'median': round(sorted(pb_data)[len(pb_data) // 2], 2),
                 'current': round(current_pb, 2),
                 'percentile': pb_percentile
@@ -142,9 +142,9 @@ class StrategyPbPePosition(StrategyDefault):
         volume_stats = None
         if len(volumes_data) > 0:
             volume_stats = {
-                'min': round(min(volumes_data), 2),
-                'max': round(max(volumes_data), 2),
-                'mean': round(sum(volumes_data) / len(volumes_data), 2),
+                # 'min': round(min(volumes_data), 2),
+                # 'max': round(max(volumes_data), 2),
+                # 'mean': round(sum(volumes_data) / len(volumes_data), 2),
                 'median': round(sorted(volumes_data)[len(volumes_data) // 2], 2),
                 'current': round(current_volume, 2),
                 'percentile': volume_percentile

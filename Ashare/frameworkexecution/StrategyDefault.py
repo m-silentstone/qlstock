@@ -48,3 +48,8 @@ class StrategyDefault:
         data_array = np.array(data_list)
         percentile = np.sum(data_array < value) / len(data_array) * 100
         return round(percentile, 2)
+
+    def print_sell_plan(self, stock_info_map):
+        print('【卖出计划】code:', stock_info_map['code'], 'name:', stock_info_map['name'])
+        today_close = stock_info_map['price']
+        print('买入价格：', today_close, '止损价格：', round(today_close*0.93, 2), '卖出1/3价格：', round(today_close * 1.13, 2), '再次卖出1/3价格:', round(today_close * 1.20, 2))

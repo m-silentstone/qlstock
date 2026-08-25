@@ -10,7 +10,7 @@ import Ashare.MyUtils as myUtils
 
 class StrategyBiasPosition(StrategyDefault):
     bias_percent_threshold = 25
-    bias_key = 'BIAS60'
+    bias_key = 'BIAS30'
 
     def __init__(self):
         pass
@@ -33,9 +33,9 @@ class StrategyBiasPosition(StrategyDefault):
         stats = None
         if len(data_list) > 0:
             stats = {
-                'min': round(min(data_list), 2),
-                'max': round(max(data_list), 2),
-                'mean': round(sum(data_list) / len(data_list), 2),
+                # 'min': round(min(data_list), 2),
+                # 'max': round(max(data_list), 2),
+                # 'mean': round(sum(data_list) / len(data_list), 2),
                 'median': round(sorted(data_list)[len(data_list) // 2], 2),
                 'current': round(current_data, 2),
                 'percentile': percentile

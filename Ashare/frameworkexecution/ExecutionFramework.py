@@ -15,7 +15,7 @@ global_stock_history_data_days = 2000
 global_stock_code_index_start = 0
 global_stock_code_index_end = 9999
 global_stock_list_file = '../all_large_stocks_field.txt'
-strategyObj = StrategyPbPePosition()
+strategyObj = StrategyBiasPosition()
 
 
 if __name__ == '__main__':
@@ -60,6 +60,7 @@ if __name__ == '__main__':
                     continue
                 print('***选入:', stock_code)
                 print(stock_detail_map)
+                strategyObj.print_sell_plan(stock_info_map)
                 filtered_stocks[stock_code] = stock_detail_map
                 stock_code_index = stock_code_index + 1
             # 打印分析结果
