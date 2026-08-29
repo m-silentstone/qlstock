@@ -5,6 +5,7 @@ import requests
 import json
 import argparse
 from fontTools.misc.cython import returns
+import Ashare.MyUtils as myUtils
 
 class StrategyDefault:
     name = 'StrategyDefault'
@@ -12,7 +13,11 @@ class StrategyDefault:
         pass
     # 计算特定stock
     def analyze_one_stock(self, stock_code):
-        print(stock_code)
+        print('分析单个目标：', stock_code)
+
+
+    def get_stock_info_data(self, stock_code):
+        return myUtils.get_stock_info_data(stock_code)
 
     # 股票筛选（包含筛选条件）True表示符合条件；False表示被排除
     def basic_filter_stock(self, stock_map):
