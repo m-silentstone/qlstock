@@ -18,6 +18,13 @@ class StrategyBiasPosition(StrategyDefault):
     def __init__(self):
         pass
 
+    # 计算特定stock
+    def analyze_one_stock(self, stock_code, stock_info_map, day_count):
+        print('分析单个目标：', stock_code)
+        is_filtered, stock_price_df = self.analyze_choose_stock(stock_code, stock_info_map, day_count)
+        print('is_filtered:', is_filtered)
+        return stock_price_df
+
     # 股票分析和继续筛选 返回1：True表示符合条件；False表示被排除。返回2：股票详细信息
     def analyze_choose_stock(self, stock_code, stock_info_map, day_count):
         stock_price_df = myUtils.get_stock_price_data(stock_code)

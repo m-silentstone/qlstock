@@ -42,6 +42,18 @@ class StrategyPbPePosition(StrategyDefault):
     def __init__(self):
         pass
 
+    def analyze_one_stock(self, stock_code, stock_info_map, day_count):
+        print('分析单个目标：', stock_code)
+        # 分析PE和PB分位情况
+        analysis_map = self.analyze_pe_pb(stock_code, day_count)
+        stock_info_map['analysis_map'] = analysis_map
+        # PEPB过滤
+        self.filter_analysis_result_pepb(analysis_map)
+        stock_price_df = myUtils.get_stock_price_data(stock_code)
+        # 计算技术指标
+        myUtils.calculate_indicators(stock_price_df)
+        return stock_price_df
+
     # 股票分析和继续筛选 返回1：True表示符合条件；False表示被排除。返回2：股票详细信息
     def analyze_choose_stock(self, stock_code, stock_info_map, day_count):
         # 分析PE和PB分位情况

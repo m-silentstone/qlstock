@@ -15,9 +15,11 @@ class StrategyDefault:
     def __init__(self):
         pass
     # 计算特定stock
-    def analyze_one_stock(self, stock_code):
+    def analyze_one_stock(self, stock_code, stock_info_map, day_count):
         print('分析单个目标：', stock_code)
-
+        # 可替换的策略
+        stock_price_df = myUtils.get_stock_price_data(stock_code)
+        return stock_price_df
 
     def get_stock_info_data(self, stock_code):
         return myUtils.get_stock_info_data(stock_code)

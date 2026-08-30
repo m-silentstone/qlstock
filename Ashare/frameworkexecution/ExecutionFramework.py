@@ -84,7 +84,7 @@ class ExecutionFramework:
         else:
             day_count = self.stock_history_data_days
         stock_info_map = self.strategyObj.get_stock_info_data(self.stock_code)
-        is_filtered, stock_price_df = self.strategyObj.analyze_choose_stock(self.stock_code, stock_info_map, day_count)
+        stock_price_df = self.strategyObj.analyze_one_stock(self.stock_code, stock_info_map, day_count)
         if stock_price_df is None:
             print('stock_price_df empty...')
             return
