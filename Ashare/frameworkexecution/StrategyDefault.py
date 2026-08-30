@@ -74,4 +74,10 @@ class StrategyDefault:
     def print_sell_plan(self, stock_info_map):
         print('【卖出计划】code:', stock_info_map['code'], 'name:', stock_info_map['name'])
         today_close = stock_info_map['price']
-        print('买入价格：', today_close, '止损价格：', round(today_close*0.93, 2), '卖出1/3价格：', round(today_close * 1.13, 2), '再次卖出1/3价格:', round(today_close * 1.20, 2))
+        unit_ratio = 0.07
+        print('买入价格：', today_close, '止损价格：', round(today_close*(1-unit_ratio), 2),
+              '卖出1/3价格：', round(today_close * (1+2*unit_ratio), 2),
+              '再次卖出1/3价格:', round(today_close * (1+3*unit_ratio), 2))
+        print('止损时百分比：', round(unit_ratio*(-100), 2),
+              '卖出1/3时百分比', round(unit_ratio * 200 * 3/2, 2),
+              '再次卖出1/3时百分比', round(unit_ratio * 300 * 3, 2))

@@ -12,14 +12,14 @@ from Ashare.frameworkexecution.StrategyBiasPosition import StrategyBiasPosition
 
 
 class ExecutionFramework:
-    #stock_code = None
-    stock_code = 'sh600309'
+    stock_code = None
+    #stock_code = 'sh600309'
     stock_history_data_days = 2000
     stock_code_index_start = 0
     stock_code_index_end = 9999
     stock_list_file = '../all_large_stocks_field.txt'
     holding_stocks = []
-    strategyObj = StrategyPbPePosition()
+    strategyObj = StrategyBiasPosition()
 
     def __init__(self):
         pass
@@ -72,7 +72,8 @@ class ExecutionFramework:
                 stock_code_index = stock_code_index + 1
             # 打印分析结果
             print(f"{'=' * 60}")
-            print(filtered_stocks)
+            for stock_code in filtered_stocks:
+                print(filtered_stocks[stock_code])
 
     # 分析单个股票，包含绘图
     def analyze_one_stock(self):
