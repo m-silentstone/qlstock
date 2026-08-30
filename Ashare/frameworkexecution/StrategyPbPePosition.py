@@ -42,18 +42,18 @@ class StrategyPbPePosition(StrategyDefault):
         analysis_map = self.analyze_pe_pb(stock_code, day_count)
         # PEPB过滤
         if not self.filter_analysis_result_pepb(analysis_map):
-            return False, analysis_map
+            return False, analysis_map, None
         stock_price_df = myUtils.get_stock_price_data(stock_code)
         # 计算技术指标
         myUtils.calculate_indicators(stock_price_df)
         # # MA过滤
         # if not self.filter_analysis_result_ma(stock_price_df, self.ma_cross_days):
-        #     return False, analysis_map
+        #     return False, analysis_map, stock_price_df
         # analysis_map['volume_stats'] = self.analyze_volume(stock_price_df, self.ma_cross_days * 2)
         # # volume过滤
         # if not self.filter_analysis_result_volume(analysis_map):
-        #     return False, analysis_map
-        return True, analysis_map
+        #     return False, analysis_map, stock_price_df
+        return True, analysis_map, stock_price_df
 
 #-----------------------------
     def analyze_pe_pb(self, stock_code, day_count=1000):

@@ -48,7 +48,7 @@ class StrategyBiasPosition(StrategyDefault):
             'stats': stats
         }
         is_filtered = (percentile <= self.bias_percent_threshold)
-        return is_filtered, analysis_map
+        return is_filtered, analysis_map, stock_price_df
 
 #-----------------------------
 

@@ -1,11 +1,14 @@
 import numpy as np
-import pandas as pd
-import time
-import requests
-import json
-import argparse
-from fontTools.misc.cython import returns
+import matplotlib
+import matplotlib.pyplot as plt ;from matplotlib.ticker import MultipleLocator
 import Ashare.MyUtils as myUtils
+
+# 中文字体为黑体
+matplotlib.rcParams['font.family'] = 'SimHei'
+# 负号显示
+matplotlib.rcParams['axes.unicode_minus'] = False
+# 交互模式
+plt.ion()
 
 class StrategyDefault:
     name = 'StrategyDefault'
@@ -31,7 +34,20 @@ class StrategyDefault:
     # 股票分析和继续筛选 返回1：True表示符合条件；False表示被排除。返回2：股票详细信息
     def analyze_choose_stock(self, stock_code, stock_info_map, day_count):
         # 可替换的策略
-        return False, None
+        stock_price_df = myUtils.get_stock_price_data(stock_code)
+        return False, None, stock_price_df
+
+    # 针对单个目标计算额外指标并绘图
+    def plot_stock_data(self, stock_code, stock_detail_map, stock_price_df):
+        print('默认策略绘制基本内容')
+        price_key = 'close'
+        plt.title(stock_detail_map['stock_name'] + stock_code)
+        # 绘制价格线
+        plt.plot(stock_price_df.index, stock_price_df[price_key], marker=',')
+        # 绘制均线
+        plt.tight_layout()
+        plt.show(block=True)
+        return
 
 
 

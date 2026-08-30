@@ -20,7 +20,8 @@ from Ashare.frameworkexecution.StrategyBiasPosition import StrategyBiasPosition
 
 
 class ExecutionFramework:
-    stock_code = None
+    #stock_code = None
+    stock_code = 'sh600309'
     stock_history_data_days = 2000
     stock_code_index_start = 0
     stock_code_index_end = 9999
@@ -67,7 +68,7 @@ class ExecutionFramework:
                     continue
                 time.sleep(0.2)
                 # 分析过程
-                is_filtered, stock_detail_map = self.strategyObj.analyze_choose_stock(stock_code, stock_info_map,
+                is_filtered, stock_detail_map, stock_price_df = self.strategyObj.analyze_choose_stock(stock_code, stock_info_map,
                                                                                  day_count)
                 # 判断选入
                 if not is_filtered:
@@ -84,7 +85,21 @@ class ExecutionFramework:
 
     # 分析单个股票，包含绘图
     def analyze_one_stock(self):
-        pass
+        if self.stock_code is None or len(executionFramework.stock_code) <= 0:
+            print('stock_code empty...')
+            return
+        if self.stock_history_data_days is None:
+            day_count = 1000
+        else:
+            day_count = self.stock_history_data_days
+        stock_info_map = self.strategyObj.get_stock_info_data(self.stock_code)
+        is_filtered, stock_detail_map, stock_price_df = self.strategyObj.analyze_choose_stock(self.stock_code, stock_info_map, day_count)
+        if stock_price_df is None:
+            print('stock_price_df empty...')
+            return
+        self.strategyObj.print_sell_plan(stock_info_map)
+        self.strategyObj.plot_stock_data(self.stock_code, stock_detail_map, stock_price_df)
+
 
     # 结合已持仓股票信息（code,持仓量, 买入价格, 持仓时间）确定是否要卖出
     def judge_stocks_sell(self):
