@@ -35,16 +35,15 @@ class StrategyDefault:
     def analyze_choose_stock(self, stock_code, stock_info_map, day_count):
         # 可替换的策略
         stock_price_df = myUtils.get_stock_price_data(stock_code)
-        return False, None, stock_price_df
+        return False, stock_price_df
 
     # 针对单个目标计算额外指标并绘图
     def plot_stock_data(self, stock_code, stock_detail_map, stock_price_df):
         print('默认策略绘制基本内容')
         price_key = 'close'
-        plt.title(stock_detail_map['stock_name'] + stock_code)
+        plt.title(stock_detail_map['name'] + stock_code)
         # 绘制价格线
         plt.plot(stock_price_df.index, stock_price_df[price_key], marker=',')
-        # 绘制均线
         plt.tight_layout()
         plt.show(block=True)
         return

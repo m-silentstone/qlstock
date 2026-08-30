@@ -9,14 +9,6 @@ from Ashare.frameworkexecution.StrategyDefault import StrategyDefault
 from Ashare.frameworkexecution.StrategyPbPePosition import StrategyPbPePosition
 from Ashare.frameworkexecution.StrategyBiasPosition import StrategyBiasPosition
 
-#global_stock_code = 'sz000001'
-# global_stock_code = None
-# global_stock_history_data_days = 2000
-# global_stock_code_index_start = 0
-# global_stock_code_index_end = 9999
-# global_stock_list_file = '../all_large_stocks_field.txt'
-# strategyObj = StrategyBiasPosition()
-
 
 
 class ExecutionFramework:
@@ -27,7 +19,7 @@ class ExecutionFramework:
     stock_code_index_end = 9999
     stock_list_file = '../all_large_stocks_field.txt'
     holding_stocks = []
-    strategyObj = StrategyBiasPosition()
+    strategyObj = StrategyPbPePosition()
 
     def __init__(self):
         pass
@@ -68,16 +60,15 @@ class ExecutionFramework:
                     continue
                 time.sleep(0.2)
                 # 分析过程
-                is_filtered, stock_detail_map, stock_price_df = self.strategyObj.analyze_choose_stock(stock_code, stock_info_map,
+                is_filtered, stock_price_df = self.strategyObj.analyze_choose_stock(stock_code, stock_info_map,
                                                                                  day_count)
                 # 判断选入
                 if not is_filtered:
                     stock_code_index = stock_code_index + 1
                     continue
                 print('条件选入:', stock_code)
-                print(stock_detail_map)
                 self.strategyObj.print_sell_plan(stock_info_map)
-                filtered_stocks[stock_code] = stock_detail_map
+                filtered_stocks[stock_code] = stock_info_map
                 stock_code_index = stock_code_index + 1
             # 打印分析结果
             print(f"{'=' * 60}")
@@ -93,12 +84,12 @@ class ExecutionFramework:
         else:
             day_count = self.stock_history_data_days
         stock_info_map = self.strategyObj.get_stock_info_data(self.stock_code)
-        is_filtered, stock_detail_map, stock_price_df = self.strategyObj.analyze_choose_stock(self.stock_code, stock_info_map, day_count)
+        is_filtered, stock_price_df = self.strategyObj.analyze_choose_stock(self.stock_code, stock_info_map, day_count)
         if stock_price_df is None:
             print('stock_price_df empty...')
             return
         self.strategyObj.print_sell_plan(stock_info_map)
-        self.strategyObj.plot_stock_data(self.stock_code, stock_detail_map, stock_price_df)
+        self.strategyObj.plot_stock_data(self.stock_code, stock_info_map, stock_price_df)
 
 
     # 结合已持仓股票信息（code,持仓量, 买入价格, 持仓时间）确定是否要卖出

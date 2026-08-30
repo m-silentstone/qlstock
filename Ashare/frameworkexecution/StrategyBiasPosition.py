@@ -1,12 +1,15 @@
 import numpy as np
-import pandas as pd
-import time
-import requests
-import json
-import argparse
-from fontTools.misc.cython import returns
 from Ashare.frameworkexecution.StrategyDefault import StrategyDefault
+import matplotlib
+import matplotlib.pyplot as plt ;from matplotlib.ticker import MultipleLocator
 import Ashare.MyUtils as myUtils
+
+# 中文字体为黑体
+matplotlib.rcParams['font.family'] = 'SimHei'
+# 负号显示
+matplotlib.rcParams['axes.unicode_minus'] = False
+# 交互模式
+plt.ion()
 
 class StrategyBiasPosition(StrategyDefault):
     bias_percent_threshold = 25
@@ -41,14 +44,28 @@ class StrategyBiasPosition(StrategyDefault):
                 'percentile': percentile
             }
         if stats is None:
-            return False, None
+            return False, stock_price_df
         analysis_map = {
             'stock_code': stock_code,
             'stock_name': stock_info_map.get('name', ''),
             'stats': stats
         }
+        stock_info_map['analysis_map'] = analysis_map
         is_filtered = (percentile <= self.bias_percent_threshold)
-        return is_filtered, analysis_map, stock_price_df
+        return is_filtered, stock_price_df
+
+    # 针对单个目标计算额外指标并绘图
+    def plot_stock_data(self, stock_code, stock_detail_map, stock_price_df):
+        price_key = 'close'
+        plt.title(stock_detail_map['name'] + stock_code)
+        # 绘制价格线
+        plt.plot(stock_price_df.index, stock_price_df[price_key], marker=',')
+        # 绘制均线
+        plt.plot(stock_price_df.index, stock_price_df['MA30'].values, 'g-')
+        plt.tight_layout()
+        plt.show(block=True)
+        return
+
 
 #-----------------------------
 

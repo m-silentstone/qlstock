@@ -1,12 +1,18 @@
 import numpy as np
 import pandas as pd
-import time
-import requests
-import json
-import argparse
-from fontTools.misc.cython import returns
 from Ashare.frameworkexecution.StrategyDefault import StrategyDefault
 import Ashare.MyUtils as myUtils
+
+import matplotlib
+import matplotlib.pyplot as plt ;from matplotlib.ticker import MultipleLocator
+
+# 中文字体为黑体
+matplotlib.rcParams['font.family'] = 'SimHei'
+# 负号显示
+matplotlib.rcParams['axes.unicode_minus'] = False
+# 交互模式
+plt.ion()
+
 
 # 尝试导入baostock
 try:
@@ -40,9 +46,10 @@ class StrategyPbPePosition(StrategyDefault):
     def analyze_choose_stock(self, stock_code, stock_info_map, day_count):
         # 分析PE和PB分位情况
         analysis_map = self.analyze_pe_pb(stock_code, day_count)
+        stock_info_map['analysis_map'] = analysis_map
         # PEPB过滤
         if not self.filter_analysis_result_pepb(analysis_map):
-            return False, analysis_map, None
+            return False, None
         stock_price_df = myUtils.get_stock_price_data(stock_code)
         # 计算技术指标
         myUtils.calculate_indicators(stock_price_df)
@@ -53,7 +60,19 @@ class StrategyPbPePosition(StrategyDefault):
         # # volume过滤
         # if not self.filter_analysis_result_volume(analysis_map):
         #     return False, analysis_map, stock_price_df
-        return True, analysis_map, stock_price_df
+        return True, stock_price_df
+
+    # 针对单个目标计算额外指标并绘图
+    def plot_stock_data(self, stock_code, stock_detail_map, stock_price_df):
+        price_key = 'close'
+        plt.title(stock_detail_map['name'] + stock_code)
+        # 绘制价格线
+        plt.plot(stock_price_df.index, stock_price_df[price_key], marker=',')
+        # 绘制均线
+        plt.plot(stock_price_df.index, stock_price_df['MA30'].values, 'g-')
+        plt.tight_layout()
+        plt.show(block=True)
+        return
 
 #-----------------------------
     def analyze_pe_pb(self, stock_code, day_count=1000):
